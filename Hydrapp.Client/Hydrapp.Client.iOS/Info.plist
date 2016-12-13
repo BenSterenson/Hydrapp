@@ -5,7 +5,6 @@
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
-		<integer>2</integer>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -53,5 +52,7 @@
 		<string>external-accessory</string>
 		<string>fetch</string>
 	</array>
+	<key>CFBundleName</key>
+	<string>Hydrapp.Client</string>
 </dict>
 </plist>
