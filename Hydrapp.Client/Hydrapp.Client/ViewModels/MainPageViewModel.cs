@@ -494,15 +494,32 @@ namespace Hydrapp.Client.ViewModels
                     await bandService.StartReadingFluidLoss();
             }
             else
-                await bandService.StopReadingSkinTemp();
-            
+            {
+                try
+                {
+                    await bandService.StopReadingSkinTemp();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+            }
         }
         private async void ToggleAmbientLight()
         {
             if (isToggleAmbientLight)
                 await bandService.StartReadingAmbientLight();
             else
-                await bandService.StopReadingAmbientLight();
+            {
+                try
+                {
+                    await bandService.StopReadingAmbientLight();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+            }
         }
         private async void ToggleHeartRate()
         {
@@ -514,7 +531,16 @@ namespace Hydrapp.Client.ViewModels
                     await bandService.StartReadingFluidLoss();
             }
             else
-                await bandService.StartReadingHeartRate();
+            {
+                try
+                {
+                    await bandService.StartReadingHeartRate();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+            }
         }
         private async void ToggleGSR()
         {
@@ -526,28 +552,64 @@ namespace Hydrapp.Client.ViewModels
                     await bandService.StartReadingFluidLoss();
             }
             else
-                await bandService.StopReadingGSR();
+            {
+                try
+                {
+                    await bandService.StopReadingGSR();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+            }
         }
         private async void ToggleUV()
         {
             if (isToggleUV)
                 await bandService.StartReadingUV();
             else
-                await bandService.StopReadingUV();
+            {
+                try
+                {
+                    await bandService.StopReadingUV();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+            }
         }
         private async void TogglePedometer()
         {
             if (isTogglePedometer)
                 await bandService.StartReadingPedometer();
             else
-                await bandService.StopReadingPedometer();
+            {
+                try
+                {
+                    await bandService.StopReadingPedometer();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+            }
         }
         private async void ToggleCalories()
         {
             if (isToggleCalories)
                 await bandService.StartReadingCalories();
             else
-                await bandService.StopReadingCalories();
+            {
+                try
+                {
+                    await bandService.StopReadingCalories();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+            }
         }
         private async void ToggleFluidLoss()
         {
@@ -581,8 +643,16 @@ namespace Hydrapp.Client.ViewModels
                 this.IsToggleGSR = false;
                 isToggleGSR = false;
                 ToggleGSR();
-
-                await bandService.StopReadingFluidLoss();
+               
+                try
+                {
+                    await bandService.StopReadingFluidLoss();
+                }
+                catch (NullReferenceException)
+                {
+                    return;
+                }
+                
             }
         }
 
