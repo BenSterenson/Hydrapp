@@ -52,12 +52,13 @@ namespace Hydrapp.Client
 
 			var signUpSucceeded = AreDetailsValid (user);
 			if (signUpSucceeded) {
-				var rootPage = Navigation.NavigationStack.FirstOrDefault ();
+				var rootPage = Navigation.NavigationStack.FirstOrDefault();
 				if (rootPage != null) {
 					App.IsUserLoggedIn = true;
-					Navigation.InsertPageBefore (new ViewModels.MainPageViewModel(), Navigation.NavigationStack.First ());
+					Navigation.InsertPageBefore (new ViewModels.MainPageViewModel(), Navigation.NavigationStack.First());
 					await Navigation.PopToRootAsync ();
-				}
+                    
+                }
 			} else {
 				messageLabel.Text = "Sign up failed";
 			}
@@ -65,7 +66,8 @@ namespace Hydrapp.Client
 
 		bool AreDetailsValid (User user)
 		{
-			return (!string.IsNullOrWhiteSpace (user.Username) && !string.IsNullOrWhiteSpace (user.Password) && !string.IsNullOrWhiteSpace (user.Email) && user.Email.Contains ("@"));
+            //TODO insert to data base
+            return (!string.IsNullOrWhiteSpace (user.Username) && !string.IsNullOrWhiteSpace (user.Password) && !string.IsNullOrWhiteSpace (user.Email) && user.Email.Contains ("@"));
 		}
 	}
 }

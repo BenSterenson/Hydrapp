@@ -25,7 +25,7 @@ namespace Hydrapp.Client
 			var isValid = AreCredentialsCorrect (user);
 			if (isValid) {
 				App.IsUserLoggedIn = true;
-				Navigation.InsertPageBefore (new MainPage (), this);
+				Navigation.InsertPageBefore (new MainPage(), this);
 				await Navigation.PopAsync ();
 			} else {
 				messageLabel.Text = "Login failed";

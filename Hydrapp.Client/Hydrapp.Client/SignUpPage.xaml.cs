@@ -22,14 +22,19 @@ namespace Hydrapp.Client
 			// Sign up logic goes here
 
 			var signUpSucceeded = AreDetailsValid (user);
-			if (signUpSucceeded) {
+			if (signUpSucceeded)
+            {
 				var rootPage = Navigation.NavigationStack.FirstOrDefault ();
 				if (rootPage != null) {
 					App.IsUserLoggedIn = true;
-					Navigation.InsertPageBefore (new MainPage (), Navigation.NavigationStack.First ());
-					await Navigation.PopToRootAsync ();
-				}
-			} else {
+                    //Navigation.InsertPageBefore (new MainPage(), Navigation.NavigationStack.First());
+                    //await Navigation.PopToRootAsync ();
+                    Navigation.InsertPageBefore(new MainPage(), this);
+                    await Navigation.PopAsync();
+                }
+			}
+            else
+            {
 				messageLabel.Text = "Sign up failed";
 			}
 		}
