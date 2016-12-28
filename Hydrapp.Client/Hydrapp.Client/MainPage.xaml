@@ -4,10 +4,14 @@
              x:Class="Hydrapp.Client.MainPage"
              xmlns:vm="clr-namespace:Hydrapp.Client.ViewModels;assembly=Hydrapp.Client">
 
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
+  </ContentPage.ToolbarItems>
+  
   <ContentPage.BindingContext>
     <vm:MainPageViewModel />
   </ContentPage.BindingContext>
-
+    
   <ContentPage.Padding>
     <OnPlatform x:TypeArguments="Thickness">
       <OnPlatform.iOS>

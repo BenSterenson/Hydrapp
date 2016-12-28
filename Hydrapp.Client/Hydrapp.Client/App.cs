@@ -10,10 +10,21 @@ namespace Hydrapp.Client
 {
     public class App : Application
     {
+        public static bool IsUserLoggedIn { get; set; }
+
         public App()
         {
+
+            if (!IsUserLoggedIn)
+            {
+                MainPage = new NavigationPage(new LoginPage());
+            }
+            else
+            {
+                MainPage = new NavigationPage(new Hydrapp.Client.MainPage());
+            }
             // The root page of your application
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
         }
 
         protected override void OnStart()

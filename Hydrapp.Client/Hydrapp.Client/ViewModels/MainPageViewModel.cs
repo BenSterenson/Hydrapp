@@ -12,8 +12,9 @@ using Hydrapp.Client.Services;
 
 namespace Hydrapp.Client.ViewModels
 {
-    public class MainPageViewModel : INotifyPropertyChanged
+    public class MainPageViewModel : ContentPage, INotifyPropertyChanged
     {
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         // Band Setup
@@ -380,6 +381,14 @@ namespace Hydrapp.Client.ViewModels
         }
         public MainPageViewModel()
         {
+
+            var toolbarItem = new ToolbarItem
+            {
+                Text = "Logout"
+            };
+            toolbarItem.Clicked += OnLogoutButtonClicked;
+            ToolbarItems.Add(toolbarItem);
+
             pageTitle = "Hydrapp";
             currentStatus = "Current Status";
             connectButtonText = "Connect to Band";
@@ -659,6 +668,14 @@ namespace Hydrapp.Client.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        async void OnLogoutButtonClicked(object sender, EventArgs e)
+        {
+        
+            App.IsUserLoggedIn = false;
+            Navigation.InsertPageBefore(new LoginPageCS(), this);
+            await Navigation.PopAsync();
         }
 
 
