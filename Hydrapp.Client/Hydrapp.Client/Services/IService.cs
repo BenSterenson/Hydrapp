@@ -14,11 +14,11 @@ namespace Hydrapp.Client.Services
         Task SyncTable();
         Task<IEnumerable<TestItem>> getTestItems();
 
-        Task<TestItem> addTestItem(string name, DateTime date);
+        Task<TestItem> addTestItem(TestItem item);
 
         Task<bool> deleteTestItem(TestItem id);
 
-
+        Task<User> addUser(User user);
 
     }
 }

@@ -41,8 +41,8 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoginPageCS.cs" />
     <Compile Include="Modules\TestItem.cs" />
+    <Compile Include="Modules\User.cs" />
     <Compile Include="Services\AzureDBService.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="SignUpPage.xaml.cs">
@@ -53,8 +53,6 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BandService.cs" />
-    <Compile Include="SignUpPageCS.cs" />
-    <Compile Include="User.cs" />
     <Compile Include="ValueConverters\CelsiusToFahrenheitConverter.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
   </ItemGroup>

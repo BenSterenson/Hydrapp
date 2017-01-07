@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hydrapp.Client.Modules;
+using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace Hydrapp.Client
@@ -44,6 +46,7 @@ namespace Hydrapp.Client
 
 		async void OnSignUpButtonClicked (object sender, EventArgs e)
 		{
+            Debug.WriteLine("SignUp button clicked");
 			await Navigation.PushAsync (new SignUpPageCS ());
 		}
 
@@ -68,7 +71,7 @@ namespace Hydrapp.Client
 		bool AreCredentialsCorrect (User user)
 		{
             //TODO check with data base
-			return user.Username == Constants.Username && user.Password == Constants.Password;
+			return user.userName == Constants.Username && user.password == Constants.Password;
 		}
 	}
 }

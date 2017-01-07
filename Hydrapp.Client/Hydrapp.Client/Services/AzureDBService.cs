@@ -16,6 +16,7 @@ namespace Hydrapp.Client.Services
     {
         public MobileServiceClient mobileService { get; set; }
         private IMobileServiceSyncTable<TestItem> testItemTable;
+        private IMobileServiceSyncTable<User> userTable;
         bool isInit;
         
         public async Task Initialize()
@@ -34,12 +35,14 @@ namespace Hydrapp.Client.Services
            
             try
             {
-                var store = new MobileServiceSQLiteStore("test2.db");
+                var store = new MobileServiceSQLiteStore("Test4.db");
                 store.DefineTable<TestItem>();
+                //store.DefineTable<User>();
                 await mobileService.SyncContext.InitializeAsync(store, new MobileServiceSyncHandler());
                 testItemTable = mobileService.GetSyncTable<TestItem>();
-                
+                userTable = mobileService.GetSyncTable<User>();
                 await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
+                await userTable.PullAsync("allUsers", userTable.CreateQuery());
                 isInit = true;
             }
             catch (Exception e)
@@ -68,14 +71,13 @@ namespace Hydrapp.Client.Services
             }
             
         }
-        public async Task<TestItem> addTestItem(string name, DateTime date)
+        public async Task<TestItem> addTestItem(TestItem item)
         {
             await Initialize();
-            if (date.CompareTo(new DateTime()) == 1)
+            if (item.date.CompareTo(new DateTime()) == 0)
             {
                 throw new Exception("Incompatible date");
             }
-            TestItem item = new TestItem(name, date);
             try
             {
                 await testItemTable.InsertAsync(item);
@@ -91,6 +93,23 @@ namespace Hydrapp.Client.Services
             return item;
         }
 
+        public async Task<User> addUser(User user)
+        {
+            await Initialize();
+            try
+            {
+                await userTable.InsertAsync(user);
+                await SyncTable();
+            }
+            catch (Exception e)
+            {
+                await userTable.DeleteAsync(user);
+                await userTable.PullAsync("allUsers", userTable.CreateQuery());
+                Debug.WriteLine("Couldn't add user:" + user, e);
+                throw e;
+            }
+            return user;
+        }
         public async Task<bool> deleteTestItem(TestItem item)
         {
             await Initialize();

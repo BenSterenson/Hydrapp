@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hydrapp.Client.Modules;
+using System;
 using Xamarin.Forms;
 
 namespace Hydrapp.Client
@@ -18,8 +19,8 @@ namespace Hydrapp.Client
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
 			var user = new User {
-				Username = usernameEntry.Text,
-				Password = passwordEntry.Text
+				userName = usernameEntry.Text,
+				password = passwordEntry.Text
 			};
 
 			var isValid = AreCredentialsCorrect (user);
@@ -35,7 +36,7 @@ namespace Hydrapp.Client
 
 		bool AreCredentialsCorrect (User user)
 		{
-			return user.Username == Constants.Username && user.Password == Constants.Password;
+			return user.userName == Constants.Username && user.password == Constants.Password;
 		}
 	}
 }

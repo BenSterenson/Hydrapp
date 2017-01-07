@@ -8,7 +8,7 @@ namespace Hydrapp.Client
 {
 	public class SignUpPageCS : ContentPage
 	{
-        private IService AzureDbservice = new AzureDBService();
+        private IService AzureDbservice = App.AzureDbservice;
 
         Entry usernameEntry, passwordEntry, emailEntry;
 		Label messageLabel;
@@ -46,6 +46,7 @@ namespace Hydrapp.Client
 
 		async void OnSignUpButtonClicked (object sender, EventArgs e)
 		{
+            Debug.WriteLine("SignUp button clicked!");
 			var user = new User () {
 				Username = usernameEntry.Text,
 				Password = passwordEntry.Text,
@@ -59,7 +60,7 @@ namespace Hydrapp.Client
 
             if (signUpSucceeded) {
                 
-                    await AzureDbservice.addTestItem(user.Username, new DateTime());
+                    await AzureDbservice.addUser(user);
                 
                 var rootPage = Navigation.NavigationStack.FirstOrDefault();
 				if (rootPage != null) {
