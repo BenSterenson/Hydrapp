@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace Hydrapp.Client.UWP
 {
@@ -29,6 +30,7 @@ namespace Hydrapp.Client.UWP
         public App()
         {
             this.InitializeComponent();
+            
             this.Suspending += OnSuspending;
         }
 

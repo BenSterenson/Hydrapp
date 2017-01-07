@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hydrapp.Client.Services;
+using System;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -6,7 +8,9 @@ namespace Hydrapp.Client
 {
 	public class SignUpPageCS : ContentPage
 	{
-		Entry usernameEntry, passwordEntry, emailEntry;
+        private IService AzureDbservice = new AzureDBService();
+
+        Entry usernameEntry, passwordEntry, emailEntry;
 		Label messageLabel;
 
 		public SignUpPageCS ()
@@ -47,12 +51,17 @@ namespace Hydrapp.Client
 				Password = passwordEntry.Text,
 				Email = emailEntry.Text
 			};
-
-			// Sign up logic goes here
-
+            
 			var signUpSucceeded = AreDetailsValid (user);
-			if (signUpSucceeded) {
-				var rootPage = Navigation.NavigationStack.FirstOrDefault();
+            
+            // insert to DB
+            
+
+            if (signUpSucceeded) {
+                
+                    await AzureDbservice.addTestItem(user.Username, new DateTime());
+                
+                var rootPage = Navigation.NavigationStack.FirstOrDefault();
 				if (rootPage != null) {
 					App.IsUserLoggedIn = true;
 					Navigation.InsertPageBefore (new ViewModels.MainPageViewModel(), Navigation.NavigationStack.First());
@@ -66,7 +75,6 @@ namespace Hydrapp.Client
 
 		bool AreDetailsValid (User user)
 		{
-            //TODO insert to data base
             return (!string.IsNullOrWhiteSpace (user.Username) && !string.IsNullOrWhiteSpace (user.Password) && !string.IsNullOrWhiteSpace (user.Email) && user.Email.Contains ("@"));
 		}
 	}
