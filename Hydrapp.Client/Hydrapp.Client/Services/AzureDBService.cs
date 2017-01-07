@@ -34,10 +34,12 @@ namespace Hydrapp.Client.Services
            
             try
             {
-                var store = new MobileServiceSQLiteStore("test.db");
+                var store = new MobileServiceSQLiteStore("test2.db");
                 store.DefineTable<TestItem>();
                 await mobileService.SyncContext.InitializeAsync(store, new MobileServiceSyncHandler());
                 testItemTable = mobileService.GetSyncTable<TestItem>();
+                
+                await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
                 isInit = true;
             }
             catch (Exception e)
@@ -60,13 +62,19 @@ namespace Hydrapp.Client.Services
             }
             catch (Exception e)
             {
-                Debug.WriteLine("unable to sync data although I'm Online. reason: ", e);
+                
+                Debug.WriteLine("unable to sync some data", e);
+                throw e;
             }
-
+            
         }
         public async Task<TestItem> addTestItem(string name, DateTime date)
         {
             await Initialize();
+            if (date.CompareTo(new DateTime()) == 1)
+            {
+                throw new Exception("Incompatible date");
+            }
             TestItem item = new TestItem(name, date);
             try
             {
@@ -75,7 +83,9 @@ namespace Hydrapp.Client.Services
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Couldn't add Test Item", e);
+                await testItemTable.DeleteAsync(item);
+                await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
+                Debug.WriteLine("Couldn't add Test Item:" + item ,  e);
                 throw e;
             }
             return item;

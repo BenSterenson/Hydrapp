@@ -5,6 +5,8 @@ using System.Text;
 
 using Xamarin.Forms;
 using Microsoft.Band.Portable;
+using Hydrapp.Client.Services;
+using Hydrapp.Client;
 
 namespace Hydrapp.Client
 {
@@ -17,6 +19,7 @@ namespace Hydrapp.Client
 
             if (!IsUserLoggedIn)
             {
+                test();
                 MainPage = new NavigationPage(new LoginPage());
             }
             else
@@ -25,6 +28,12 @@ namespace Hydrapp.Client
             }
             // The root page of your application
             //MainPage = new MainPage();
+        }
+
+        private async void test()
+        {
+            IService AzureDbservice = new AzureDBService();
+            await AzureDbservice.addTestItem("Jimmy the duke", new DateTime(1990,03,28));
         }
 
         protected override void OnStart()
