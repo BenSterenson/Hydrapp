@@ -35,13 +35,13 @@ namespace Hydrapp.Client.Services
            
             try
             {
-                var store = new MobileServiceSQLiteStore("Test4.db");
-                store.DefineTable<TestItem>();
-                //store.DefineTable<User>();
+                var store = new MobileServiceSQLiteStore("testNew.db");
+                //store.DefineTable<TestItem>();
+                store.DefineTable<User>();
                 await mobileService.SyncContext.InitializeAsync(store, new MobileServiceSyncHandler());
-                testItemTable = mobileService.GetSyncTable<TestItem>();
+                //testItemTable = mobileService.GetSyncTable<TestItem>();
                 userTable = mobileService.GetSyncTable<User>();
-                await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
+                //await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
                 await userTable.PullAsync("allUsers", userTable.CreateQuery());
                 isInit = true;
             }
@@ -61,7 +61,8 @@ namespace Hydrapp.Client.Services
             try
             {
                 await mobileService.SyncContext.PushAsync();
-                await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
+                await userTable.PullAsync("allusers", userTable.CreateQuery());
+                //await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
             }
             catch (Exception e)
             {
@@ -100,6 +101,8 @@ namespace Hydrapp.Client.Services
             {
                 await userTable.InsertAsync(user);
                 await SyncTable();
+                User result = await userTable.LookupAsync(user.Id);
+                user.UserId = result.UserId;
             }
             catch (Exception e)
             {

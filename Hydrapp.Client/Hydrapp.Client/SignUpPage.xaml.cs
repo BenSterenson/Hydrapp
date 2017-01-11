@@ -22,7 +22,8 @@ namespace Hydrapp.Client
                 userName = usernameEntry.Text,
                 password = passwordEntry.Text,
                 email = emailEntry.Text,
-                bmi = 0
+                height = 20,
+                weight = 123
 			};
 
             // Sign up logic goes here
