@@ -1,8 +1,4 @@
-﻿using Hydrapp.Client.Modules;
-using Hydrapp.Client.Services;
-using System;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -10,56 +6,46 @@ namespace Hydrapp.Client
 {
 	public partial class SignUpPage : ContentPage
 	{
-        private IService AzureDbservice = App.AzureDbservice;
-        public SignUpPage ()
+		public SignUpPage ()
 		{
 			InitializeComponent();
 		}
 
 		async void OnSignUpButtonClicked (object sender, EventArgs e)
 		{
-            var user = new User() {
-                userName = usernameEntry.Text,
-                password = passwordEntry.Text,
-                email = emailEntry.Text,
-                height = 20,
-                weight = 123
-			};
+			var user = new User () {
+				Username = usernameEntry.Text,
+				Password = passwordEntry.Text,
+				Email = emailEntry.Text,
+                Weight = weightEntry.Text,
+                Height = heightEntry.Text
+            };
 
-            // Sign up logic goes here
+			// Sign up logic goes here
 
-
-            if (AreDetailsValid(user) == false)
+			var signUpSucceeded = AreDetailsValid (user);
+			if (signUpSucceeded)
             {
-                messageLabel.Text = "Sign up failed, not valid";
-            }
+				var rootPage = Navigation.NavigationStack.FirstOrDefault ();
+				if (rootPage != null) {
+					App.IsUserLoggedIn = true;
+                    //Navigation.InsertPageBefore (new MainPage(), Navigation.NavigationStack.First());
+                    //await Navigation.PopToRootAsync ();
+                    Navigation.InsertPageBefore(new MainPage(), this);
+                    await Navigation.PopAsync();
+                }
+			}
             else
             {
-                try
-                {
-                    await AzureDbservice.addUser(user);
-
-                    var rootPage = Navigation.NavigationStack.FirstOrDefault();
-                    if (rootPage != null)
-                    {
-                        App.IsUserLoggedIn = true;
-                        //Navigation.InsertPageBefore (new MainPage(), Navigation.NavigationStack.First());
-                        //await Navigation.PopToRootAsync ();
-                        Navigation.InsertPageBefore(new MainPage(), this);
-                        await Navigation.PopAsync();
-                    }
-                }
-                catch (Exception execption)
-                {
-                    Debug.WriteLine("SignUp Failed!", execption);
-                }
-            }
-            
+				messageLabel.Text = "Sign up failed";
+			}
 		}
 
 		bool AreDetailsValid (User user)
 		{
-			return (!string.IsNullOrWhiteSpace (user.userName) && !string.IsNullOrWhiteSpace (user.password) && !string.IsNullOrWhiteSpace (user.email) && user.email.Contains ("@"));
+            int n;
+			return (!string.IsNullOrWhiteSpace (user.Username) && !string.IsNullOrWhiteSpace (user.Password) && !string.IsNullOrWhiteSpace (user.Email) && user.Email.Contains ("@") &&
+                !string.IsNullOrWhiteSpace(user.Weight) && int.TryParse(user.Weight, out n) && !string.IsNullOrWhiteSpace(user.Height) && int.TryParse(user.Weight, out n));
 		}
 	}
 }
