@@ -7,11 +7,21 @@
 		<StackLayout VerticalOptions="StartAndExpand">
 			<Label Text="Username" />
 			<Entry x:Name="usernameEntry" Placeholder="username" />
+      
 			<Label Text="Password" />
 			<Entry x:Name="passwordEntry" IsPassword="true" />
+      
 			<Label Text="Email address" />
 			<Entry x:Name="emailEntry" />
-			<Button Text="Sign Up" Clicked="OnSignUpButtonClicked" />
+
+      <Label Text="Weight" />
+      <Entry x:Name="weightEntry" Placeholder="Enter your Weight" />
+
+      <Label Text="Height" />
+      <Entry x:Name="heightEntry" Placeholder="Enter your Height" />
+      
+      
+      <Button Text="Sign Up" Clicked="OnSignUpButtonClicked" />
 			<Label x:Name="messageLabel" />
 		</StackLayout>
 	</ContentPage.Content>

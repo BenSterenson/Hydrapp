@@ -13,5 +13,10 @@ namespace Hydrapp.Client
         public string Password { get; set; }
 
         public string Email { get; set; }
+
+        public string Weight { get; set; }
+
+        public string Height { get; set; }
+
     }
 }
