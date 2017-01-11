@@ -1,4 +1,5 @@
 ﻿using Hydrapp.Client.Modules;
+using Hydrapp.Client.Services;
 using System;
 using Xamarin.Forms;
 
@@ -6,7 +7,10 @@ namespace Hydrapp.Client
 {
 	public partial class LoginPage : ContentPage
 	{
-		public LoginPage ()
+
+        private static IService AzureDbservice = App.AzureDbservice;
+
+        public LoginPage ()
 		{
 			InitializeComponent();
 		}
@@ -18,13 +22,9 @@ namespace Hydrapp.Client
 
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
-			var user = new User {
-				userName = usernameEntry.Text,
-				password = passwordEntry.Text
-			};
-
-			var isValid = AreCredentialsCorrect (user);
-			if (isValid) {
+			
+			int userId = checkCredentials(usernameEntry.Text, passwordEntry.Text);
+			if (userId > 0) {
 				App.IsUserLoggedIn = true;
 				Navigation.InsertPageBefore (new MainPage(), this);
 				await Navigation.PopAsync ();
@@ -34,9 +34,14 @@ namespace Hydrapp.Client
 			}
 		}
 
-		bool AreCredentialsCorrect (User user)
-		{
-			return user.userName == Constants.Username && user.password == Constants.Password;
-		}
+        private int checkCredentials(string userName, string password)
+        {
+            if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
+            {
+                return -1;
+            }
+            return (AzureDbservice.getUserId(userName, password)).Result;
+        }
+        
 	}
 }

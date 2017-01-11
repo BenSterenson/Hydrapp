@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Xamarin.Forms;
+using Hydrapp.Client.Modules;
 
 namespace Hydrapp.Client
 {
@@ -13,12 +14,13 @@ namespace Hydrapp.Client
 
 		async void OnSignUpButtonClicked (object sender, EventArgs e)
 		{
+            
 			var user = new User () {
-				Username = usernameEntry.Text,
-				Password = passwordEntry.Text,
-				Email = emailEntry.Text,
-                Weight = weightEntry.Text,
-                Height = heightEntry.Text
+                userName = usernameEntry.Text,
+                password = passwordEntry.Text,
+				email = emailEntry.Text,
+                weight = parseToDouble(weightEntry.Text),
+                height = parseToDouble(heightEntry.Text)
             };
 
 			// Sign up logic goes here
@@ -41,11 +43,24 @@ namespace Hydrapp.Client
 			}
 		}
 
-		bool AreDetailsValid (User user)
+        private double parseToDouble(string text)
+        {
+            try
+            {
+                return Double.Parse(text);
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+        }
+
+        bool AreDetailsValid (User user)
 		{
-            int n;
-			return (!string.IsNullOrWhiteSpace (user.Username) && !string.IsNullOrWhiteSpace (user.Password) && !string.IsNullOrWhiteSpace (user.Email) && user.Email.Contains ("@") &&
-                !string.IsNullOrWhiteSpace(user.Weight) && int.TryParse(user.Weight, out n) && !string.IsNullOrWhiteSpace(user.Height) && int.TryParse(user.Weight, out n));
+            return true;
+      //      double n;
+	//		return (!string.IsNullOrWhiteSpace (user.userName) && !string.IsNullOrWhiteSpace (user.password) && !string.IsNullOrWhiteSpace (user.email) && user.email.Contains ("@") &&
+       //         !string.IsNullOrWhiteSpace(user.weight) && double.TryParse(user.weight, out n) && !string.IsNullOrWhiteSpace(user.height) && double.TryParse(user.weight, out n));
 		}
 	}
 }

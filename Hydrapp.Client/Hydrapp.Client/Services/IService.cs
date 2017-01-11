@@ -20,5 +20,6 @@ namespace Hydrapp.Client.Services
 
         Task<User> addUser(User user);
 
+        Task<int> getUserId(string userName, string password);
     }
 }

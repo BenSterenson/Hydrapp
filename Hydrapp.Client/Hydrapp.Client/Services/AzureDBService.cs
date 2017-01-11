@@ -133,5 +133,14 @@ namespace Hydrapp.Client.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<int> getUserId(string userName, string password)
+        {
+            await Initialize();
+            //userTable.Select<User>(;
+
+            return 0;
+        }
+
     }
 }
