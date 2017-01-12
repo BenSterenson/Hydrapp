@@ -41,6 +41,9 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GroupLoginPage.xaml.cs">
+      <DependentUpon>GroupLoginPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\TestItem.cs" />
     <Compile Include="Modules\User.cs" />
     <Compile Include="Services\AzureDBService.cs" />
@@ -128,6 +131,12 @@
   <ItemGroup>
     <EmbeddedResource Include="MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GroupLoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

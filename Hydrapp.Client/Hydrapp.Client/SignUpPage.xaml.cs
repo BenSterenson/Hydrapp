@@ -39,7 +39,7 @@ namespace Hydrapp.Client
 
                     //Navigation.InsertPageBefore (new MainPage(), Navigation.NavigationStack.First());
                     //await Navigation.PopToRootAsync ();
-                    Navigation.InsertPageBefore(new MainPage(), this);
+                    Navigation.InsertPageBefore(new GroupLoginPage(), this);
                     await Navigation.PopAsync();
                 }
 			}

@@ -26,7 +26,7 @@ namespace Hydrapp.Client
 			int userId = checkCredentials(usernameEntry.Text, passwordEntry.Text);
 			if (userId > 0) {
 				App.IsUserLoggedIn = true;
-				Navigation.InsertPageBefore (new MainPage(), this);
+				Navigation.InsertPageBefore (new GroupLoginPage(), this);
 				await Navigation.PopAsync ();
 			} else {
 				messageLabel.Text = "Login failed";
@@ -40,8 +40,13 @@ namespace Hydrapp.Client
             {
                 return -1;
             }
+            // TODO
             return (AzureDbservice.getUserId(userName, password)).Result;
+
+            /*if (userName == Constants.Username && password == Constants.Password)
+                return 1;
+            return 0;*/
         }
-        
-	}
+
+    }
 }
