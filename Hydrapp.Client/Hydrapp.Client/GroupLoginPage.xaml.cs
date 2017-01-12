@@ -12,11 +12,27 @@ namespace Hydrapp.Client
         private bool createGroup;
         public GroupLoginPage()
         {
+            var toolbarItem = new ToolbarItem
+            {
+                Text = "Settings"
+            };
+            toolbarItem.Clicked += OnSettingsButtonClicked;
+            ToolbarItems.Add(toolbarItem);
+
             createGroup = true;
             InitializeComponent();
         }
 
-        private async void onToggled(object sender, ToggledEventArgs e)
+        // Buttons
+
+        /*Settings*/
+        async void OnSettingsButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingPage());
+        }
+
+        /*CreateGroup Toggle */
+        private void onToggled(object sender, ToggledEventArgs e)
         {
             if (e.Value)
             {
@@ -28,9 +44,10 @@ namespace Hydrapp.Client
                 buttonLabel.Text = "join Group";
                 createGroup = false;
             }
-        }      
+        }
 
-        async void OnLoginButtonClicked(object sender, EventArgs e)
+        /*CreateGroup Toggle */
+        async void OnGroupLoginButtonClicked(object sender, EventArgs e)
         {
             if (createGroup)
                 await DisplayAlert("Group Information", "Group name : " + groupnameEntry.Text + "\nPassword: " + passwordEntry.Text, "OK");
@@ -53,6 +70,16 @@ namespace Hydrapp.Client
             }
 
         }
+
+        /*Logout*/
+        async void OnLogoutButtonClicked(object sender, EventArgs e)
+        {
+            App.IsUserLoggedIn = false;
+            Navigation.InsertPageBefore(new LoginPage(), this);
+            await Navigation.PopAsync();
+        }
+
+        //Help functions
         private int checkCredentials(string userName, string password)
         {
             if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
@@ -66,11 +93,6 @@ namespace Hydrapp.Client
             return 0;
         }
 
-        async void OnLogoutButtonClicked(object sender, EventArgs e)
-        {
-            App.IsUserLoggedIn = false;
-            Navigation.InsertPageBefore(new LoginPage(), this);
-            await Navigation.PopAsync();
-        }
+
     }
 }

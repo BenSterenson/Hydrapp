@@ -24,7 +24,7 @@
 
       <Button x:Name="buttonLabel" Text="Create Group"
               HorizontalOptions="Center"
-              VerticalOptions="CenterAndExpand" Clicked="OnLoginButtonClicked"/>
+              VerticalOptions="CenterAndExpand" Clicked="OnGroupLoginButtonClicked"/>
       
       <Label x:Name="messageLabel" />
 

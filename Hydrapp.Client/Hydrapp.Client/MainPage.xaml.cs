@@ -12,6 +12,13 @@ namespace Hydrapp.Client
     {
         public MainPage()
         {
+            var toolbarItem = new ToolbarItem
+            {
+                Text = "Settings"
+            };
+            toolbarItem.Clicked += OnSettingsButtonClicked;
+            ToolbarItems.Add(toolbarItem);
+
             InitializeComponent();
         }
 
@@ -20,6 +27,12 @@ namespace Hydrapp.Client
             App.IsUserLoggedIn = false;
             Navigation.InsertPageBefore(new LoginPage(), this);
             await Navigation.PopAsync();
+        }
+
+        /*Settings*/
+        async void OnSettingsButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SettingPage());
         }
     }
 }
