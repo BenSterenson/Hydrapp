@@ -50,7 +50,11 @@ namespace Hydrapp.Client
         async void OnGroupLoginButtonClicked(object sender, EventArgs e)
         {
             if (createGroup)
+            {
                 await DisplayAlert("Group Information", "Group name : " + groupnameEntry.Text + "\nPassword: " + passwordEntry.Text, "OK");
+                Navigation.InsertPageBefore(new ManageGroupPage(), this);
+                await Navigation.PopAsync();
+            }
             else
             {
                 int userId = checkCredentials(groupnameEntry.Text, passwordEntry.Text);

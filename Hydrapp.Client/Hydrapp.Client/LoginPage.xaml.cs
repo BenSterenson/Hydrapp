@@ -12,7 +12,7 @@ namespace Hydrapp.Client
 
         public LoginPage ()
 		{
-			InitializeComponent();
+            InitializeComponent();
 		}
 
 		async void OnSignUpButtonClicked (object sender, EventArgs e)

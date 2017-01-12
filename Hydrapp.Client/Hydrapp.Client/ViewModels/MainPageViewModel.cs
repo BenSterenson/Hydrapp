@@ -381,14 +381,6 @@ namespace Hydrapp.Client.ViewModels
         }
         public MainPageViewModel()
         {
-
-            var toolbarItem = new ToolbarItem
-            {
-                Text = "Logout"
-            };
-            toolbarItem.Clicked += OnLogoutButtonClicked;
-            ToolbarItems.Add(toolbarItem);
-
             pageTitle = "Hydrapp";
             currentStatus = "Current Status";
             connectButtonText = "Connect to Band";
@@ -670,13 +662,6 @@ namespace Hydrapp.Client.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        async void OnLogoutButtonClicked(object sender, EventArgs e)
-        {
-        
-            App.IsUserLoggedIn = false;
-            Navigation.InsertPageBefore(new LoginPage(), this);
-            await Navigation.PopAsync();
-        }
 
 
     }

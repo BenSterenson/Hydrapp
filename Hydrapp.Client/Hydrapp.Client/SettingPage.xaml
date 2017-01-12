@@ -4,7 +4,21 @@
 			 x:Class="Hydrapp.Client.SettingPage"
 			 Title="Sign Up">
 	<ContentPage.Content>
-		<StackLayout VerticalOptions="StartAndExpand">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="3*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+
+      <StackLayout VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="1">
+		
 			<Label Text="Username" />
       <Entry x:Name = "usernameEntry" BackgroundColor = "#c0c0c0" IsEnabled="false"/>
       
@@ -24,5 +38,6 @@
       <Button Text="Update" Clicked="OnUpdateButtonClicked" />
 			<Label x:Name="messageLabel" />
 		</StackLayout>
+   </Grid>
 	</ContentPage.Content>
 </ContentPage>

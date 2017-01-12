@@ -11,7 +11,21 @@
   </ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-		<StackLayout VerticalOptions="StartAndExpand">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="2*" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+
+      <StackLayout VerticalOptions="StartAndExpand" Grid.Row="1" Grid.Column="1">
+		
 
       <Label Text="Create \ Join Group:" />
       <Switch IsToggled="True" Toggled="onToggled" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
@@ -29,6 +43,7 @@
       <Label x:Name="messageLabel" />
 
     </StackLayout>
+   </Grid>
 	</ContentPage.Content>
 
 </ContentPage>

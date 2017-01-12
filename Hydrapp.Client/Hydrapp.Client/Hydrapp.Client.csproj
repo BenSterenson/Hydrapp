@@ -44,6 +44,9 @@
     <Compile Include="GroupLoginPage.xaml.cs">
       <DependentUpon>GroupLoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManageGroupPage.xaml.cs">
+      <DependentUpon>ManageGroupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\TestItem.cs" />
     <Compile Include="Modules\User.cs" />
     <Compile Include="Services\AzureDBService.cs" />
@@ -60,6 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BandService.cs" />
     <Compile Include="ValueConverters\CelsiusToFahrenheitConverter.cs" />
+    <Compile Include="ViewModels\ManageGroupPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +150,12 @@
   <ItemGroup>
     <EmbeddedResource Include="SettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ManageGroupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
