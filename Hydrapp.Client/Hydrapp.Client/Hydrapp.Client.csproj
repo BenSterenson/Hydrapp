@@ -52,6 +52,9 @@
     <Compile Include="Modules\User.cs" />
     <Compile Include="Services\AzureDBService.cs" />
     <Compile Include="Services\IService.cs" />
+    <Compile Include="MemberChartPage.xaml.cs">
+      <DependentUpon>MemberChartPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,12 @@
   <ItemGroup>
     <EmbeddedResource Include="ManageGroupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MemberChartPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
