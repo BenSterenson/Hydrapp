@@ -27,7 +27,7 @@ namespace Hydrapp.Client.Modules
 
         public User(string username, string password, string email, double height, double weight)
         {
-            userName = userName;
+            this.userName = username;
             this.password = password;
             this.email = email;
             this.height = height;

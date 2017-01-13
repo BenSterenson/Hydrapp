@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Hydrapp.Client.ManageGroupPage"
-             xmlns:vm="clr-namespace:Hydrapp.Client.ViewModels;assembly=Hydrapp.Client">
+             xmlns:vm="clr-namespace:Hydrapp.Client.ViewModels;assembly=Hydrapp.Client"
+             BackgroundImage="background.png">
 
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
@@ -24,13 +25,58 @@
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
 
+    
     <StackLayout Padding="0,20,0,0">
-      <ListView x:Name="listView" HasUnevenRows="true">
+      <ListView x:Name="listView" SeparatorVisibility="Default" ItemsSource="{Binding Participants}" >
+       <ListView.Header>
+          <StackLayout Padding="15,5,5,5" BackgroundColor="#cccccc" Orientation="Horizontal">
+          <Grid>
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+     
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="5*"/>
+              <ColumnDefinition Width="3*"/>
+              <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            
+              <Label Text="No." FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
+              <Label Text="Name" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
+              <Label Text="AVG HR" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
+              <Label Text="Fluid Loss" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
+          
+          </Grid>
+         </StackLayout>
+        </ListView.Header>
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
               <StackLayout Padding="15,5,5,5" Orientation="Horizontal">
-                <Label Text="Monkey" FontAttributes="Bold" VerticalOptions="Center" />
+
+
+                <Grid>
+
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                  </Grid.RowDefinitions>
+                  
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="3*"/>
+                  </Grid.ColumnDefinitions>
+                  
+                  <Label Text="{Binding RowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
+                  <Label Text="{Binding User.userName}" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
+                  <Label Text="{Binding AvgHeartRate}" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
+                  <Label Text="{Binding AvgFluidLoss}" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
+                  
+                </Grid>
               </StackLayout>
             </ViewCell>
           </DataTemplate>

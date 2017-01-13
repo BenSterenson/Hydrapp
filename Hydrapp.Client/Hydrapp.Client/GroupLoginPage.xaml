@@ -4,7 +4,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="Hydrapp.Client.GroupLoginPage"
              xmlns:vm="clr-namespace:Hydrapp.Client.ViewModels;assembly=Hydrapp.Client"
-             Title="GroupLoginPage">
+             Title="GroupLoginPage"
+             BackgroundImage="background.png">
 
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
