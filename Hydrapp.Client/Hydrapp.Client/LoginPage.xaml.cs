@@ -40,12 +40,8 @@ namespace Hydrapp.Client
             {
                 return -1;
             }
-            // TODO
-            //return (AzureDbservice.getUserId(userName, password)).Result;
-
-            if (userName == Constants.Username && password == Constants.Password)
-                return 1;
-            return 0;
+            
+            return (AzureDbservice.getUserId(userName, password)).Result;
         }
 
     }

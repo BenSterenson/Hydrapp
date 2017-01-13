@@ -12,7 +12,7 @@ namespace Hydrapp.Client.Modules
     {
         [JsonProperty(PropertyName = "UserId")]
         public int UserId { get; set; }
-        [JsonProperty(PropertyName = "username")]
+        [JsonProperty(PropertyName = "userName")]
         public string userName { get; set; }
         [JsonProperty(PropertyName = "password")]
         public string password { get; set; }
