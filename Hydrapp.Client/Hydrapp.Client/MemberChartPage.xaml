@@ -9,44 +9,56 @@
   <ContentPage.BindingContext>
     <vm:ChartsViewModel />
   </ContentPage.BindingContext>
-  
+
   <chart:SfChart>
 
-    <chart:SfChart.PrimaryAxis>
+    <chart:SfChart.Title>
 
-      <chart:CategoryAxis>
+		<chart:ChartTitle Text="Fluid Loss [%]" />
 
-        <chart:CategoryAxis.Title>
+	</chart:SfChart.Title> 
+    <chart:SfChart.ChartBehaviors>
 
-          <chart:ChartAxisTitle Text="Name"> </chart:ChartAxisTitle>
+	<chart:ChartZoomPanBehavior ZoomMode="X"/>
+      
 
-        </chart:CategoryAxis.Title>
-
-      </chart:CategoryAxis>
-
-    </chart:SfChart.PrimaryAxis>
-
-    <chart:SfChart.SecondaryAxis>
-
-      <chart:NumericalAxis>
-
-        <chart:NumericalAxis.Title>
-
-          <chart:ChartAxisTitle Text="Height (in cm)"></chart:ChartAxisTitle>
-
-        </chart:NumericalAxis.Title>
-
-      </chart:NumericalAxis>
-
-    </chart:SfChart.SecondaryAxis>
-
+</chart:SfChart.ChartBehaviors>
+    
     <chart:SfChart.Series>
-
-      <chart:ColumnSeries ItemsSource="{Binding Data}" XBindingPath="Name" YBindingPath="Height">
-
-      </chart:ColumnSeries>
+     
+      <chart:LineSeries ItemsSource="{Binding DehydrationLevel}" Color = "Black" />
 
     </chart:SfChart.Series>
+    
+  <chart:SfChart.SecondaryAxis>
+
+	<chart:NumericalAxis Maximum="30" Minimum="0">      
+
+		<chart:NumericalAxis.StripLines>        
+
+			<chart:NumericalStripLine Start="5" Width ="1" Text="Dehydration Threshold" FillColor="#ff8300">
+
+				<chart:NumericalStripLine.LabelStyle>
+
+					<chart:ChartStripLineLabelStyle HorizontalAlignment="Near" VerticalAlignment="Center" TextColor="Black">
+
+						<chart:ChartStripLineLabelStyle.Font>
+
+							<Font FontSize="15" />
+
+						</chart:ChartStripLineLabelStyle.Font>
+
+					</chart:ChartStripLineLabelStyle>              
+
+				</chart:NumericalStripLine.LabelStyle>
+
+			</chart:NumericalStripLine>
+
+		</chart:NumericalAxis.StripLines>
+
+	</chart:NumericalAxis>
+
+</chart:SfChart.SecondaryAxis>
 
   </chart:SfChart>
   </ContentPage>

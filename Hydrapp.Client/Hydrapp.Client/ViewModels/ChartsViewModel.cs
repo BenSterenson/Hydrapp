@@ -2,8 +2,9 @@
 using System.ComponentModel;
 using Xamarin.Forms;
 
-
-
+using Syncfusion.SfChart.XForms;
+using System.Collections.ObjectModel;
+using System;
 
 namespace Hydrapp.Client.ViewModels
 {
@@ -17,20 +18,35 @@ namespace Hydrapp.Client.ViewModels
     public class ChartsViewModel : ContentPage, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        
 
-        public List<Model> Data { get; set; }
+
+        public ObservableCollection<ChartDataPoint> DehydrationLevel { get; set; }
+        
 
         public ChartsViewModel()
         {
 
-            Data = new List<Model>()
-            {
-                new Model { Name = "David", Height = 180 },
-                new Model { Name = "Michael", Height = 170 },
-                new Model { Name = "Steve", Height = 160 },
-                new Model { Name = "Joel", Height = 182 }
-            };
+            DehydrationLevel = new ObservableCollection<ChartDataPoint>();
+            
+
+            UpdateDehydrationLevel();
         }
+        
+        void UpdateDehydrationLevel()
+        {
+            Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), AddData);
+        }
+
+        private bool AddData()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 10);
+            int hourRand = random.Next(0, 24);
+            int minRand = random.Next(0, 60);
+            string randTime = hourRand.ToString() + ":" + minRand.ToString();
+            DehydrationLevel.Add(new ChartDataPoint(randTime, randomNumber));
+            return true;
+        }
+
     }
 }
