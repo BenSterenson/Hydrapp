@@ -1,6 +1,7 @@
 ﻿using Hydrapp.Client.Modules;
 using Hydrapp.Client.Services;
 using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Hydrapp.Client
@@ -23,7 +24,7 @@ namespace Hydrapp.Client
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
 			
-			int userId = checkCredentials(usernameEntry.Text, passwordEntry.Text);
+			int userId = await checkCredentials(usernameEntry.Text, passwordEntry.Text);
 			if (userId > 0) {
 				App.IsUserLoggedIn = true;
 				Navigation.InsertPageBefore (new GroupLoginPage(), this);
@@ -34,14 +35,14 @@ namespace Hydrapp.Client
 			}
 		}
 
-        private int checkCredentials(string userName, string password)
+        private async Task<int> checkCredentials(string userName, string password)
         {
             if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
             {
                 return -1;
             }
-            
-            return (AzureDbservice.getUserId(userName, password)).Result;
+
+            return await AzureDbservice.getUserId(userName, password);
         }
 
     }

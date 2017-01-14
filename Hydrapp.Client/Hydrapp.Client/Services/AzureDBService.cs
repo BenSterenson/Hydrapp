@@ -14,15 +14,15 @@ namespace Hydrapp.Client.Services
 {
     public class AzureDBService : IService
     {
-        //public MobileServiceClient mobileService = new MobileServiceClient("https://hydrapp.azurewebsites.net", null)
-        //{
-           // SerializerSettings = new MobileServiceJsonSerializerSettings()
-          //  {
-         //       CamelCasePropertyNames = true
-        //    }
-        //};
+        public MobileServiceClient mobileService = new MobileServiceClient("https://hydrapp.azurewebsites.net", null)
+        {
+            SerializerSettings = new MobileServiceJsonSerializerSettings()
+            {
+                CamelCasePropertyNames = false
+            }
+        };
 
-        public MobileServiceClient mobileService = new MobileServiceClient("https://hydrapp.azurewebsites.net");
+        //public MobileServiceClient mobileService = new MobileServiceClient("https://hydrapp.azurewebsites.net");
 
         private IMobileServiceSyncTable<User> userTable;
         private bool isInit;
@@ -112,16 +112,7 @@ namespace Hydrapp.Client.Services
 
         public async Task<int> getUserId(string userName, string password)
         {
-            List<int> userIDList;
-            try {
-                userIDList = await mobileService.GetTable<User>().Select(user => user.UserId).ToListAsync();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-            //await Initialize();
-            //List<int> userIDList = await userTable.Where(user => user.userName == userName && user.password == password).Select(user => user.UserId).ToListAsync();
+            List<int> userIDList = await mobileService.GetTable<User>().Where(user => user.userName == userName && user.password == password).Select(user => user.UserId).ToListAsync();
             if (userIDList.Count == 0)
             {
                 return 0;
