@@ -27,8 +27,6 @@ namespace Hydrapp.Client.ViewModels
         {
 
             DehydrationLevel = new ObservableCollection<ChartDataPoint>();
-            
-
             UpdateDehydrationLevel();
         }
         
