@@ -12,12 +12,7 @@ namespace Hydrapp.Client.Services
 
         Task Initialize();
         Task SyncTable();
-        Task<IEnumerable<TestItem>> getTestItems();
-
-        Task<TestItem> addTestItem(TestItem item);
-
-        Task<bool> deleteTestItem(TestItem id);
-
+       
         Task<User> addUser(User user);
 
         Task<int> getUserId(string userName, string password);

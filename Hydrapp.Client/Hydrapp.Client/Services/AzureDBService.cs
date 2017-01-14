@@ -14,10 +14,18 @@ namespace Hydrapp.Client.Services
 {
     public class AzureDBService : IService
     {
-        public MobileServiceClient mobileService { get; set; }
-        private IMobileServiceSyncTable<TestItem> testItemTable;
+        public MobileServiceClient mobileService = new MobileServiceClient("https://hydrapp.azurewebsites.net", null)
+        {
+            SerializerSettings = new MobileServiceJsonSerializerSettings()
+            {
+                CamelCasePropertyNames = false
+            }
+        };
+
+        //public MobileServiceClient mobileService = new MobileServiceClient("https://hydrapp.azurewebsites.net");
+
         private IMobileServiceSyncTable<User> userTable;
-        bool isInit;
+        private bool isInit;
         
         public async Task Initialize()
         {
@@ -35,13 +43,10 @@ namespace Hydrapp.Client.Services
            
             try
             {
-                var store = new MobileServiceSQLiteStore("testNew.db");
-                //store.DefineTable<TestItem>();
+                var store = new MobileServiceSQLiteStore("Noam.db");
                 store.DefineTable<User>();
                 await mobileService.SyncContext.InitializeAsync(store, new MobileServiceSyncHandler());
-                //testItemTable = mobileService.GetSyncTable<TestItem>();
                 userTable = mobileService.GetSyncTable<User>();
-                //await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
                 await userTable.PullAsync("allUsers", userTable.CreateQuery());
                 isInit = true;
             }
@@ -51,7 +56,6 @@ namespace Hydrapp.Client.Services
             }
             
         }
-
         public async Task SyncTable()
         {
             var connected = await Plugin.Connectivity.CrossConnectivity.Current.IsReachable("google.com",10000);
@@ -62,7 +66,6 @@ namespace Hydrapp.Client.Services
             {
                 await mobileService.SyncContext.PushAsync();
                 await userTable.PullAsync("allusers", userTable.CreateQuery());
-                //await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
             }
             catch (Exception e)
             {
@@ -72,28 +75,6 @@ namespace Hydrapp.Client.Services
             }
             
         }
-        public async Task<TestItem> addTestItem(TestItem item)
-        {
-            await Initialize();
-            if (item.date.CompareTo(new DateTime()) == 0)
-            {
-                throw new Exception("Incompatible date");
-            }
-            try
-            {
-                await testItemTable.InsertAsync(item);
-                await SyncTable();
-            }
-            catch (Exception e)
-            {
-                await testItemTable.DeleteAsync(item);
-                await testItemTable.PullAsync("allTestItems", testItemTable.CreateQuery());
-                Debug.WriteLine("Couldn't add Test Item:" + item ,  e);
-                throw e;
-            }
-            return item;
-        }
-
         public async Task<User> addUser(User user)
         {
             await Initialize();
@@ -113,33 +94,30 @@ namespace Hydrapp.Client.Services
             }
             return user;
         }
-        public async Task<bool> deleteTestItem(TestItem item)
+        public async Task<bool> deleteUser(User user)
         {
             await Initialize();
             try
             {
-                await testItemTable.DeleteAsync(item);
+                await userTable.DeleteAsync(user);
                 await SyncTable();
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Couldn't delete TestItem, exception: ", e);
+                Debug.WriteLine("Couldn't delete user: " + user + ", exception: ", e);
                 return false;
             }
             return true;
         }
 
-        public Task<IEnumerable<TestItem>> getTestItems()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<int> getUserId(string userName, string password)
         {
-            await Initialize();
-            //userTable.Select<User>(;
-
-            return 0;
+            List<int> userIDList = await mobileService.GetTable<User>().Where(user => user.userName == userName && user.password == password).Select(user => user.UserId).ToListAsync();
+            if (userIDList.Count == 0)
+            {
+                return 0;
+            }
+            return userIDList.ElementAt(0);
         }
 
     }
