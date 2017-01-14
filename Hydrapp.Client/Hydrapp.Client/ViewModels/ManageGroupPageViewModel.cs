@@ -48,7 +48,7 @@ namespace Hydrapp.Client.ViewModels
         {
             groupName = "HydrappGroup";
             RefreshGroupMembers();
-            Memberleft();
+            //Memberleft();
             //numOfParticipants = UpdateNumOfParticipants();
 
         }
@@ -98,8 +98,9 @@ namespace Hydrapp.Client.ViewModels
         {
             for (int i = 1; i <= participants.Count(); i++)
             {
-                participants[i-1].rowNumber = i;
+                participants[i-1].RowNumber = i;
             }
+            OnPropertyChanged();
         }
 
         int RowCount()

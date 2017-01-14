@@ -23,6 +23,7 @@ namespace Hydrapp.Client
             ToolbarItems.Add(toolbarItem);
 
             InitializeComponent();
+
             this.BindingContext = new ManageGroupPageViewModel();
 
             listView.ItemSelected +=async (object sender, SelectedItemChangedEventArgs e) => {

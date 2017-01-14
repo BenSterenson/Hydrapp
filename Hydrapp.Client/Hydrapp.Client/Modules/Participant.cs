@@ -2,15 +2,32 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hydrapp.Client.Modules
 {
-    public class Participant : EntityData
+    public class Participant : EntityData, INotifyPropertyChanged
     {
-        public int rowNumber { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        private int rowNumber;
+   
+
+        public int RowNumber
+        {
+            get
+            {
+                return rowNumber;
+            }
+            set
+            {
+                rowNumber = value;
+                OnPropertyChanged();
+            }
+        }
         public User user { get; set; }
         //public Group Group { get; set; }
         //public Band Band { get; set; }
@@ -27,6 +44,11 @@ namespace Hydrapp.Client.Modules
         {
             this.rowNumber = rowNumber;
             this.user = user;
+        }
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
         }
     }
 }

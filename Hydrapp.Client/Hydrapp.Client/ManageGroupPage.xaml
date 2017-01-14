@@ -21,7 +21,7 @@
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
 
-    
+  
     <StackLayout Padding="0,20,0,0">
       <ListView x:Name="listView" SeparatorVisibility="Default" ItemsSource="{Binding Participants}" >
        <ListView.Header>
@@ -51,13 +51,13 @@
         
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ViewCell>
+            <ViewCell >
               <ViewCell.View>
 
-                <StackLayout Padding="15,5,5,5" Orientation="Horizontal">
+                <StackLayout Padding="15,25,5,25" Orientation="Horizontal">
 
 
-                <Grid>
+                <Grid >
 
                   <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -70,10 +70,10 @@
                     <ColumnDefinition Width="3*"/>
                   </Grid.ColumnDefinitions>
 
-                  <Label Text="{Binding rowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
+                  <Label Text="{Binding RowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
                   <Label Text="{Binding user.userName}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
-                  <Label Text="{Binding user.weight}" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
-                  <Label Text="{Binding user.height}" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
+                  <Label Text="{Binding user.weight, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
+                  <Label Text="{Binding user.height, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
                   
                 </Grid>
               </StackLayout>
