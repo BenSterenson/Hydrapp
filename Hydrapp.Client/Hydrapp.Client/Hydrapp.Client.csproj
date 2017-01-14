@@ -47,8 +47,10 @@
     <Compile Include="ManageGroupPage.xaml.cs">
       <DependentUpon>ManageGroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\GroupMember.cs" />
     <Compile Include="Modules\TestItem.cs" />
     <Compile Include="Modules\Participant.cs" />
+    <Compile Include="Modules\Group.cs" />
     <Compile Include="Modules\User.cs" />
     <Compile Include="Services\AzureDBService.cs" />
     <Compile Include="Services\IService.cs" />

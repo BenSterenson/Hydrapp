@@ -42,7 +42,7 @@ namespace Hydrapp.Client
                 return -1;
             }
 
-            return await AzureDbservice.getUserId(userName, password);
+            return await AzureDbservice.loginUser(userName, password);
         }
 
     }

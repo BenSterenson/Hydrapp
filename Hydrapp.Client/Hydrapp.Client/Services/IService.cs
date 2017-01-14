@@ -12,9 +12,9 @@ namespace Hydrapp.Client.Services
 
         Task Initialize();
         Task SyncTable();
-       
         Task<User> addUser(User user);
-
-        Task<int> getUserId(string userName, string password);
+        Task<int> loginUser(string userName, string password);
+        Task<int> joinGroup(string userName, string groupID, string groupPassword);
+        Task<int> createGroup(string userId, string groupName, string groupPassword);
     }
 }

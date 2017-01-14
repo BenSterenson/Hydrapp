@@ -18,7 +18,7 @@ namespace Hydrapp.Client.Services
         {
             SerializerSettings = new MobileServiceJsonSerializerSettings()
             {
-                CamelCasePropertyNames = false
+                CamelCasePropertyNames = true
             }
         };
 
@@ -110,7 +110,7 @@ namespace Hydrapp.Client.Services
             return true;
         }
 
-        public async Task<int> getUserId(string userName, string password)
+        public async Task<int> loginUser(string userName, string password)
         {
             List<int> userIDList = await mobileService.GetTable<User>().Where(user => user.userName == userName && user.password == password).Select(user => user.UserId).ToListAsync();
             if (userIDList.Count == 0)
@@ -118,6 +118,22 @@ namespace Hydrapp.Client.Services
                 return 0;
             }
             return userIDList.ElementAt(0);
+        }
+
+        public async Task<int> joinGroup(string userName, string groupID, string groupPassword)
+        {
+            // check if credentials are correct in Groups table (groupID + password)
+            // insert new entry in GroupMembers table for this user
+            
+            return 0;
+        }
+
+        public async Task<int> createGroup(string userId, string groupName, string groupPassword)
+        {
+            // create new entry in group table
+            // insert new entry in GroupMembers table for this ADMIN!
+
+            return 0;
         }
 
     }

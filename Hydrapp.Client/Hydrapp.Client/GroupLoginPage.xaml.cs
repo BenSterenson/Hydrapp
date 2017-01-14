@@ -3,6 +3,7 @@ using Hydrapp.Client.Services;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Hydrapp.Client
@@ -10,6 +11,8 @@ namespace Hydrapp.Client
 	public partial class GroupLoginPage : ContentPage
     {
         private bool createGroup;
+        private static IService AzureDbservice = App.AzureDbservice;
+
         public GroupLoginPage()
         {
             var toolbarItem = new ToolbarItem
@@ -51,15 +54,15 @@ namespace Hydrapp.Client
         {
             if (createGroup)
             {
-                await DisplayAlert("Group Information", "Group name : " + groupnameEntry.Text + "\nPassword: " + passwordEntry.Text, "OK");
+                await DisplayAlert("Group Information", "Group Id : " + groupIDEntry.Text + "\nPassword: " + passwordEntry.Text, "OK");
                 Navigation.InsertPageBefore(new ManageGroupPage(), this);
                 await Navigation.PopAsync();
             }
             else
             {
-                int userId = checkCredentials(groupnameEntry.Text, passwordEntry.Text);
+                int result = await JoinGroup("userName", groupIDEntry.Text, passwordEntry.Text);
 
-                if (userId > 0)
+                if (result > 0)
                 {
                     App.IsUserLoggedIn = true;
 
@@ -84,17 +87,13 @@ namespace Hydrapp.Client
         }
 
         //Help functions
-        private int checkCredentials(string userName, string password)
+        private async Task<int> JoinGroup(string userName, string groupID, string groupPassword)
         {
-            if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
+            if (String.IsNullOrEmpty(groupID) || String.IsNullOrEmpty(groupPassword))
             {
                 return -1;
             }
-            //return (AzureDbservice.getUserId(userName, password)).Result;
-
-            if (userName == Constants.Username && password == Constants.Password)
-                return 1;
-            return 0;
+            return await (AzureDbservice.joinGroup(userName, groupID, groupPassword));
         }
 
 
