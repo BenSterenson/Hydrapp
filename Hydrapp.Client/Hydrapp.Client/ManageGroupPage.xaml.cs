@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Hydrapp.Client.Modules;
+using Hydrapp.Client.ViewModels;
+using System.Collections;
 
 namespace Hydrapp.Client
 {
@@ -21,6 +23,7 @@ namespace Hydrapp.Client
             ToolbarItems.Add(toolbarItem);
 
             InitializeComponent();
+            this.BindingContext = new ManageGroupPageViewModel();
 
             listView.ItemSelected +=async (object sender, SelectedItemChangedEventArgs e) => {
 
@@ -28,7 +31,7 @@ namespace Hydrapp.Client
 
                 if (member == null)
                     return;
-
+                
                 await DisplayAlert("ItemSelected", member.user.userName, "Ok");
                 await Navigation.PushAsync(new MemberChartPage());
             };

@@ -8,10 +8,6 @@
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
   </ContentPage.ToolbarItems>
-
-  <ContentPage.BindingContext>
-    <vm:ManageGroupPageViewModel />
-  </ContentPage.BindingContext>
     
   <StackLayout>
     
@@ -20,7 +16,7 @@
            FontAttributes="Bold"
            HorizontalOptions="Center"/>
 
-    <Label Text="{Binding NumOfParticipants}"
+    <Label Text="{Binding NumOfParticipants, StringFormat='Number Of Participants: {0}'}"
            Font="Small"
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
@@ -52,10 +48,13 @@
           </Grid>
          </StackLayout>
         </ListView.Header>
+        
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
-              <StackLayout Padding="15,5,5,5" Orientation="Horizontal">
+              <ViewCell.View>
+
+                <StackLayout Padding="15,5,5,5" Orientation="Horizontal">
 
 
                 <Grid>
@@ -70,14 +69,15 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>
                   </Grid.ColumnDefinitions>
-                  
-                  <Label Text="{Binding RowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
-                  <Label Text="{Binding User.userName}" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
-                  <Label Text="{Binding AvgHeartRate}" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
-                  <Label Text="{Binding AvgFluidLoss}" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
+
+                  <Label Text="{Binding rowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
+                  <Label Text="{Binding user.userName}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
+                  <Label Text="{Binding user.weight}" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
+                  <Label Text="{Binding user.height}" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
                   
                 </Grid>
               </StackLayout>
+                </ViewCell.View>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>

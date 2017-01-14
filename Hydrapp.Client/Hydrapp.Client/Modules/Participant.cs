@@ -10,6 +10,7 @@ namespace Hydrapp.Client.Modules
 {
     public class Participant : EntityData
     {
+        public int rowNumber { get; set; }
         public User user { get; set; }
         //public Group Group { get; set; }
         //public Band Band { get; set; }
@@ -21,7 +22,11 @@ namespace Hydrapp.Client.Modules
         public Participant(User user)
         {
             this.user = user;
-
+        }
+        public Participant(int rowNumber, User user)
+        {
+            this.rowNumber = rowNumber;
+            this.user = user;
         }
     }
 }
