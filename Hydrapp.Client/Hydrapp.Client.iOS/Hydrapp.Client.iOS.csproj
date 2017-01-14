@@ -141,13 +141,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Syncfusion.SfChart.iOS">
-      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Xamarin\lib\ios-unified\Syncfusion.SfChart.iOS.dll</HintPath>
+      <HintPath>..\..\packages\Syncfusion\IOS\Syncfusion.SfChart.iOS.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfChart.XForms">
-      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Xamarin\lib\ios-unified\Syncfusion.SfChart.XForms.dll</HintPath>
+      <HintPath>..\..\packages\Syncfusion\IOS\Syncfusion.SfChart.XForms.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.SfChart.XForms.iOS">
-      <HintPath>C:\Program Files (x86)\Syncfusion\Essential Studio\14.4.0.15\Xamarin\lib\ios-unified\Syncfusion.SfChart.XForms.iOS.dll</HintPath>
+      <HintPath>..\..\packages\Syncfusion\IOS\Syncfusion.SfChart.XForms.iOS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
