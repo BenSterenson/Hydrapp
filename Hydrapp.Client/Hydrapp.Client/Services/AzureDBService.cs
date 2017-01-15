@@ -119,21 +119,26 @@ namespace Hydrapp.Client.Services
             }
             return userIDList.ElementAt(0);
         }
-
-        public async Task<int> joinGroup(string userName, string groupID, string groupPassword)
+         
+        public async Task<int> joinGroup(int userId, int groupID, string groupPassword)
         {
-            // check if credentials are correct in Groups table (groupID + password)
-            // insert new entry in GroupMembers table for this user
-            
-            return 0;
+            List<Group> result = await mobileService.GetTable<Group>().Where(group => group.GroupId == groupID && group.Password == groupPassword).ToListAsync();
+            if (result.Count == 0)
+            {
+                return 0;
+            }
+            GroupMember groupMember = new GroupMember(userId, groupID, false);
+            await mobileService.GetTable<GroupMember>().InsertAsync(groupMember);
+            return userId;
         }
 
-        public async Task<int> createGroup(string userId, string groupName, string groupPassword)
+        public async Task<int> createGroup(int userId, string groupName, string groupPassword)
         {
-            // create new entry in group table
-            // insert new entry in GroupMembers table for this ADMIN!
-
-            return 0;
+            Group group = new Group(groupName, groupPassword);
+            await mobileService.GetTable<Group>().InsertAsync(group);
+            GroupMember groupMember = new GroupMember(userId, group.GroupId, true);
+            await mobileService.GetTable<GroupMember>().InsertAsync(groupMember);
+            return group.GroupId;
         }
 
     }

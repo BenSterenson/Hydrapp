@@ -8,6 +8,7 @@ namespace Hydrapp.Client
 {
 	public partial class SignUpPage : ContentPage
 	{
+        
         private IService AzureDbService = App.AzureDbservice;
         public SignUpPage ()
 		{
@@ -35,6 +36,7 @@ namespace Hydrapp.Client
 				if (rootPage != null) {
 					App.IsUserLoggedIn = true;
                     await AzureDbService.addUser(user);
+                    App.userId = user.UserId;
                     // user have UserId
 
                     //Navigation.InsertPageBefore (new MainPage(), Navigation.NavigationStack.First());

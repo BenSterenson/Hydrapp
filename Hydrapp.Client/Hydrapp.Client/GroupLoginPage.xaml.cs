@@ -10,6 +10,7 @@ namespace Hydrapp.Client
 {
 	public partial class GroupLoginPage : ContentPage
     {
+        private int userId = App.userId;
         private bool createGroup;
         private static IService AzureDbservice = App.AzureDbservice;
 
@@ -54,13 +55,14 @@ namespace Hydrapp.Client
         {
             if (createGroup)
             {
-                await DisplayAlert("Group Information", "Group Id : " + groupIDEntry.Text + "\nPassword: " + passwordEntry.Text, "OK");
+                int GroupId = await AzureDbservice.createGroup(userId, groupIdEntry.Text, passwordEntry.Text);
+                await DisplayAlert("Group Information", "Group Id : " + GroupId + "\nPassword: " + passwordEntry.Text, "OK");
                 Navigation.InsertPageBefore(new ManageGroupPage(), this);
                 await Navigation.PopAsync();
             }
             else
             {
-                int result = await JoinGroup("userName", groupIDEntry.Text, passwordEntry.Text);
+                int result = await JoinGroup(userId, groupIdEntry.Text, passwordEntry.Text);
 
                 if (result > 0)
                 {
@@ -87,13 +89,21 @@ namespace Hydrapp.Client
         }
 
         //Help functions
-        private async Task<int> JoinGroup(string userName, string groupID, string groupPassword)
+        private async Task<int> JoinGroup(int userId, string groupIDAsString, string groupPassword)
         {
-            if (String.IsNullOrEmpty(groupID) || String.IsNullOrEmpty(groupPassword))
+            if (String.IsNullOrEmpty(groupIDAsString) || String.IsNullOrEmpty(groupPassword))
             {
                 return -1;
             }
-            return await (AzureDbservice.joinGroup(userName, groupID, groupPassword));
+            int groupId;
+            try {
+                groupId = int.Parse(groupIDAsString);
+            }
+            catch
+            {
+                return -1;
+            }
+            return await (AzureDbservice.joinGroup(userId, groupId, groupPassword));
         }
 
 

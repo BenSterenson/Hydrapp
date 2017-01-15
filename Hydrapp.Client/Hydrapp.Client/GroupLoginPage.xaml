@@ -32,7 +32,7 @@
       <Switch IsToggled="True" Toggled="onToggled" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
       
       <Label Text="Group Name:" />
-			<Entry x:Name="groupnameEntry" Placeholder="Enter group name" />
+			<Entry x:Name="groupIdEntry" Placeholder="Enter group name/Id" />
       
 			<Label Text="Group Password" />
 			<Entry x:Name="passwordEntry" Placeholder="Enter group password" />
