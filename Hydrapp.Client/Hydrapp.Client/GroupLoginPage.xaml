@@ -31,8 +31,8 @@
       <Label Text="Create \ Join Group:" />
       <Switch IsToggled="True" Toggled="onToggled" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
       
-      <Label Text="Group Name:" />
-			<Entry x:Name="groupIdEntry" Placeholder="Enter group name/Id" />
+      <Label x:Name="groupLabel" Text="Group Name:" />
+			<Entry x:Name="groupIdEntry" Placeholder="Enter group name" />
       
 			<Label Text="Group Password" />
 			<Entry x:Name="passwordEntry" Placeholder="Enter group password" />

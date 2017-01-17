@@ -40,12 +40,16 @@ namespace Hydrapp.Client
         {
             if (e.Value)
             {
+                groupLabel.Text = "Group Name";
                 buttonLabel.Text = "Create Group";
+                groupIdEntry.Placeholder = "Enter Group Name";
                 createGroup = true;
             }
             else
             {
+                groupLabel.Text = "Group Id";
                 buttonLabel.Text = "join Group";
+                groupIdEntry.Placeholder = "Enter Group Id";
                 createGroup = false;
             }
         }
