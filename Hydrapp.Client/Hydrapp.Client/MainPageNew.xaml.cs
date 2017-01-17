@@ -47,7 +47,6 @@ namespace Hydrapp.Client
             }
         }
 
-
          public void OnSelectedIndexChanged(object sender, EventArgs e)
         {
             if (BandPicker.SelectedIndex == -1)

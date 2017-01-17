@@ -16,7 +16,7 @@ namespace Hydrapp.Client.ViewModels
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        /*
         // Band Setup
 
         //local band that we will connect to
@@ -414,19 +414,19 @@ namespace Hydrapp.Client.ViewModels
             this.ConnectButtonText = "Connect to Band: " + band.Name;
             
 
-           /* try
-            {
-                // Get the list of Microsoft Bands paired to the phone.
-                IBandInfo[] pairedBands = bandService.getBands();
+           // try
+           // {
+            //    // Get the list of Microsoft Bands paired to the phone.
+           //     IBandInfo[] pairedBands = bandService.getBands();
+           //
+           //     IBandInfo[] pairedBands = await BandClientManager.Instance.GetBandsAsync();
+            //    if (pairedBands.Length < 1)
+          //      {
+          //
+            //    }
+    }
 
-                IBandInfo[] pairedBands = await BandClientManager.Instance.GetBandsAsync();
-                if (pairedBands.Length < 1)
-                {
-
-                }*/
-        }
-
-        private async void ConnectToBand()
+    private async void ConnectToBand()
         {
             this.CurrentStatus = "Connecting...";
             var result = await bandService.ConnectToBand(band);             
@@ -662,7 +662,7 @@ namespace Hydrapp.Client.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        */
 
     }
 }

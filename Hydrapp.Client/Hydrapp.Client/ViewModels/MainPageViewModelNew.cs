@@ -354,7 +354,7 @@ namespace Hydrapp.Client.ViewModels
                 this.ReadAmbientLight = bandService.CurrentAmbientLight;
                 this.ReadPedometer = bandService.CurrentPedometer;
                 this.ReadCalories = bandService.CurrentCalories;
-                //this.ReadFluidLoss = bandService.CurrentFluidLoss;
+                this.ReadFluidLoss = bandService.CurrentFluidLoss;
             });
         }
 

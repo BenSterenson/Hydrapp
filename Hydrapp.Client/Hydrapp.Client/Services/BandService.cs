@@ -18,6 +18,11 @@ namespace Hydrapp.Client.Services
         private BandClient bandClient;
         private BandDeviceInfo band;
         private BandClientManager bandClientManager;
+
+
+        private double skinTemp_val;
+        private int heartRate_val;
+        private long gsr_val;
         
         private string currentSkinTemp = "Not Active";
         public string CurrentSkinTemp
@@ -27,6 +32,7 @@ namespace Hydrapp.Client.Services
             {
                 currentSkinTemp = value;
                 OnPropertyChanged();
+                CalcFluidLoss();
             }
         }
 
@@ -49,6 +55,7 @@ namespace Hydrapp.Client.Services
             {
                 currentHeartRate = value;
                 OnPropertyChanged();
+                CalcFluidLoss();
             }
         }
 
@@ -60,6 +67,7 @@ namespace Hydrapp.Client.Services
             {
                 currentGSR = value;
                 OnPropertyChanged();
+                CalcFluidLoss();
             }
         }
 
@@ -154,7 +162,8 @@ namespace Hydrapp.Client.Services
         private async void SkinTemperature_ReadingChanged(object sender, Microsoft.Band.Portable.Sensors.BandSensorReadingEventArgs<Microsoft.Band.Portable.Sensors.BandSkinTemperatureReading> e)
         {
             await Task.Run(() => {
-                this.CurrentSkinTemp = e.SensorReading.Temperature.ToString(); // Celsius
+                this.skinTemp_val = e.SensorReading.Temperature;
+                this.CurrentSkinTemp = skinTemp_val.ToString(); // Celsius
                 //this.CurrentSkinTemp = CelsiusToFahrenheitConverter.Convert(e.SensorReading.Temperature).ToString(); // Fahrenheit
             });
         }
@@ -215,7 +224,8 @@ namespace Hydrapp.Client.Services
         {
             await Task.Run(() =>
             {
-                this.CurrentHeartRate = e.SensorReading.HeartRate.ToString();
+                this.heartRate_val = e.SensorReading.HeartRate;
+                this.CurrentHeartRate = heartRate_val.ToString();
             });
         }
 
@@ -233,7 +243,8 @@ namespace Hydrapp.Client.Services
         {
             await Task.Run(() =>
             {
-                this.CurrentGSR = e.SensorReading.Resistance.ToString();
+                this.gsr_val = e.SensorReading.Resistance;
+                this.CurrentGSR = gsr_val.ToString();
             });
         }
         public async Task StartReadingUV()
@@ -291,28 +302,25 @@ namespace Hydrapp.Client.Services
         }
 
 
-        public async Task StartReadingFluidLoss()
+        public void CalcFluidLoss()
         {
+            // TODO work on the furmula
             try
             {
-                int bodyweight = 75;
-                double height = 1.75;
-                double bmi_Val = bodyweight / (Math.Pow(height, 2));
-                int gsr_val = Convert.ToInt32(this.currentGSR, 10);
-                int heartRate_val = Convert.ToInt32(this.currentHeartRate, 10);
-                double skinTemp_val = Convert.ToDouble(this.currentSkinTemp);
-                this.currentFluidLoss = (-1.95403 + (0.0554441 * bmi_Val) - (0.0228502 * skinTemp_val) + (0.0084186 * heartRate_val) + (0.000370397 * gsr_val)).ToString("#.###");
+                if (this.skinTemp_val != 0 && this.heartRate_val != 0 && this.gsr_val != 0)
+                {
+                    int bodyweight = 75;
+                    double height = 1.75;
+                    double bmi_Val = bodyweight / (Math.Pow(height, 2));
+                    this.CurrentFluidLoss = (-1.95403 + (0.0554441 * bmi_Val) - (0.0228502 * this.skinTemp_val) + (0.0084186 * this.heartRate_val) + (0.000370397 * this.gsr_val)).ToString("#.###");
+                }
             }
             catch (OverflowException)
             {
-                this.currentFluidLoss = "0";
+                return;
             }
         }
-        public async Task StopReadingFluidLoss()
-        {
-            this.currentFluidLoss = "0";
-
-        }
+        
         
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
