@@ -26,7 +26,7 @@ namespace Hydrapp.Client
             }
             else
             {
-                MainPage = new NavigationPage(new Hydrapp.Client.MainPage());
+                MainPage = new NavigationPage(new Hydrapp.Client.MainPageNew());
             }
             // The root page of your application
             //MainPage = new MainPage();
