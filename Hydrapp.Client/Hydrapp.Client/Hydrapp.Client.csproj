@@ -44,6 +44,9 @@
     <Compile Include="GroupLoginPage.xaml.cs">
       <DependentUpon>GroupLoginPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainPageNew.xaml.cs">
+      <DependentUpon>MainPageNew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManageGroupPage.xaml.cs">
       <DependentUpon>ManageGroupPage.xaml</DependentUpon>
     </Compile>
@@ -68,6 +71,7 @@
     <Compile Include="Services\BandService.cs" />
     <Compile Include="ValueConverters\CelsiusToFahrenheitConverter.cs" />
     <Compile Include="ViewModels\ChartsViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModelNew.cs" />
     <Compile Include="ViewModels\ManageGroupPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
   </ItemGroup>
@@ -170,6 +174,12 @@
   <ItemGroup>
     <EmbeddedResource Include="MemberChartPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainPageNew.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

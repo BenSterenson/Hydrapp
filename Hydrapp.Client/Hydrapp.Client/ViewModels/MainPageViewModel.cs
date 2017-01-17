@@ -430,7 +430,7 @@ namespace Hydrapp.Client.ViewModels
         {
             this.CurrentStatus = "Connecting...";
             var result = await bandService.ConnectToBand(band);             
-            this.CurrentStatus = result;
+            //this.CurrentStatus = result;
             this.ConnectButtonEnabled = false;
             bandService.PropertyChanged += BandService_PropertyChanged;
         }

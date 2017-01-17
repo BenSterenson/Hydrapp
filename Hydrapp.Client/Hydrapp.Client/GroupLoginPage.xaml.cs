@@ -63,7 +63,7 @@ namespace Hydrapp.Client
                 {
                     App.IsUserLoggedIn = true;
 
-                    Navigation.InsertPageBefore(new MainPage(), this);
+                    Navigation.InsertPageBefore(new MainPageNew(), this);
                     await Navigation.PopAsync();
                 }
                 else

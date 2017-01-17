@@ -119,61 +119,26 @@ namespace Hydrapp.Client.Services
             return bands;
         }
 
-        public async Task<String> ConnectToBand(BandDeviceInfo b)
+        public async Task<bool> ConnectToBand(BandDeviceInfo b)
         {
-            //#############################################################
+            
             band = b;
-            bandClient = await bandClientManager.ConnectAsync(band);
-            return String.Format("connected to {0} !", band.Name);
-            //#################################################################
-
-            /*var bands = await BandClientManager.Instance.GetBandsAsync();
-            var band = bands.FirstOrDefault();
-
-            if (band != null)
+            try
             {
-                var client = await BandClientManager.Instance.ConnectAsync(band);
-
-                string name = await client.GetFirmwareVersionAsync();
+                bandClient = await bandClientManager.ConnectAsync(band);
+            }
+            catch (Exception ex)
+            {
+                String.Format("Exception: " + ex);
+                return false;
             }
 
-            BandClientManager.Instance.ConnectAsync();
-            var bandInfo = (await BandClientManager.Instance.GetBandsAsync()).FirstOrDefault();
-            IBandClient bandClient = null;
-            if (bandInfo != null)
-            {
-                try
-                {
-                    bandClient = await BandClientManager.Instance.ConnectAsync(bandInfo);
-                }
-                catch (Exception ex)
-                {
-                    String.Format("Exception: " + ex);
-                }
-
-                if (bandClient != null)
-                {
-                    try
-                    {
-                        String.Format("Band connected: " + bandClient.GetFirmwareVersionAsync().Result);
-                        var bandContactState = await bandClient.SensorManager.Contact.GetCurrentStateAsync();
-                        String.Format(bandContactState.State == BandContactState.NotWorn
-                            ? "Band not worn"
-                            : "Band worn");
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("Exception 1: " + ex);
-                    }
-                }
-            }
             if (bandClient != null)
             {
-                deferral.Complete();
-                bandClient.Dispose();
-                bandClient = null;
+                return true;
             }
-           */
+            return false;
+           
         }
 
         public async Task StartReadingSkinTemp()
