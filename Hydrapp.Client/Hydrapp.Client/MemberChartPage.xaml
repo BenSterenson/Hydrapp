@@ -11,54 +11,33 @@
   </ContentPage.BindingContext>
 
   <chart:SfChart>
-
     <chart:SfChart.Title>
-
-		<chart:ChartTitle Text="Fluid Loss [%]" />
-
-	</chart:SfChart.Title> 
+		  <chart:ChartTitle Text="Fluid Loss [%]" />
+	  </chart:SfChart.Title> 
+    
     <chart:SfChart.ChartBehaviors>
-
-	<chart:ChartZoomPanBehavior ZoomMode="X"/>
-      
-
-</chart:SfChart.ChartBehaviors>
+	    <chart:ChartZoomPanBehavior ZoomMode="X"/>
+    </chart:SfChart.ChartBehaviors>
     
     <chart:SfChart.Series>
-     
       <chart:LineSeries ItemsSource="{Binding DehydrationLevel}" Color = "Black" />
-
     </chart:SfChart.Series>
     
-  <chart:SfChart.SecondaryAxis>
-
-	<chart:NumericalAxis Maximum="30" Minimum="0">      
-
-		<chart:NumericalAxis.StripLines>        
-
-			<chart:NumericalStripLine Start="5" Width ="1" Text="Dehydration Threshold" FillColor="#ff8300">
-
-				<chart:NumericalStripLine.LabelStyle>
-
-					<chart:ChartStripLineLabelStyle HorizontalAlignment="Near" VerticalAlignment="Center" TextColor="Black">
-
-						<chart:ChartStripLineLabelStyle.Font>
-
-							<Font FontSize="15" />
-
-						</chart:ChartStripLineLabelStyle.Font>
-
-					</chart:ChartStripLineLabelStyle>              
-
-				</chart:NumericalStripLine.LabelStyle>
-
-			</chart:NumericalStripLine>
-
-		</chart:NumericalAxis.StripLines>
-
-	</chart:NumericalAxis>
-
-</chart:SfChart.SecondaryAxis>
+    <chart:SfChart.SecondaryAxis>
+	    <chart:NumericalAxis Maximum="30" Minimum="0">      
+		    <chart:NumericalAxis.StripLines>        
+			    <chart:NumericalStripLine Start="5" Width ="1" Text="Dehydration Threshold" FillColor="#ff8300">
+				    <chart:NumericalStripLine.LabelStyle>
+					    <chart:ChartStripLineLabelStyle HorizontalAlignment="Near" VerticalAlignment="Center" TextColor="Black">
+						    <chart:ChartStripLineLabelStyle.Font>
+							    <Font FontSize="15" />
+						    </chart:ChartStripLineLabelStyle.Font>
+					    </chart:ChartStripLineLabelStyle>              
+				    </chart:NumericalStripLine.LabelStyle>
+			    </chart:NumericalStripLine>
+		    </chart:NumericalAxis.StripLines>
+	    </chart:NumericalAxis>
+    </chart:SfChart.SecondaryAxis>
 
   </chart:SfChart>
-  </ContentPage>
+</ContentPage>
