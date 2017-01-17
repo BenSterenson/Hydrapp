@@ -64,6 +64,10 @@ namespace Hydrapp.Client.ViewModels
 
         private bool checkForNewMember()
         {
+            // create private field- currentGroupMembers
+            // go to DB and check if new members in the group
+            // add them here
+
             Random random = new Random();
 
             string name = RandomString(random.Next(0, 10));

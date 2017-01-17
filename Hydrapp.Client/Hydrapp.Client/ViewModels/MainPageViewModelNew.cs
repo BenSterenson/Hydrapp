@@ -325,7 +325,7 @@ namespace Hydrapp.Client.ViewModels
                 await bandService.StartReadingCalories();
                 //await bandService.StartReadingFluidLoss();
 
-                InserToDB();// TODO
+                InserToDB();
                 return;
             }
             this.CurrentStatus = "Failed to connect : " + band.Name;
@@ -339,7 +339,8 @@ namespace Hydrapp.Client.ViewModels
 
         private bool SendDataToCloud()
         {
-          //TODO
+            //TODO- send to AzureDB
+            // new BandEntity(readHR, readHRQuality, readSkinTemp, readSkinTemp, readAmbientLight, readGSR, readUV, readPedometer, readCalories, readFluidLoss)
             return true;
         }
 

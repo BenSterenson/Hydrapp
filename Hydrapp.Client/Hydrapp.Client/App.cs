@@ -15,6 +15,7 @@ namespace Hydrapp.Client
     {
         public static bool IsUserLoggedIn { get; set; }
         public static int userId;
+        public static int groupId;
         public static IService AzureDbservice = new AzureDBService(); 
         public App()
         {
