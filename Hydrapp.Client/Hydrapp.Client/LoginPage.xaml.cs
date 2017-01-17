@@ -8,7 +8,7 @@ namespace Hydrapp.Client
 {
 	public partial class LoginPage : ContentPage
 	{
-
+        
         private static IService AzureDbservice = App.AzureDbservice;
 
         public LoginPage ()
@@ -27,6 +27,7 @@ namespace Hydrapp.Client
 			int userId = await checkCredentials(usernameEntry.Text, passwordEntry.Text);
 			if (userId > 0) {
 				App.IsUserLoggedIn = true;
+                App.userId = userId;
 				Navigation.InsertPageBefore (new GroupLoginPage(), this);
 				await Navigation.PopAsync ();
 			} else {
@@ -42,7 +43,7 @@ namespace Hydrapp.Client
                 return -1;
             }
 
-            return await AzureDbservice.getUserId(userName, password);
+            return await AzureDbservice.loginUser(userName, password);
         }
 
     }

@@ -18,7 +18,7 @@ namespace Hydrapp.Client.Services
         {
             SerializerSettings = new MobileServiceJsonSerializerSettings()
             {
-                CamelCasePropertyNames = false
+                CamelCasePropertyNames = true
             }
         };
 
@@ -110,7 +110,7 @@ namespace Hydrapp.Client.Services
             return true;
         }
 
-        public async Task<int> getUserId(string userName, string password)
+        public async Task<int> loginUser(string userName, string password)
         {
             List<int> userIDList = await mobileService.GetTable<User>().Where(user => user.userName == userName && user.password == password).Select(user => user.UserId).ToListAsync();
             if (userIDList.Count == 0)
@@ -118,6 +118,27 @@ namespace Hydrapp.Client.Services
                 return 0;
             }
             return userIDList.ElementAt(0);
+        }
+         
+        public async Task<int> joinGroup(int userId, int groupID, string groupPassword)
+        {
+            List<Group> result = await mobileService.GetTable<Group>().Where(group => group.GroupId == groupID && group.Password == groupPassword).ToListAsync();
+            if (result.Count == 0)
+            {
+                return 0;
+            }
+            GroupMember groupMember = new GroupMember(userId, groupID, false);
+            await mobileService.GetTable<GroupMember>().InsertAsync(groupMember);
+            return userId;
+        }
+
+        public async Task<int> createGroup(int userId, string groupName, string groupPassword)
+        {
+            Group group = new Group(groupName, groupPassword);
+            await mobileService.GetTable<Group>().InsertAsync(group);
+            GroupMember groupMember = new GroupMember(userId, group.GroupId, true);
+            await mobileService.GetTable<GroupMember>().InsertAsync(groupMember);
+            return group.GroupId;
         }
 
     }
