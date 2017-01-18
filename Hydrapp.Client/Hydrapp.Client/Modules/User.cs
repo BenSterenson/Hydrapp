@@ -10,6 +10,8 @@ namespace Hydrapp.Client.Modules
 {
     public class User: EntityData
     {
+
+
         [JsonProperty(PropertyName = "UserId")]
         public int UserId { get; set; }
         [JsonProperty(PropertyName = "UserName")]
@@ -25,7 +27,7 @@ namespace Hydrapp.Client.Modules
 
         public User() { }
 
-        public User(string username, string password, string email, double height, double weight)
+        public User(string username, string password, string email, double weight, double height)
         {
             this.userName = username;
             this.password = password;

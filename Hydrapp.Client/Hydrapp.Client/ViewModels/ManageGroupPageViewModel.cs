@@ -20,6 +20,7 @@ namespace Hydrapp.Client.ViewModels
     {
 
         private ObservableCollection<Participant> participants = new ObservableCollection<Participant>();
+        private Color backgroundColor;
         public ObservableCollection<Participant> Participants
         {
             get
@@ -154,8 +155,20 @@ namespace Hydrapp.Client.ViewModels
                 OnPropertyChanged();
             }
         }
-        
 
+        public new Color BackgroundColor
+        {
+            get
+            {
+                return backgroundColor;
+            }
+
+            set
+            {
+                backgroundColor = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string AvgFluidLoss
         {
