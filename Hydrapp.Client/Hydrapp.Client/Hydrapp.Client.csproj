@@ -73,6 +73,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BandService.cs" />
+    <Compile Include="ValueConverters\FluidlossColorConverter.cs" />
     <Compile Include="ValueConverters\CelsiusToFahrenheitConverter.cs" />
     <Compile Include="ViewModels\ChartsViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModelNew.cs" />

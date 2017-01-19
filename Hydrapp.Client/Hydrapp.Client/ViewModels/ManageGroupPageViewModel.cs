@@ -22,6 +22,7 @@ namespace Hydrapp.Client.ViewModels
         private IService AzureDbService = App.AzureDbservice;
         private List<int> currentMembersList = new List<int>();
         private ObservableCollection<Participant> participants = new ObservableCollection<Participant>();
+        private Color backgroundColor;
         public ObservableCollection<Participant> Participants
         {
             get
@@ -166,8 +167,20 @@ namespace Hydrapp.Client.ViewModels
                 OnPropertyChanged();
             }
         }
-        
 
+        public new Color BackgroundColor
+        {
+            get
+            {
+                return backgroundColor;
+            }
+
+            set
+            {
+                backgroundColor = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string AvgFluidLoss
         {

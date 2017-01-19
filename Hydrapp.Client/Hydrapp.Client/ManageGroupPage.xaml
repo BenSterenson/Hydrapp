@@ -3,12 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Hydrapp.Client.ManageGroupPage"
              xmlns:vm="clr-namespace:Hydrapp.Client.ViewModels;assembly=Hydrapp.Client"
+             xmlns:converters="clr-namespace:Hydrapp.Client.ValueConverters;assembly=Hydrapp.Client"
              BackgroundImage="background.png">
 
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="Logout" Clicked="OnLogoutButtonClicked" />
   </ContentPage.ToolbarItems>
-    
+
+  
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:FluidlossColorConverter x:Key="FluidlossColorConverter" />   
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
+
   <StackLayout>
     
     <Label Text="{Binding GroupName}"
@@ -53,13 +62,12 @@
           <DataTemplate>
             <ViewCell >
               <ViewCell.View>
+                <!--Binding BackgroundColor-->
+                <StackLayout Padding="15,25,5,25" Orientation="Horizontal" >
 
-                <StackLayout Padding="15,25,5,25" Orientation="Horizontal">
 
-
-                <Grid >
-
-                  <Grid.RowDefinitions>
+                <Grid BackgroundColor="{Binding Converter={StaticResource FluidlossColorConverter}}">
+                   <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                   </Grid.RowDefinitions>
                   
@@ -69,7 +77,8 @@
                     <ColumnDefinition Width="3*"/>
                     <ColumnDefinition Width="3*"/>
                   </Grid.ColumnDefinitions>
-
+                  
+                  
                   <Label Text="{Binding RowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
                   <Label Text="{Binding user.userName}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
                   <Label Text="{Binding user.weight, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
