@@ -49,34 +49,39 @@ namespace Hydrapp.Client.ViewModels
         private string userName;
         private string avgHeartRate;
         private string avgFluidLoss;
+        private bool CollectionChanged = false;
 
 
         public ManageGroupPageViewModel()
         {
             groupName = "HydrappGroup";
             RefreshGroupMembers();
+            updateMembersTimer();
             //Memberleft();
             //numOfParticipants = UpdateNumOfParticipants();
-            participants.CollectionChanged += OnCollectionChanged;
+            //participants.CollectionChanged += OnCollectionChanged;
         }
 
 
         void RefreshGroupMembers()
         {
-            Device.StartTimer(new TimeSpan(0, 0, 0, 2), checkForNewMember);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 5), checkForNewMember);
         }
-        void Memberleft()
+        void updateMembersTimer()
         {
-            Device.StartTimer(new TimeSpan(0, 0, 0, 11), removeMember);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 10), updateValues);
         }
         
         private bool checkForNewMember()
         {
             addNewMembers();
+            return true;
+        }
+        private bool updateValues()
+        {
             update();
             return true;
         }
-
         private async void update()
         {
             foreach (var participant in participants) {
@@ -86,6 +91,10 @@ namespace Hydrapp.Client.ViewModels
                     participant.BandEntry = latest;
                 }
             }
+            /*Participants.CollectionChanged += (a, b) =>
+            {
+                CollectionChanged = true;
+            };*/
         }
 
         private async void addNewMembers()
@@ -224,14 +233,9 @@ namespace Hydrapp.Client.ViewModels
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));   
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            
         }
-
-        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            base.OnBindingContextChanged();
-
-         }
 
     }
 }

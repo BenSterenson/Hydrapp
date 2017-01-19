@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Syncfusion.SfChart.XForms;
 using System.Collections.ObjectModel;
 using System;
+using Hydrapp.Client.Modules;
 
 namespace Hydrapp.Client.ViewModels
 {
@@ -17,9 +18,9 @@ namespace Hydrapp.Client.ViewModels
         public ObservableCollection<ChartDataPoint> DehydrationLevel { get; set; }
         
 
-        public ChartsViewModel()
+        public ChartsViewModel(User user)
         {
-
+            var us = user;
             DehydrationLevel = new ObservableCollection<ChartDataPoint>();
             UpdateDehydrationLevel();
         }

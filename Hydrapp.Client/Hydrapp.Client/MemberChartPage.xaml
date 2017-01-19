@@ -6,9 +6,9 @@
        xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms">
 
 
-  <ContentPage.BindingContext>
+ <!-- <ContentPage.BindingContext>
     <vm:ChartsViewModel />
-  </ContentPage.BindingContext>
+  </ContentPage.BindingContext>-->
 
   <chart:SfChart>
     <chart:SfChart.Title>
