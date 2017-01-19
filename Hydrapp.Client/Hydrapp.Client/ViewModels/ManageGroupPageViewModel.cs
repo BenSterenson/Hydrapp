@@ -67,30 +67,32 @@ namespace Hydrapp.Client.ViewModels
 
         private bool checkForNewMember()
         {
-            //addNewMembers();
-            
-            Random random = new Random();
-
-            string name = RandomString(random.Next(0, 10));
-            string password = RandomString(random.Next(0, 10));
-            string email = RandomString(random.Next(0, 10)) + "@gmail.com";
-            double height = random.NextDouble() * (2.20 - 1.40) + 1.40;
-            double weight = random.NextDouble() * (120 - 55) + 55;
-
-            var x = new BandEntry(DateTime.Now, 33, 33, 5, 3800, 30.4, 27, 70, 0, 200, 100, 7.8, false);
-            participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height),x));
-            if (participants.Count() == 3) {
-                var y = new BandEntry(DateTime.Now, 33, 33, 5, 3800, 30.4, 27, 80, 0, 200, 100, 100, false);
-                Participants[0].BandEntry = y;
-            }
-            NumOfParticipants = participants.Count();
+            addNewMembers();
+            update();
+//            Random random = new Random();
+//
+//            string name = RandomString(random.Next(0, 10));
+//            string password = RandomString(random.Next(0, 10));
+//            string email = RandomString(random.Next(0, 10)) + "@gmail.com";
+//            double height = random.NextDouble() * (2.20 - 1.40) + 1.40;
+//            double weight = random.NextDouble() * (120 - 55) + 55;
+//
+//            participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height)));
+//            NumOfParticipants = participants.Count();
             return true;
+        }
+
+        private async void update()
+        {
+            if (NumOfParticipants > 0)
+            {
+                BandEntry latest = await AzureDbService.getLatestBandEntryForUser(participants.ElementAt(0).user.UserId);
+            }
         }
 
         private async void addNewMembers()
         {
            List<User> membersToAdd = await AzureDbService.getNewMembers(currentMembersList, App.GroupId);
-            
            foreach (var user in membersToAdd)
             {
                 currentMembersList.Add(user.UserId);

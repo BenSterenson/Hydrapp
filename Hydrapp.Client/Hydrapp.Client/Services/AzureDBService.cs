@@ -212,5 +212,24 @@ namespace Hydrapp.Client.Services
             }
             return bandId;
         }
+
+        public async Task<BandEntry> getLatestBandEntryForUser(int userId)
+        {
+            List<BandEntry> result = await mobileService.GetTable<BandEntry>()
+                .Where(bandEntry => bandEntry.UserId == userId)
+                .OrderByDescending(entry => entry.TimeStamp)
+                .ToListAsync();
+            return result.ElementAt(0);
+        }
+
+        public async Task deleteBandEntriesForGroup(int groupId)
+        {
+            List<BandEntry> result = await mobileService.GetTable<BandEntry>().Where(bandEntry => bandEntry.GroupId == groupId).ToListAsync();
+            foreach (var entry in result)
+            {
+                //await mobileService.GetTable<HistoryBandEntry>().insertAsync(entry);
+                await mobileService.GetTable<BandEntry>().DeleteAsync(entry);
+            }
+        }
     }
 }
