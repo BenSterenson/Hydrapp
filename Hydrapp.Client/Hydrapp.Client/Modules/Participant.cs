@@ -15,6 +15,9 @@ namespace Hydrapp.Client.Modules
         public event PropertyChangedEventHandler PropertyChanged;
         private int rowNumber;
         public User user { get; set; }
+        private BandEntry bandEntry;
+
+
 
         public int RowNumber
         {
@@ -28,7 +31,20 @@ namespace Hydrapp.Client.Modules
                 OnPropertyChanged();
             }
         }
-        
+
+        public BandEntry BandEntry
+        {
+            get
+            {
+                return bandEntry;
+            }
+            set
+            {
+                bandEntry = value;
+                OnPropertyChanged();
+            }
+        }
+
         //public Group Group { get; set; }
         //public Band Band { get; set; }
         //public Band Band_nfo { get; set; }
@@ -44,6 +60,12 @@ namespace Hydrapp.Client.Modules
         {
             this.rowNumber = rowNumber;
             this.user = user;
+        }
+        public Participant(int rowNumber, User user, BandEntry Entry)
+        {
+            this.rowNumber = rowNumber;
+            this.user = user;
+            this.BandEntry = Entry;
         }
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
