@@ -68,7 +68,7 @@ namespace Hydrapp.Client.ViewModels
         private bool checkForNewMember()
         {
             addNewMembers();
-            
+            update();
 //            Random random = new Random();
 //
 //            string name = RandomString(random.Next(0, 10));
@@ -80,6 +80,14 @@ namespace Hydrapp.Client.ViewModels
 //            participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height)));
 //            NumOfParticipants = participants.Count();
             return true;
+        }
+
+        private async void update()
+        {
+            if (NumOfParticipants > 0)
+            {
+                BandEntry latest = await AzureDbService.getLatestBandEntryForUser(participants.ElementAt(0).user.UserId);
+            }
         }
 
         private async void addNewMembers()

@@ -19,5 +19,7 @@ namespace Hydrapp.Client.Services
         Task<int> getBandIdForUserId(int userId, int groupId, string bandName);
         Task<int> addBandEntry(BandEntry bandEntry);
         Task<List<User>> getNewMembers(List<int> currentMembersList, int groupId);
+        Task<BandEntry> getLatestBandEntryForUser(int userId);
+        Task deleteBandEntriesForGroup(int groupId);
     }
 }
