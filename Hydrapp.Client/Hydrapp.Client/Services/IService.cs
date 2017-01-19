@@ -21,5 +21,6 @@ namespace Hydrapp.Client.Services
         Task<List<User>> getNewMembers(List<int> currentMembersList, int groupId);
         Task<BandEntry> getLatestBandEntryForUser(int userId);
         Task deleteBandEntriesForGroup(int groupId);
+        Task groupLogout(int groupId);
     }
 }
