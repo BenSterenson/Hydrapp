@@ -24,10 +24,7 @@ namespace Hydrapp.Client.ViewModels
         private IService AzureDbService = App.AzureDbservice;
         private List<int> currentMembersList = new List<int>();
         private ObservableCollection<Participant> participants = new ObservableCollection<Participant>();
-
-
-
-
+       
 
         private Color backgroundColor;
         public ObservableCollection<Participant> Participants
@@ -72,33 +69,22 @@ namespace Hydrapp.Client.ViewModels
         {
             Device.StartTimer(new TimeSpan(0, 0, 0, 11), removeMember);
         }
-
+        
         private bool checkForNewMember()
         {
             addNewMembers();
             update();
-            //Random random = new Random();
-
-            //string name = RandomString(random.Next(0, 10));
-            //string password = RandomString(random.Next(0, 10));
-            //string email = RandomString(random.Next(0, 10)) + "@gmail.com";
-            //double height = random.NextDouble() * (2.20 - 1.40) + 1.40;
-            //double weight = random.NextDouble() * (120 - 55) + 55;
-            //BandEntry latest = new BandEntry(DateTime.Now, 3, 3, 3, 3, 3, 3, 70, 0, 100, 100, 80, false);
-            //participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height), latest));
-            //NumOfParticipants = participants.Count();
-
             return true;
         }
 
         private async void update()
         {
-            if (NumOfParticipants > 0)
-            {
-                BandEntry latest = await AzureDbService.getLatestBandEntryForUser(participants.ElementAt(0).user.UserId);
-                //BandEntry latest = new BandEntry(DateTime.Now, 3, 3, 3, 3, 3, 3, 90, 0, 100, 200, 100, false);
-                Participants[0].BandEntry = latest;
-
+            foreach (var participant in participants) {
+                BandEntry latest = await AzureDbService.getLatestBandEntryForUser(participant.user.UserId);
+                if (latest != null)
+                {
+                    participant.BandEntry = latest;
+                }
             }
         }
 
@@ -109,7 +95,11 @@ namespace Hydrapp.Client.ViewModels
             {
                 currentMembersList.Add(user.UserId);
 
-                participants.Add(new Participant(RowCount(), user));
+                BandEntry latest = await AzureDbService.getLatestBandEntryForUser(user.UserId);
+                if (latest != null)
+                {
+                    participants.Add(new Participant(RowCount(), user, latest));
+                }
             }
             NumOfParticipants = participants.Count();
         }

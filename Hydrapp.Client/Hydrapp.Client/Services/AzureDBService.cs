@@ -219,7 +219,11 @@ namespace Hydrapp.Client.Services
                 .Where(bandEntry => bandEntry.UserId == userId)
                 .OrderByDescending(entry => entry.TimeStamp)
                 .ToListAsync();
-            return result.ElementAt(0);
+            if (result.Count > 0)
+            {
+                return result.ElementAt(0);
+            }
+            return null;
         }
 
         public async Task deleteBandEntriesForGroup(int groupId)
