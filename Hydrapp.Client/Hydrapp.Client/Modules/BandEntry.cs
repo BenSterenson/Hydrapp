@@ -36,5 +36,25 @@ namespace Hydrapp.Client.Modules
         public double FluidLoss { get; set; }
         [JsonProperty(PropertyName = "IsDehydrated")]
         public bool IsDehydrated { get; set; }
+
+        public BandEntry(DateTime timeStamp, int groupId, int userId, int bandId, int gsr, double skinTemp,
+        int light, int heartRate, int UV, int calories, int steps, double floidLoss, bool IsDehydrated)
+        {
+            this.TimeStamp = timeStamp;
+            this.GroupId = groupId;
+            this.UserId = userId;
+            this.BandId = bandId;
+            this.GSR = gsr;
+            this.SkinTemp = skinTemp;
+            this.Light = light;
+            this.HeartRate = heartRate;
+            this.UV = UV;
+            this.Calories = calories;
+            this.Steps = steps;
+            this.FluidLoss = floidLoss;
+            this.IsDehydrated = IsDehydrated;
+        }
     }
+
+    
 }

@@ -36,7 +36,7 @@ namespace Hydrapp.Client
 				if (rootPage != null) {
 					App.IsUserLoggedIn = true;
                     await AzureDbService.addUser(user);
-                    App.userId = user.UserId;
+                    App.User = user;
                     // user have UserId
 
                     //Navigation.InsertPageBefore (new MainPage(), Navigation.NavigationStack.First());

@@ -24,10 +24,10 @@ namespace Hydrapp.Client
 		async void OnLoginButtonClicked (object sender, EventArgs e)
 		{
 			
-			int userId = await checkCredentials(usernameEntry.Text, passwordEntry.Text);
-			if (userId > 0) {
+			User user = await checkCredentials(usernameEntry.Text, passwordEntry.Text);
+			if (user != null) {
 				App.IsUserLoggedIn = true;
-                App.userId = userId;
+                App.User = user;
 				Navigation.InsertPageBefore (new GroupLoginPage(), this);
 				await Navigation.PopAsync ();
 			} else {
@@ -36,11 +36,11 @@ namespace Hydrapp.Client
 			}
 		}
 
-        private async Task<int> checkCredentials(string userName, string password)
+        private async Task<User> checkCredentials(string userName, string password)
         {
             if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
             {
-                return -1;
+                return null;
             }
 
             return await AzureDbservice.loginUser(userName, password);

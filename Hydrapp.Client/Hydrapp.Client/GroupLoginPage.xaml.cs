@@ -10,7 +10,7 @@ namespace Hydrapp.Client
 {
 	public partial class GroupLoginPage : ContentPage
     {
-        private int userId = App.userId;
+        private int userId = App.User.UserId;
         private bool createGroup;
         private static IService AzureDbservice = App.AzureDbservice;
 
@@ -61,19 +61,28 @@ namespace Hydrapp.Client
             {
                 int GroupId = await AzureDbservice.createGroup(userId, groupIdEntry.Text, passwordEntry.Text);
                 await DisplayAlert("Group Information", "Group Id : " + GroupId + "\nPassword: " + passwordEntry.Text, "OK");
+                App.GroupId = GroupId;
                 Navigation.InsertPageBefore(new ManageGroupPage(), this);
                 await Navigation.PopAsync();
             }
             else
             {
                 int result = await JoinGroup(userId, groupIdEntry.Text, passwordEntry.Text);
-
                 if (result > 0)
                 {
                     App.IsUserLoggedIn = true;
+                    App.GroupId = int.Parse(groupIdEntry.Text);
 
-                    Navigation.InsertPageBefore(new MainPageNew(), this);
-                    await Navigation.PopAsync();
+                    if (result == 2) //user is Admin- Admin mode
+                    {
+                        Navigation.InsertPageBefore(new ManageGroupPage(), this);
+                        await Navigation.PopAsync();
+                    }
+                    else // user is regular user
+                    {
+                        Navigation.InsertPageBefore(new MainPageNew(), this);
+                        await Navigation.PopAsync();
+                    }
                 }
                 else
                 {

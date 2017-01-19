@@ -13,12 +13,14 @@ using System.Reflection;
 
 using Hydrapp.Client.Modules;
 using System.Collections.ObjectModel;
+using Hydrapp.Client.Services;
 
 namespace Hydrapp.Client.ViewModels
 {
     public class ManageGroupPageViewModel : ContentPage, INotifyPropertyChanged
     {
-
+        private IService AzureDbService = App.AzureDbservice;
+        private List<int> currentMembersList = new List<int>();
         private ObservableCollection<Participant> participants = new ObservableCollection<Participant>();
         public ObservableCollection<Participant> Participants
         {
@@ -64,22 +66,32 @@ namespace Hydrapp.Client.ViewModels
 
         private bool checkForNewMember()
         {
-            // create private field- currentGroupMembers
-            // go to DB and check if new members in the group
-            // add them here
-
-            Random random = new Random();
-
-            string name = RandomString(random.Next(0, 10));
-            string password = RandomString(random.Next(0, 10));
-            string email = RandomString(random.Next(0, 10))+ "@gmail.com";
-            double height = random.NextDouble() * (2.20 - 1.40) + 1.40;
-            double weight = random.NextDouble() * (120 - 55) + 55;
-
-            participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height)));
-            NumOfParticipants = participants.Count();
+            addNewMembers();
+            
+//            Random random = new Random();
+//
+//            string name = RandomString(random.Next(0, 10));
+//            string password = RandomString(random.Next(0, 10));
+//            string email = RandomString(random.Next(0, 10)) + "@gmail.com";
+//            double height = random.NextDouble() * (2.20 - 1.40) + 1.40;
+//            double weight = random.NextDouble() * (120 - 55) + 55;
+//
+//            participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height)));
+//            NumOfParticipants = participants.Count();
             return true;
         }
+
+        private async void addNewMembers()
+        {
+           List<User> membersToAdd = await AzureDbService.getNewMembers(currentMembersList, App.GroupId);
+           foreach (var user in membersToAdd)
+            {
+                currentMembersList.Add(user.UserId);
+                participants.Add(new Participant(RowCount(), user));
+            }
+            NumOfParticipants = participants.Count();
+        }
+
         private bool removeMember()
         {
             Random random = new Random();

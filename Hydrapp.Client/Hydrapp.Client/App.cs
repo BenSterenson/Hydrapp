@@ -8,14 +8,15 @@ using Microsoft.Band.Portable;
 using Hydrapp.Client.Services;
 using Hydrapp.Client;
 using System.Diagnostics;
+using Hydrapp.Client.Modules;
 
 namespace Hydrapp.Client
 {
     public class App : Application
     {
         public static bool IsUserLoggedIn { get; set; }
-        public static int userId;
-        public static int groupId;
+        public static User User;
+        public static int GroupId;
         public static IService AzureDbservice = new AzureDBService(); 
         public App()
         {

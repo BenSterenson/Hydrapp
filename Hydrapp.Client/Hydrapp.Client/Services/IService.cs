@@ -13,8 +13,11 @@ namespace Hydrapp.Client.Services
         Task Initialize();
         Task SyncTable();
         Task<User> addUser(User user);
-        Task<int> loginUser(string userName, string password);
+        Task<User> loginUser(string userName, string password);
         Task<int> joinGroup(int userId, int groupID, string groupPassword);
         Task<int> createGroup(int userId, string groupName, string groupPassword);
+        Task<int> getBandIdForUserId(int userId, int groupId, string bandName);
+        Task<int> addBandEntry(BandEntry bandEntry);
+        Task<List<User>> getNewMembers(List<int> currentMembersList, int groupId);
     }
 }

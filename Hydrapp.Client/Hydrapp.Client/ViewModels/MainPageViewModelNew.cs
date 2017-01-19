@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Hydrapp.Client.Modules;
 using Hydrapp.Client.ValueConverters;
 using Microsoft.Band.Portable;
 using Xamarin.Forms;
@@ -17,10 +18,10 @@ namespace Hydrapp.Client.ViewModels
 
     public class MainPageViewModelNew : ContentPage, INotifyPropertyChanged
     {
-
+        private static IService AzureDbservice = App.AzureDbservice;
         public event PropertyChangedEventHandler PropertyChanged;
         public static event EventHandler<EventArgs> BandListUpdated;
-        
+        private int BandId;
 
         private void OnBandListUpdated(EventArgs e)
         {
@@ -304,11 +305,12 @@ namespace Hydrapp.Client.ViewModels
         private async void ConnectToBand()
         {
             this.CurrentStatus = "Connecting...";
-
+            
             int index = MainPageNew.bandSelectedIndex;
             band = BandList[index];
 
-            var result = await bandService.ConnectToBand(band);
+            this.BandId = await AzureDbservice.getBandIdForUserId(App.User.UserId, App.GroupId, band.Name);
+            var result = await bandService.ConnectToBand(band, App.User);
             if (result)
             {
                 this.CurrentStatus = "Connected to band : " + band.Name;
@@ -334,14 +336,44 @@ namespace Hydrapp.Client.ViewModels
         void InserToDB()
         {
             // send data every 5 sec
-            Device.StartTimer(new TimeSpan(0, 0, 0, 5), SendDataToCloud);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 5), UpdateDataInDb);
         }
 
-        private bool SendDataToCloud()
+        private bool UpdateDataInDb()
         {
-            //TODO- send to AzureDB
-            // new BandEntity(readHR, readHRQuality, readSkinTemp, readSkinTemp, readAmbientLight, readGSR, readUV, readPedometer, readCalories, readFluidLoss)
+            try
+            {
+                double fluidLoss = double.Parse(readFluidLoss);
+                bool dehydration = fluidLoss >= 3.0;
+                BandEntry newEntry = new BandEntry(DateTime.UtcNow, App.GroupId, App.User.UserId, BandId, int.Parse(readGSR),
+                    double.Parse(readSkinTemp), int.Parse(readAmbientLight), int.Parse(readHR), getUV(readUV),
+                    int.Parse(readCalories), 0, fluidLoss, dehydration);
+                sendToCloud(newEntry);
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
             return true;
+        }
+
+        private int getUV(string readUV)
+        {
+            int uvIndex;
+            try
+            {
+                uvIndex = int.Parse(readUV);
+            }
+            catch (Exception e) //UV not Active or "None"
+            {
+                return 0;
+            }
+            return uvIndex;
+        }
+
+        private async void sendToCloud(BandEntry newEntry)
+        {
+            await AzureDbservice.addBandEntry(newEntry);
         }
 
         private async void BandService_PropertyChanged(object sender, PropertyChangedEventArgs e)

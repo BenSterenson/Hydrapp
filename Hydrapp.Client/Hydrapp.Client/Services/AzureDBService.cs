@@ -110,25 +110,40 @@ namespace Hydrapp.Client.Services
             return true;
         }
 
-        public async Task<int> loginUser(string userName, string password)
+        public async Task<User> loginUser(string userName, string password)
         {
-            List<int> userIDList = await mobileService.GetTable<User>().Where(user => user.userName == userName && user.password == password).Select(user => user.UserId).ToListAsync();
+            List<User> userIDList = await mobileService.GetTable<User>().Where(user => user.userName == userName && user.password == password).ToListAsync();
             if (userIDList.Count == 0)
             {
-                return 0;
+                return null;
             }
             return userIDList.ElementAt(0);
         }
          
         public async Task<int> joinGroup(int userId, int groupID, string groupPassword)
         {
+            // check if credentials are ok
             List<Group> result = await mobileService.GetTable<Group>().Where(group => group.GroupId == groupID && group.Password == groupPassword).ToListAsync();
             if (result.Count == 0)
             {
                 return 0;
             }
-            GroupMember groupMember = new GroupMember(userId, groupID, false);
-            await mobileService.GetTable<GroupMember>().InsertAsync(groupMember);
+
+            // check if the user already exist in group
+            List<GroupMember> groupMembersList = await mobileService.GetTable<GroupMember>().Where(groupMember => groupMember.UserId == userId && groupMember.GroupId == groupID).ToListAsync();
+            if (groupMembersList.Count > 0)
+            {
+                if (groupMembersList.ElementAt(0).Admin == true) //user is admin!
+                {
+                    return 2;
+                }
+                else // user is regular
+                {
+                    return 1;
+                }
+            }
+            GroupMember newGroupMember = new GroupMember(userId, groupID, false);
+            await mobileService.GetTable<GroupMember>().InsertAsync(newGroupMember);
             return userId;
         }
 
@@ -141,5 +156,61 @@ namespace Hydrapp.Client.Services
             return group.GroupId;
         }
 
+        public async Task<int> addBandEntry(BandEntry bandEntry)
+        {
+            try
+            {
+                await mobileService.GetTable<BandEntry>().InsertAsync(bandEntry);
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+            return 1;
+        }
+
+        public async Task<List<User>> getNewMembers(List<int> currentMembersList, int groupId)
+        {
+            List<User> newUsers = new List<User>();
+            List<int> newUsersIds = new List<int>();
+            List<int> dbMembersIds = await mobileService.GetTable<GroupMember>().Where(groupMember => groupMember.GroupId == groupId && groupMember.Admin == false).Select(groupMember => groupMember.UserId).ToListAsync();
+            foreach (var memberId in dbMembersIds)
+            {
+                if (!currentMembersList.Contains(memberId)) // new member
+                {
+                    newUsersIds.Add(memberId);
+                }
+            }
+            if (newUsersIds.Count > 0)
+            {
+                newUsers = await mobileService.GetTable<User>().Where(user => newUsersIds.Contains(user.UserId)).ToListAsync();
+            }
+            return newUsers;
+        }
+
+        public async Task<int> getBandIdForUserId(int userId, int groupId, string bandName)
+        {
+            var bandId = 0;
+            List<Band> bandsList;
+            try
+            {
+                bandsList = await mobileService.GetTable<Band>().Where(band => band.UserId == userId).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+            if (bandsList.Count > 0) // this user already have bandId
+            {
+                bandId = bandsList.ElementAt(0).BandId;
+            }
+            else // adding Band to DB
+            {
+                var newBand = new Band(userId, bandId, bandName);
+                await mobileService.GetTable<Band>().InsertAsync(newBand);
+                bandId = newBand.BandId;
+            }
+            return bandId;
+        }
     }
 }

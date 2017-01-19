@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using Hydrapp.Client.Modules;
 using Microsoft.Band;
 
 
@@ -18,6 +18,7 @@ namespace Hydrapp.Client.Services
         private BandClient bandClient;
         private BandDeviceInfo band;
         private BandClientManager bandClientManager;
+        private User user { get; set; }
 
 
         private double skinTemp_val;
@@ -127,12 +128,13 @@ namespace Hydrapp.Client.Services
             return bands;
         }
 
-        public async Task<bool> ConnectToBand(BandDeviceInfo b)
+        public async Task<bool> ConnectToBand(BandDeviceInfo b, User user)
         {
             
             band = b;
             try
             {
+                this.user = user;
                 bandClient = await bandClientManager.ConnectAsync(band);
             }
             catch (Exception ex)
@@ -148,7 +150,7 @@ namespace Hydrapp.Client.Services
             return false;
            
         }
-
+        
         public async Task StartReadingSkinTemp()
         {
             await bandClient.SensorManager.SkinTemperature.StartReadingsAsync();
@@ -309,8 +311,8 @@ namespace Hydrapp.Client.Services
             {
                 if (this.skinTemp_val != 0 && this.heartRate_val != 0 && this.gsr_val != 0)
                 {
-                    int bodyweight = 75;
-                    double height = 1.75;
+                    double bodyweight = user.weight;
+                    double height = user.height;
                     double bmi_Val = bodyweight / (Math.Pow(height, 2));
                     this.CurrentFluidLoss = (-1.95403 + (0.0554441 * bmi_Val) - (0.0228502 * this.skinTemp_val) + (0.0084186 * this.heartRate_val) + (0.000370397 * this.gsr_val)).ToString("#.###");
                 }

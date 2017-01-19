@@ -50,6 +50,7 @@
     <Compile Include="ManageGroupPage.xaml.cs">
       <DependentUpon>ManageGroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Band.cs" />
     <Compile Include="Modules\BandEntry.cs" />
     <Compile Include="Modules\GroupMember.cs" />
     <Compile Include="Modules\TestItem.cs" />
@@ -137,6 +138,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
   </ItemGroup>
