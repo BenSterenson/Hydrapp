@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,10 +15,12 @@ namespace Hydrapp.Client.Modules
     public class Participant : EntityData, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+
         private int rowNumber;
         public User user { get; set; }
         private BandEntry bandEntry;
-
+        private ObservableCollection<BandEntry> bandEntryHistory = new ObservableCollection<BandEntry>();
 
 
         public int RowNumber
@@ -42,6 +46,7 @@ namespace Hydrapp.Client.Modules
             {
                 bandEntry = value;
                 OnPropertyChanged();
+                bandEntryHistory.Add(bandEntry);
             }
         }
 
@@ -70,7 +75,6 @@ namespace Hydrapp.Client.Modules
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         }
     }
 }

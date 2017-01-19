@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 using Hydrapp.Client.ValueConverters;
 using Microsoft.Band.Portable;
 using Xamarin.Forms;
+using System.Threading;
 
 using System.Reflection;
 
 using Hydrapp.Client.Modules;
 using System.Collections.ObjectModel;
 using Hydrapp.Client.Services;
+using System.Collections.Specialized;
 
 namespace Hydrapp.Client.ViewModels
 {
@@ -22,6 +24,11 @@ namespace Hydrapp.Client.ViewModels
         private IService AzureDbService = App.AzureDbservice;
         private List<int> currentMembersList = new List<int>();
         private ObservableCollection<Participant> participants = new ObservableCollection<Participant>();
+
+
+
+
+
         private Color backgroundColor;
         public ObservableCollection<Participant> Participants
         {
@@ -41,11 +48,11 @@ namespace Hydrapp.Client.ViewModels
 
         private string groupName;
         private int numOfParticipants;
-        
+
         private string userName;
         private string avgHeartRate;
         private string avgFluidLoss;
-        
+
 
         public ManageGroupPageViewModel()
         {
@@ -53,8 +60,9 @@ namespace Hydrapp.Client.ViewModels
             RefreshGroupMembers();
             //Memberleft();
             //numOfParticipants = UpdateNumOfParticipants();
-
+            participants.CollectionChanged += OnCollectionChanged;
         }
+
 
         void RefreshGroupMembers()
         {
@@ -69,16 +77,17 @@ namespace Hydrapp.Client.ViewModels
         {
             addNewMembers();
             update();
-//            Random random = new Random();
-//
-//            string name = RandomString(random.Next(0, 10));
-//            string password = RandomString(random.Next(0, 10));
-//            string email = RandomString(random.Next(0, 10)) + "@gmail.com";
-//            double height = random.NextDouble() * (2.20 - 1.40) + 1.40;
-//            double weight = random.NextDouble() * (120 - 55) + 55;
-//
-//            participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height)));
-//            NumOfParticipants = participants.Count();
+            //Random random = new Random();
+
+            //string name = RandomString(random.Next(0, 10));
+            //string password = RandomString(random.Next(0, 10));
+            //string email = RandomString(random.Next(0, 10)) + "@gmail.com";
+            //double height = random.NextDouble() * (2.20 - 1.40) + 1.40;
+            //double weight = random.NextDouble() * (120 - 55) + 55;
+            //BandEntry latest = new BandEntry(DateTime.Now, 3, 3, 3, 3, 3, 3, 70, 0, 100, 100, 80, false);
+            //participants.Add(new Participant(RowCount(), new User(name, password, email, weight, height), latest));
+            //NumOfParticipants = participants.Count();
+
             return true;
         }
 
@@ -87,15 +96,19 @@ namespace Hydrapp.Client.ViewModels
             if (NumOfParticipants > 0)
             {
                 BandEntry latest = await AzureDbService.getLatestBandEntryForUser(participants.ElementAt(0).user.UserId);
+                //BandEntry latest = new BandEntry(DateTime.Now, 3, 3, 3, 3, 3, 3, 90, 0, 100, 200, 100, false);
+                Participants[0].BandEntry = latest;
+
             }
         }
 
         private async void addNewMembers()
         {
-           List<User> membersToAdd = await AzureDbService.getNewMembers(currentMembersList, App.GroupId);
-           foreach (var user in membersToAdd)
+            List<User> membersToAdd = await AzureDbService.getNewMembers(currentMembersList, App.GroupId);
+            foreach (var user in membersToAdd)
             {
                 currentMembersList.Add(user.UserId);
+
                 participants.Add(new Participant(RowCount(), user));
             }
             NumOfParticipants = participants.Count();
@@ -123,7 +136,7 @@ namespace Hydrapp.Client.ViewModels
         {
             for (int i = 1; i <= participants.Count(); i++)
             {
-                participants[i-1].RowNumber = i;
+                participants[i - 1].RowNumber = i;
             }
             OnPropertyChanged();
         }
@@ -161,7 +174,7 @@ namespace Hydrapp.Client.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
         public string UserName
         {
             get
@@ -221,10 +234,14 @@ namespace Hydrapp.Client.ViewModels
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));   
         }
 
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            base.OnBindingContextChanged();
+
+         }
 
     }
 }
