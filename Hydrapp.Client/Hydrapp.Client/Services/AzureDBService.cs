@@ -235,5 +235,15 @@ namespace Hydrapp.Client.Services
                 await mobileService.GetTable<BandEntry>().DeleteAsync(entry);
             }
         }
+
+        public async Task groupLogout(int groupId)
+        {
+            List<GroupMember> result = await mobileService.GetTable<GroupMember>().Where(groupMember => groupMember.GroupId == groupId && groupMember.Admin == false).ToListAsync();
+            foreach (var groupMember in result)
+            {
+                await mobileService.GetTable<GroupMember>().DeleteAsync(groupMember);
+            }
+            await deleteBandEntriesForGroup(groupId);
+        }
     }
 }

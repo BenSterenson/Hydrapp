@@ -7,12 +7,14 @@ using Xamarin.Forms;
 using Hydrapp.Client.Modules;
 using Hydrapp.Client.ViewModels;
 using System.Collections;
+using Hydrapp.Client.Services;
 
 namespace Hydrapp.Client
 {
     public partial class ManageGroupPage : ContentPage
     {
-       
+        private IService AzureDbService = App.AzureDbservice;
+
         public ManageGroupPage()
         {
             var toolbarItem = new ToolbarItem
@@ -45,6 +47,7 @@ namespace Hydrapp.Client
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
             App.IsUserLoggedIn = false;
+            await AzureDbService.groupLogout(App.GroupId);
             Navigation.InsertPageBefore(new LoginPage(), this);
             await Navigation.PopAsync();
         }
