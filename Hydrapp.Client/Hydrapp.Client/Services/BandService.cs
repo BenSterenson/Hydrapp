@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hydrapp.Client.Modules;
 using Microsoft.Band;
+using Xamarin.Forms;
 
 
 namespace Hydrapp.Client.Services
@@ -33,7 +34,6 @@ namespace Hydrapp.Client.Services
             {
                 currentSkinTemp = value;
                 OnPropertyChanged();
-                CalcFluidLoss();
             }
         }
 
@@ -56,7 +56,6 @@ namespace Hydrapp.Client.Services
             {
                 currentHeartRate = value;
                 OnPropertyChanged();
-                CalcFluidLoss();
             }
         }
 
@@ -68,7 +67,6 @@ namespace Hydrapp.Client.Services
             {
                 currentGSR = value;
                 OnPropertyChanged();
-                CalcFluidLoss();
             }
         }
 
@@ -303,24 +301,36 @@ namespace Hydrapp.Client.Services
             });
         }
 
-
-        public void CalcFluidLoss()
+        public void UpdateFluidLoss()
         {
-            // TODO work on the furmula
+            Device.StartTimer(new TimeSpan(0, 0, 0, 10), CalcFluidLoss);
+
+        }
+
+        public bool CalcFluidLoss()
+        {
             try
             {
                 if (this.skinTemp_val != 0 && this.heartRate_val != 0 && this.gsr_val != 0)
                 {
                     double bodyweight = user.weight;
                     double height = user.height;
-                    double bmi_Val = bodyweight / (Math.Pow(height, 2));
-                    this.CurrentFluidLoss = (-1.95403 + (0.0554441 * bmi_Val) - (0.0228502 * this.skinTemp_val) + (0.0084186 * this.heartRate_val) + (0.000370397 * this.gsr_val)).ToString("#.###");
+                    double bmi_Val = bodyweight / (Math.Pow(height/100, 2));
+                    double fluidLoss = (-0.287 + (0.055 * bmi_Val) - (0.02 * this.skinTemp_val) + (0.009 * this.heartRate_val) + (0.0004 * this.gsr_val));
+                    fluidLoss = fluidLoss / 100000;
+                    if (fluidLoss > 0)
+                    {
+                        if (!this.currentFluidLoss.Equals("Not Active"))
+                            fluidLoss = double.Parse(this.currentFluidLoss) + fluidLoss;
+                        this.currentFluidLoss = fluidLoss.ToString("#.#####");
+                    }
                 }
             }
             catch (OverflowException)
             {
-                return;
+                return false;
             }
+            return true;
         }
         
         
