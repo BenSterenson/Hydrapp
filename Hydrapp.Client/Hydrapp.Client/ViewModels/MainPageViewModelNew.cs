@@ -305,38 +305,47 @@ namespace Hydrapp.Client.ViewModels
         private async void ConnectToBand()
         {
             this.CurrentStatus = "Connecting...";
-            
-            int index = MainPageNew.bandSelectedIndex;
-            band = BandList[index];
-
-            this.BandId = await AzureDbservice.getBandIdForUserId(App.User.UserId, App.GroupId, band.Name);
-            var result = await bandService.ConnectToBand(band, App.User);
-            if (result)
+            try
             {
-                this.CurrentStatus = "Connected to band : " + band.Name;
-                this.ConnectButtonEnabled = false;
-                bandService.PropertyChanged += BandService_PropertyChanged;
+                int index = MainPageNew.bandSelectedIndex;
+                band = BandList[index];
 
-                // Band Readings
-                await bandService.StartReadingSkinTemp();
-                await bandService.StartReadingHeartRate();
-                await bandService.StartReadingGSR();
-                await bandService.StartReadingUV();
-                await bandService.StartReadingAmbientLight();
-                await bandService.StartReadingPedometer();
-                await bandService.StartReadingCalories();
-                //await bandService.StartReadingFluidLoss();
+                this.BandId = await AzureDbservice.getBandIdForUserId(App.User.UserId, App.GroupId, band.Name);
+                var result = await bandService.ConnectToBand(band, App.User);
+                if (result)
+                {
+                    this.CurrentStatus = "Connected to band : " + band.Name;
+                    this.ConnectButtonEnabled = false;
+                    bandService.PropertyChanged += BandService_PropertyChanged;
+                    bandService.UpdateFluidLoss();
+                    // Band Readings
+                    await bandService.StartReadingSkinTemp();
+                    await bandService.StartReadingHeartRate();
+                    await bandService.StartReadingGSR();
+                    await bandService.StartReadingUV();
+                    await bandService.StartReadingAmbientLight();
+                    await bandService.StartReadingPedometer();
+                    await bandService.StartReadingCalories();
+                    //await bandService.StartReadingFluidLoss();
 
-                InserToDB();
-                return;
+                    InserToDB();
+                    return;
+                }
+                else
+                {
+                    throw new Exception("cannot connect");
+                }
             }
-            this.CurrentStatus = "Failed to connect : " + band.Name;
+            catch (Exception e)
+            {
+                this.CurrentStatus = "Failed to connect : " + band.Name;
+            }
         }
 
         void InserToDB()
         {
-            // send data every 5 sec
-            Device.StartTimer(new TimeSpan(0, 0, 0, 5), UpdateDataInDb);
+            // send data every 10 sec
+            Device.StartTimer(new TimeSpan(0, 0, 0, 10), UpdateDataInDb);
         }
 
         private bool UpdateDataInDb()
@@ -406,10 +415,17 @@ namespace Hydrapp.Client.ViewModels
         {
             get
             {
-                return new Command(async () =>
-                {
-                    await bandService.StopReadingSkinTemp();
-                });
+                    return new Command(async () =>
+                    {
+                        try
+                        {
+                            await bandService.StopReadingSkinTemp();
+                        }
+                        catch (Exception e)
+                        {
+                            //
+                        }
+                    });
             }
         }
 
