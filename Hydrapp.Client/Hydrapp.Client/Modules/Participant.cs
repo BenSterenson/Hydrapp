@@ -19,9 +19,8 @@ namespace Hydrapp.Client.Modules
 
         private int rowNumber;
         public User user { get; set; }
-        private BandEntry bandEntry;
         private ObservableCollection<BandEntry> bandEntryHistory = new ObservableCollection<BandEntry>();
-
+        private BandEntry bandEntry;
 
         public int RowNumber
         {
@@ -35,7 +34,6 @@ namespace Hydrapp.Client.Modules
                 OnPropertyChanged();
             }
         }
-
         public BandEntry BandEntry
         {
             get

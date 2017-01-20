@@ -55,6 +55,4 @@ namespace Hydrapp.Client.Modules
             this.IsDehydrated = IsDehydrated;
         }
     }
-
-    
 }
