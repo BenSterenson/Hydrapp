@@ -44,15 +44,17 @@
               <Grid.ColumnDefinitions>
 
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
               </Grid.ColumnDefinitions>
 
               <Label Text="No." FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
               <Label Text="Name" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
               <Label Text="Heart Rate" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
               <Label Text="Fluid Loss" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
+              <Label Text="Skin Temp" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="4" />
 
             </Grid>
           </StackLayout>
@@ -74,9 +76,10 @@
 
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="Auto"/>
-                      <ColumnDefinition Width="5*"/>
-                      <ColumnDefinition Width="3*"/>
-                      <ColumnDefinition Width="3*"/>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
 
@@ -84,6 +87,7 @@
                     <Label Text="{Binding user.userName}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
                     <Label Text="{Binding BandEntry.HeartRate, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
                     <Label Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
+                    <Label Text="{Binding BandEntry.SkinTemp, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="4" />
 
                   </Grid>
                 </StackLayout>
