@@ -26,7 +26,7 @@ namespace Hydrapp.Client.ViewModels
         private IService AzureDbService = App.AzureDbservice;
         private List<int> currentMembersList = new List<int>();
         private ObservableCollection<Participant> participants = new ObservableCollection<Participant>();
-
+        private bool noticed = false;
         private string groupName;
         private int numOfParticipants;
         private Color backgroundColor;
@@ -64,18 +64,18 @@ namespace Hydrapp.Client.ViewModels
         
         private bool checkForNewMember()
         {
-            //addNewMembers();
+            addNewMembers();
 
             /*Generate random users*/
-            GenerateaddNewMembers();
+            //GenerateaddNewMembers();
             return true;
         }
         private bool updateValues()
         {
-            //update();
+            update();
 
             /*Generate random values for users*/
-            updateVal();
+            //updateVal();
             return true;
         }
         private async void update()
@@ -91,6 +91,11 @@ namespace Hydrapp.Client.ViewModels
                 {
                     member.BandEntry = latest;
                     Participants[i] = new Participant(member.RowNumber, member.user, latest);
+                    if (latest.IsDehydrated && noticed == false)
+                    {
+                        await DisplayAlert("Dehydration Alert", member.user.userName + " is dehydrated!!", "Ok");
+                        noticed = true;
+                    }
                 }
             }
         }

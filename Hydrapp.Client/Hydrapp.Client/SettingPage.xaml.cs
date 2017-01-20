@@ -23,13 +23,10 @@ namespace Hydrapp.Client
 
         async void OnUpdateButtonClicked(object sender, EventArgs e)
 		{
-            var user = new User();
+            var user = App.User;
             double n;
             
-            if (isNotNull(passwordEntry.Text))
-            {
-                user.password = passwordEntry.Text;
-            }
+            
             if (isNotNull(passwordEntry.Text))
             {
                 user.password = passwordEntry.Text;
@@ -42,9 +39,7 @@ namespace Hydrapp.Client
             {
                 user.height = Double.Parse(heightEntry.Text);
             }
-
-            // TODO
-            // update user with new values
+            
             bool successOnUpdate = await updateUser(user);
             if (successOnUpdate)
             {
