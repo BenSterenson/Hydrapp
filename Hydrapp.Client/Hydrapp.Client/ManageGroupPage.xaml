@@ -62,7 +62,7 @@
 
         <ListView.ItemTemplate>
           <DataTemplate>
-            <ViewCell >
+            <ViewCell>
               <ViewCell.View>
                 <!--Binding BackgroundColor-->
                 <StackLayout Padding="15,25,5,25" Orientation="Horizontal" >
@@ -86,7 +86,7 @@
                     <Label Text="{Binding RowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
                     <Label Text="{Binding user.userName}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
                     <Label Text="{Binding BandEntry.HeartRate, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
-                    <Label Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
+                    <Label Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.######}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
                     <Label Text="{Binding BandEntry.SkinTemp, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="4" />
 
                   </Grid>

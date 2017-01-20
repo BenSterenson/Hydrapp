@@ -90,7 +90,7 @@ namespace Hydrapp.Client.ViewModels
                 if (latest != null && (DateTime.Compare(member.BandEntry.TimeStamp, latest.TimeStamp) < 0))
                 {
                     member.BandEntry = latest;
-                    Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry);
+                    Participants[i] = new Participant(member.RowNumber, member.user, latest);
                 }
             }
         }
@@ -215,8 +215,7 @@ namespace Hydrapp.Client.ViewModels
             {
                 BandEntry latest = GenerateBandEntry();
                 var member = participants[i];
-                member.BandEntry = latest;
-                Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry);
+                Participants[i] = new Participant(member.RowNumber, member.user, latest);
             }
         }
 

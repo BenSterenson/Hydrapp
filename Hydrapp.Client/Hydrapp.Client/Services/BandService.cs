@@ -315,7 +315,7 @@ namespace Hydrapp.Client.Services
                 {
                     double bodyweight = user.weight;
                     double height = user.height;
-                    double bmi_Val = bodyweight / (Math.Pow(height/100, 2));
+                    double bmi_Val = bodyweight / (Math.Pow(height, 2));
                     double fluidLoss = (-0.287 + (0.055 * bmi_Val) - (0.02 * this.skinTemp_val) + (0.009 * this.heartRate_val) + (0.0004 * this.gsr_val));
                     fluidLoss = fluidLoss / 100000;
                     if (fluidLoss > 0)

@@ -34,7 +34,7 @@
       <Entry x:Name="weightEntry" Placeholder="Enter your Weight" />
 
       <Label Text="Height" />
-      <Entry x:Name="heightEntry" Placeholder="Enter your Height" />
+      <Entry x:Name="heightEntry" Placeholder="Enter your Height in Meters" />
       
       
       <Button Text="Sign Up" Clicked="OnSignUpButtonClicked" />
