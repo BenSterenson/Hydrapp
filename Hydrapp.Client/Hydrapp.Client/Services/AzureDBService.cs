@@ -245,5 +245,18 @@ namespace Hydrapp.Client.Services
             }
             await deleteBandEntriesForGroup(groupId);
         }
+
+        public async Task updateUser(User user)
+        {
+            List<User> result = await mobileService.GetTable<User>().Where(x => x.UserId == user.UserId).ToListAsync();
+            user.Id = result.ElementAt(0).Id;
+            await mobileService.GetTable<User>().UpdateAsync(user);
+        }
+
+        public async Task<List<BandEntry>> getBandEntriesForUser(User user)
+        {
+            List<BandEntry> result = await mobileService.GetTable<BandEntry>().Where(bandEntry => bandEntry.UserId == user.UserId).OrderByDescending(entry => entry.TimeStamp).ToListAsync();
+            return result;
+        }
     }
 }

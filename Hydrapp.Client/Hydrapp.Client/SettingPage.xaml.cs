@@ -2,6 +2,7 @@
 using Hydrapp.Client.Services;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace Hydrapp.Client
@@ -11,12 +12,8 @@ namespace Hydrapp.Client
         private IService AzureDbService = App.AzureDbservice;
         public SettingPage()
 		{
-            
             InitializeComponent();
-            var user = new User() { userName = "abadacaddc", email="afba@gmail.com", height = 5, weight = 10};
-            //todo
-            //user = readfromDB()
-
+		    var user = App.User;
             usernameEntry.Text = user.userName;
             emailEntry.Placeholder = user.email;
             weightEntry.Placeholder = user.weight.ToString();
@@ -48,7 +45,7 @@ namespace Hydrapp.Client
 
             // TODO
             // update user with new values
-            bool successOnUpdate = updateUser(user);
+            bool successOnUpdate = await updateUser(user);
             if (successOnUpdate)
             {
                 await DisplayAlert("Updated Status", "Successfully updated information", "OK");
@@ -60,10 +57,10 @@ namespace Hydrapp.Client
 			}
 		}
 
-        private bool updateUser(User user)
+        private async Task<bool> updateUser(User user)
         {
+            await AzureDbService.updateUser(user);
             return true;
-            //throw new NotImplementedException();
         }
 
         bool isNotNull(string value)

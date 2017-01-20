@@ -57,40 +57,59 @@ namespace Hydrapp.Client
         /*CreateGroup Toggle */
         async void OnGroupLoginButtonClicked(object sender, EventArgs e)
         {
-            if (createGroup)
-            {
-                int GroupId = await AzureDbservice.createGroup(userId, groupIdEntry.Text, passwordEntry.Text);
-                await DisplayAlert("Group Information", "Group Id : " + GroupId + "\nPassword: " + passwordEntry.Text, "OK");
-                App.GroupId = GroupId;
-                Navigation.InsertPageBefore(new ManageGroupPage(), this);
-                await Navigation.PopAsync();
-            }
-            else
-            {
-                int result = await JoinGroup(userId, groupIdEntry.Text, passwordEntry.Text);
-                if (result > 0)
-                {
-                    App.IsUserLoggedIn = true;
-                    App.GroupId = int.Parse(groupIdEntry.Text);
 
-                    if (result == 2) //user is Admin- Admin mode
-                    {
-                        Navigation.InsertPageBefore(new ManageGroupPage(), this);
-                        await Navigation.PopAsync();
-                    }
-                    else // user is regular user
-                    {
-                        Navigation.InsertPageBefore(new MainPageNew(), this);
-                        await Navigation.PopAsync();
-                    }
+            if (checkValid(groupIdEntry.Text, passwordEntry.Text) == 1)
+            {
+                if (createGroup)
+                {
+                    int GroupId = await AzureDbservice.createGroup(userId, groupIdEntry.Text, passwordEntry.Text);
+                    await DisplayAlert("Group Information",
+                        "Group Id : " + GroupId + "\nPassword: " + passwordEntry.Text, "OK");
+                    App.GroupId = GroupId;
+                    Navigation.InsertPageBefore(new ManageGroupPage(), this);
+                    await Navigation.PopAsync();
                 }
                 else
                 {
-                    messageLabel.Text = "Login failed";
-                    passwordEntry.Text = string.Empty;
+                    int result = await JoinGroup(userId, groupIdEntry.Text, passwordEntry.Text);
+                    if (result > 0)
+                    {
+                        App.IsUserLoggedIn = true;
+                        App.GroupId = int.Parse(groupIdEntry.Text);
+
+                        if (result == 2) //user is Admin- Admin mode
+                        {
+                            Navigation.InsertPageBefore(new ManageGroupPage(), this);
+                            await Navigation.PopAsync();
+                        }
+                        else // user is regular user
+                        {
+                            Navigation.InsertPageBefore(new MainPageNew(), this);
+                            await Navigation.PopAsync();
+                        }
+                    }
+                    else // Invalid credentials
+                    {
+                        messageLabel.Text = "Login failed. Check credentials";
+                        passwordEntry.Text = string.Empty;
+                    }
                 }
             }
+            else // Invalid fields
+            {
+                messageLabel.Text = "Login failed. Empty fields are not allowed";
+                passwordEntry.Text = string.Empty;
+            }
 
+        }
+
+        private int checkValid(string text1, string text2)
+        {
+            if (String.IsNullOrEmpty(text1) || String.IsNullOrEmpty(text2))
+            {
+                return -1;
+            }
+            return 1;
         }
 
         /*Logout*/
@@ -104,10 +123,6 @@ namespace Hydrapp.Client
         //Help functions
         private async Task<int> JoinGroup(int userId, string groupIDAsString, string groupPassword)
         {
-            if (String.IsNullOrEmpty(groupIDAsString) || String.IsNullOrEmpty(groupPassword))
-            {
-                return -1;
-            }
             int groupId;
             try {
                 groupId = int.Parse(groupIDAsString);
