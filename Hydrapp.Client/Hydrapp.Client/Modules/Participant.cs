@@ -21,7 +21,7 @@ namespace Hydrapp.Client.Modules
         public User user { get; set; }
         private ObservableCollection<BandEntry> bandEntryHistory = new ObservableCollection<BandEntry>();
         private BandEntry bandEntry;
-        private string image_src = "checkmark.png";
+        private string image_src;
 
         public int RowNumber
         {
@@ -90,6 +90,14 @@ namespace Hydrapp.Client.Modules
             this.rowNumber = rowNumber;
             this.user = user;
             this.bandEntry = Entry;
+            if (Entry.SkinTemp > 35)
+            {
+                this.Image_src = "overheat.png";
+            }
+            else
+            {
+                this.Image_src = "checkmark.png";
+            }
         }
         public Participant(int rowNumber, User user, BandEntry Entry, ObservableCollection<BandEntry> BandEntryHistory)
         {
@@ -97,6 +105,14 @@ namespace Hydrapp.Client.Modules
             this.user = user;
             this.bandEntry = Entry;
             this.bandEntryHistory = BandEntryHistory;
+            if (Entry.SkinTemp > 35)
+            {
+                this.Image_src = "overheat.png";
+            }
+            else
+            {
+                this.Image_src = "checkmark.png";
+            }
         }
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
