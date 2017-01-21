@@ -21,6 +21,7 @@ namespace Hydrapp.Client.Modules
         public User user { get; set; }
         private ObservableCollection<BandEntry> bandEntryHistory = new ObservableCollection<BandEntry>();
         private BandEntry bandEntry;
+        private string image_src = "checkmark.png";
 
         public int RowNumber
         {
@@ -31,6 +32,19 @@ namespace Hydrapp.Client.Modules
             set
             {
                 rowNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Image_src
+        {
+            get
+            {
+                return image_src;
+            }
+            set
+            {
+                image_src = value;
                 OnPropertyChanged();
             }
         }

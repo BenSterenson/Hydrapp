@@ -18,8 +18,9 @@
   </ContentPage.Resources>
 
 
-  <StackLayout>
-    
+
+    <StackLayout Padding="0,50,0,0">
+      <StackLayout>
     <Label Text="{Binding GroupName}"
            Font="Large"
            FontAttributes="Bold"
@@ -29,75 +30,62 @@
            Font="Small"
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
-
-  
-    <StackLayout Padding="0,20,0,0">
-      <ListView x:Name="listView" SeparatorVisibility="Default" ItemsSource="{Binding Participants}" >
+  </StackLayout>
+    
+      <ListView x:Name="listView" SeparatorVisibility="Default" ItemsSource="{Binding Participants}" RowHeight="50">
         <ListView.Header>
-          <StackLayout Padding="15,5,5,5" BackgroundColor="#cccccc" Orientation="Horizontal">
             <Grid>
 
-              <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-              </Grid.RowDefinitions>
-
               <Grid.ColumnDefinitions>
-
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.1*"/>
               </Grid.ColumnDefinitions>
 
-              <Label Text="No." FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
-              <Label Text="Name" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
-              <Label Text="Heart Rate" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
-              <Label Text="Fluid Loss" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
-              <Label Text="Skin Temp" FontAttributes="Bold" VerticalOptions="Center" Grid.Row="0" Grid.Column="4" />
-
+              <Label Grid.Column="0" Text="No." FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+              <Label Grid.Column="1" Text="Name" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+              <Label Grid.Column="2" Text="Heart Rate" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+              <Label Grid.Column="3" Text="Fluid Loss" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+              <Label Grid.Column="4" Text="Skin Temp" FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+              <Label Grid.Column="5" Text="Status" FontAttributes="Bold" VerticalOptions="Center" />
             </Grid>
-          </StackLayout>
+          
         </ListView.Header>
 
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
-              <ViewCell.View>
-                <!--Binding BackgroundColor-->
-                <StackLayout Padding="15,25,5,25" Orientation="Horizontal" >
-
-              <!--     <Grid BackgroundColor="{Binding Converter={StaticResource FluidlossColorConverter}}">-->
-
+              
+                <!--Binding BackgroundColor
+                   <Grid BackgroundColor="{Binding Converter={StaticResource FluidlossColorConverter}}">-->
                     <Grid >
-                    <Grid.RowDefinitions>
-                      <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
 
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="*"/>
+
+                      <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="0.1*"/>
+                      <ColumnDefinition Width="0.2*"/>
+                      <ColumnDefinition Width="0.2*"/>
+                      <ColumnDefinition Width="0.2*"/>
+                      <ColumnDefinition Width="0.2*"/>
+                      <ColumnDefinition Width="0.1*"/>
                     </Grid.ColumnDefinitions>
-
-
-                    <Label Text="{Binding RowNumber}" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
-                    <Label Text="{Binding user.userName}" VerticalOptions="Center" Grid.Row="0" Grid.Column="1" />
-                    <Label Text="{Binding BandEntry.HeartRate, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="2" />
-                    <Label Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.######}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="3" />
-                    <Label Text="{Binding BandEntry.SkinTemp, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" Grid.Row="0" Grid.Column="4" />
-
+                      
+                    <Label Grid.Column="0" Text="{Binding RowNumber}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Label Grid.Column="1" Text="{Binding user.userName}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Label Grid.Column="2" Text="{Binding BandEntry.HeartRate, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Label Grid.Column="3" Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.######}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Label Grid.Column="4" Text="{Binding BandEntry.SkinTemp, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Image Grid.Column="5" Source="{Binding Image_src}" HeightRequest="30" />
                   </Grid>
-                </StackLayout>
-              </ViewCell.View>
-            </ViewCell>
+              
+
+    </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
     </StackLayout>
-
-  </StackLayout>
   
 </ContentPage>
