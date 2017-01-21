@@ -43,7 +43,7 @@ namespace Hydrapp.Client.ViewModels
         void UpdateDehydrationLevel()
         {
             //Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), AddData);
-            Device.StartTimer(new TimeSpan(0, 0, 0, 300), UseMemberInfo);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), UseMemberInfo);
         }
 
         private bool UseMemberInfo()

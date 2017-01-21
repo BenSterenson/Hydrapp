@@ -24,7 +24,7 @@
     </chart:SfChart.Series>
     
     <chart:SfChart.SecondaryAxis>
-	    <chart:NumericalAxis Maximum="30" Minimum="0">      
+	    <chart:NumericalAxis Maximum="10" Minimum="0">      
 		    <chart:NumericalAxis.StripLines>        
 			    <chart:NumericalStripLine Start="5" Width ="1" Text="Dehydration Threshold" FillColor="#ff8300">
 				    <chart:NumericalStripLine.LabelStyle>
