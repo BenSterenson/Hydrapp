@@ -47,6 +47,13 @@ namespace Hydrapp.Client.Modules
                 bandEntryHistory.Add(bandEntry);
             }
         }
+        public ObservableCollection<BandEntry> BandEntryHistory
+        {
+            get
+            {
+                return bandEntryHistory;
+            }
+        }
 
         //public Group Group { get; set; }
         //public Band Band { get; set; }
@@ -68,7 +75,14 @@ namespace Hydrapp.Client.Modules
         {
             this.rowNumber = rowNumber;
             this.user = user;
-            this.BandEntry = Entry;
+            this.bandEntry = Entry;
+        }
+        public Participant(int rowNumber, User user, BandEntry Entry, ObservableCollection<BandEntry> BandEntryHistory)
+        {
+            this.rowNumber = rowNumber;
+            this.user = user;
+            this.bandEntry = Entry;
+            this.bandEntryHistory = BandEntryHistory;
         }
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

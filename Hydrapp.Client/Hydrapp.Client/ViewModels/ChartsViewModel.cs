@@ -20,15 +20,17 @@ namespace Hydrapp.Client.ViewModels
         private List<BandEntry> historicData;
         private int counter = 0;
         private User CurrentUser;
+        private Participant CurrentParticipant;
         private BandEntry currentEntry;
         public ObservableCollection<ChartDataPoint> DehydrationLevel { get; set; }
 
 
-        public ChartsViewModel(User user)
+        public ChartsViewModel(Participant member)
         {
-            var us = user;
-            CurrentUser = user;
-            GetHistoricData();
+            CurrentParticipant = member;
+            CurrentUser = member.user;
+
+            //GetHistoricData();
             DehydrationLevel = new ObservableCollection<ChartDataPoint>();
             UpdateDehydrationLevel();
         }
@@ -40,12 +42,24 @@ namespace Hydrapp.Client.ViewModels
 
         void UpdateDehydrationLevel()
         {
-            Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), AddData);
+            //Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), AddData);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 300), UseMemberInfo);
         }
+
+        private bool UseMemberInfo()
+        {
+            if (counter < CurrentParticipant.BandEntryHistory.Count)
+            {
+                currentEntry = CurrentParticipant.BandEntryHistory[counter];
+                counter++;
+                DehydrationLevel.Add(new ChartDataPoint(currentEntry.TimeStamp, currentEntry.FluidLoss));
+            }
+            return true;
+        }
+
 
         private bool AddData()
         {
-            BandEntry entry;
             if (counter < historicData.Count)
             {
                 currentEntry = historicData.ElementAt(counter);

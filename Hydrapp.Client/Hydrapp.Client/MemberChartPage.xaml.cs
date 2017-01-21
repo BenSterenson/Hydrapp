@@ -8,11 +8,11 @@ namespace Hydrapp.Client
 {
     public partial class MemberChartPage : ContentPage
     {
-        public MemberChartPage(User user)
+        public MemberChartPage(Participant member)
         {
             InitializeComponent();
 
-            this.BindingContext = new ChartsViewModel(user);
+            this.BindingContext = new ChartsViewModel(member);
 
         }
     }

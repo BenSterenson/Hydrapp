@@ -36,7 +36,7 @@ namespace Hydrapp.Client
                     return;
                 
                 await DisplayAlert("ItemSelected", member.user.userName, "Ok");
-                await Navigation.PushAsync(new MemberChartPage(member.user));
+                await Navigation.PushAsync(new MemberChartPage(member));
             };
 
             // The ItemSelected is also triggered here.
