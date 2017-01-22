@@ -112,8 +112,8 @@
     <Content Include="dehydration.png" />
     <Content Include="monkey.jpg" />
     <Content Include="normalfluid.png" />
-    <Content Include="normalHeat.png" />
     <Content Include="overHeat.png" />
+    <Content Include="normalHeat.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
