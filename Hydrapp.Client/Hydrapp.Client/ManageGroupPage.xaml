@@ -43,6 +43,7 @@
                 <ColumnDefinition Width="0.2*"/>
                 <ColumnDefinition Width="0.2*"/>
                 <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.1*"/>
               </Grid.ColumnDefinitions>
 
               <Label Grid.Column="0" Text="No." FontAttributes="Bold" VerticalOptions="Center" HorizontalTextAlignment="Center" />
@@ -71,15 +72,17 @@
                       <ColumnDefinition Width="0.2*"/>
                       <ColumnDefinition Width="0.2*"/>
                       <ColumnDefinition Width="0.1*"/>
-                    </Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="0.1*"/>
+                      </Grid.ColumnDefinitions>
                       
                     <Label Grid.Column="0" Text="{Binding RowNumber}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="1" Text="{Binding user.userName}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="2" Text="{Binding BandEntry.HeartRate, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="3" Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.######}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="4" Text="{Binding BandEntry.SkinTemp, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
-                    <Image Grid.Column="5" Source="{Binding Image_src}" HeightRequest="30" />
-                  </Grid>
+                    <Image Grid.Column="5" Source="{Binding Image_temp}" HeightRequest="30" />
+                    <Image Grid.Column="6" Source="{Binding Image_fluid}" HeightRequest="30" />
+                    </Grid>
               
 
     </ViewCell>

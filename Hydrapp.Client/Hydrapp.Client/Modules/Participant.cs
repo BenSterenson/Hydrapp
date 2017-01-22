@@ -21,7 +21,8 @@ namespace Hydrapp.Client.Modules
         public User user { get; set; }
         private ObservableCollection<BandEntry> bandEntryHistory = new ObservableCollection<BandEntry>();
         private BandEntry bandEntry;
-        private string image_src;
+        private string image_temp;
+        private string image_fluid;
 
         public int RowNumber
         {
@@ -36,15 +37,27 @@ namespace Hydrapp.Client.Modules
             }
         }
 
-        public string Image_src
+        public string Image_temp
         {
             get
             {
-                return image_src;
+                return image_temp;
             }
             set
             {
-                image_src = value;
+                image_temp = value;
+                OnPropertyChanged();
+            }
+        }
+        public string Image_fluid
+        {
+            get
+            {
+                return image_fluid;
+            }
+            set
+            {
+                image_fluid = value;
                 OnPropertyChanged();
             }
         }
@@ -90,14 +103,8 @@ namespace Hydrapp.Client.Modules
             this.rowNumber = rowNumber;
             this.user = user;
             this.bandEntry = Entry;
-            if (Entry.SkinTemp > 35)
-            {
-                this.Image_src = "overheat.png";
-            }
-            else
-            {
-                this.Image_src = "checkmark.png";
-            }
+            this.Image_temp = Entry.SkinTemp > 35 ? "overHeat.png" : "normalHeat.png";
+            this.Image_fluid = Entry.IsDehydrated ? "dehydration.png" : "normalfluid.png";
         }
         public Participant(int rowNumber, User user, BandEntry Entry, ObservableCollection<BandEntry> BandEntryHistory)
         {
@@ -105,14 +112,8 @@ namespace Hydrapp.Client.Modules
             this.user = user;
             this.bandEntry = Entry;
             this.bandEntryHistory = BandEntryHistory;
-            if (Entry.SkinTemp > 35)
-            {
-                this.Image_src = "overheat.png";
-            }
-            else
-            {
-                this.Image_src = "checkmark.png";
-            }
+            this.Image_temp = Entry.SkinTemp > 35 ? "overHeat.png" : "normalHeat.png";
+            this.Image_fluid = Entry.IsDehydrated ? "dehydration.png" : "normalfluid.png";
         }
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
