@@ -64,18 +64,18 @@ namespace Hydrapp.Client.ViewModels
         
         private bool checkForNewMember()
         {
-            //addNewMembers();
+            addNewMembers();
 
             /*Generate random users*/
-            GenerateaddNewMembers();
+            //GenerateaddNewMembers();
             return true;
         }
         private bool updateValues()
         {
-            //update();
+            update();
 
             /*Generate random values for users*/
-            updateVal();
+            //updateVal();
             return true;
         }
         private async void update()
@@ -105,12 +105,11 @@ namespace Hydrapp.Client.ViewModels
             List<User> membersToAdd = await AzureDbService.getNewMembers(currentMembersList, App.GroupId);
             foreach (var user in membersToAdd)
             {
-                currentMembersList.Add(user.UserId);
-
                 BandEntry latest = await AzureDbService.getLatestBandEntryForUser(user.UserId);
                 if (latest != null)
                 {
                     participants.Add(new Participant(RowCount(), user, latest));
+                    currentMembersList.Add(user.UserId);
                 }
             }
             NumOfParticipants = participants.Count();
