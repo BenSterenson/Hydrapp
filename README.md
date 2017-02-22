@@ -17,7 +17,9 @@
 - Managing group feature, allows trip guides, army commanders, family members, or anyone who wants to monitor other members' health condition and make sure they stay hydrated.
 
 # Video
-https://www.youtube.com/watch?v=sCWgWnbH7R0&t=1s
+[Hydrapp Video](https://www.youtube.com/watch?v=sCWgWnbH7R0&t=1s)
+
+
 
 # Technology
 - Azure cloud 
