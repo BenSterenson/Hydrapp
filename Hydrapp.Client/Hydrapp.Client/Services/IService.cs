@@ -22,7 +22,11 @@ namespace Hydrapp.Client.Services
         Task<BandEntry> getLatestBandEntryForUser(int userId);
         Task<List<BandEntry>> getBandEntriesForUser(User user);
         Task deleteBandEntriesForGroup(int groupId);
-        Task groupLogout(int groupId);
+        Task groupLogout(int groupId, int activityId);
         Task updateUser(User user);
+        Task<int> createActivity(int Lvl, int groupId);
+        Task<int> updateUserHydrateAvg(int activityId, List<int> userIds);
+        Task<int>  getActivityForGroup(int groupId);
+        Task<long> getDehydrateAVGForUser(int userId, int activityLvl);
     }
 }

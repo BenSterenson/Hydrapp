@@ -30,6 +30,12 @@
            Font="Small"
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
+
+    <Button Text="End Activity"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand"
+            Clicked="OnSummaryButtonClicked" />
+        
   </StackLayout>
     
       <ListView x:Name="listView" SeparatorVisibility="Default" ItemsSource="{Binding Participants}" RowHeight="50">

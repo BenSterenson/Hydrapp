@@ -30,6 +30,7 @@ namespace Hydrapp.Client.ViewModels
         private string groupName;
         private int numOfParticipants;
         private Color backgroundColor;
+        public Stopwatch stopwatch;
 
         public ObservableCollection<Participant> Participants
         {
@@ -47,9 +48,10 @@ namespace Hydrapp.Client.ViewModels
         public ManageGroupPageViewModel()
         {
             groupName = "HydrappGroup";
-
+            stopwatch = Stopwatch.StartNew();
             RefreshGroupMembers();
             updateMembersTimer();
+            recommendationTimer();
             //Memberleft();
 
         }
@@ -61,11 +63,35 @@ namespace Hydrapp.Client.ViewModels
         {
             Device.StartTimer(new TimeSpan(0, 0, 0, 10), updateValues);
         }
-        
+        void recommendationTimer()
+        {
+            Device.StartTimer(new TimeSpan(0,0,0, 2), checkRecom);
+        }
+
+        private bool checkRecom()
+        {
+            foreach (Participant participant in Participants) {
+                if (participant.notified == false && participant.dehydrateTicks > 0 && participant.dehydrateTicks < stopwatch.ElapsedTicks)
+                {
+                    showAlert(participant);
+                    participant.notified = true;
+                }
+            }
+            return true;
+        }
+
+        private async void showAlert(Participant par)
+        {
+            await DisplayAlert("ALERT ALERT ALERT\n",
+                        "According to our learning algorithm, User: " + par.user.userName +
+                        ", jas a chance of getting hydrated soon. please pay attention!", "OK");
+
+        }
+
         private bool checkForNewMember()
         {
             addNewMembers();
-
+            
             /*Generate random users*/
             //GenerateaddNewMembers();
             return true;
@@ -90,7 +116,7 @@ namespace Hydrapp.Client.ViewModels
                 if (latest != null && (DateTime.Compare(member.BandEntry.TimeStamp, latest.TimeStamp) < 0))
                 {
                     member.BandEntry = latest;
-                    Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.BandEntryHistory);
+                    Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.dehydrateTicks, member.BandEntryHistory);
                     if (latest.IsDehydrated && noticed == false)
                     {
                         await DisplayAlert("Dehydration Alert", member.user.userName + " is dehydrated!!", "Ok");
@@ -106,12 +132,14 @@ namespace Hydrapp.Client.ViewModels
             foreach (var user in membersToAdd)
             {
                 BandEntry latest = await AzureDbService.getLatestBandEntryForUser(user.UserId);
+                long dehydrateTicks = await AzureDbService.getDehydrateAVGForUser(user.UserId, App.ActivityLvl);
                 if (latest != null)
                 {
-                    participants.Add(new Participant(RowCount(), user, latest));
+                    participants.Add(new Participant(RowCount(), user, latest, dehydrateTicks));
                     currentMembersList.Add(user.UserId);
                 }
             }
+            App.Users = currentMembersList;
             NumOfParticipants = participants.Count();
         }
 
@@ -203,11 +231,18 @@ namespace Hydrapp.Client.ViewModels
         private void GenerateaddNewMembers()
         {
             // TODO REMOVE 
-            if (participants.Count() < 9)
+            if (participants.Count() != 3)
             {
-                User user = GenerateRandUser();
-                BandEntry latest = GenerateBandEntry();
-                participants.Add(new Participant(RowCount(), user, latest));
+
+                User user = new User("Ben", "123", "nan",70,1.80);
+                BandEntry latest = GenerateBandEntry(null);
+                participants.Add(new Participant(RowCount(), user, latest, 1000));
+                user = new User("Noam", "123", "nan", 70, 1.80);
+                latest = GenerateBandEntry(null);
+                participants.Add(new Participant(RowCount(), user, latest, 2000));
+                user = new User("Shimon", "123", "nan", 70, 1.80);
+                latest = GenerateBandEntry(null);
+                participants.Add(new Participant(RowCount(), user, latest, 3000));
             }
             NumOfParticipants = participants.Count();
         }
@@ -217,24 +252,34 @@ namespace Hydrapp.Client.ViewModels
             int numofusers = Participants.Count();
             for (int i = 0; i < numofusers; i++)
             {
-                BandEntry latest = GenerateBandEntry();
+                Participant p = Participants[i];
+                BandEntry latest = GenerateBandEntry(p.BandEntry);
                 var member = participants[i];
                 member.BandEntry = latest;
-                Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.BandEntryHistory);
+                Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.dehydrateTicks, member.BandEntryHistory);
             }
         }
 
-        public BandEntry GenerateBandEntry()
+        public BandEntry GenerateBandEntry(BandEntry current)
         {
             // TODO REMOVE 
-
+            bool isDe = false;
             Random random = new Random();
             int hearRate = random.Next(70, 200);
             double skinTemp = random.NextDouble() * (37 - 28) + 28;
             double hear = random.NextDouble() * (100 - 50) + 50;
-            double fluidloss = random.NextDouble() * (10 - 0) + 0;
-
-            return new BandEntry(DateTime.Now, 32, 3, 3, 3, skinTemp, 0, hearRate, 0, 0, 0, fluidloss, false);
+            double fluidloss;
+            if (current == null) {
+                fluidloss = 0;
+            }
+            else {
+                fluidloss = current.FluidLoss + (random.NextDouble() * (0.8));
+            }
+            if (fluidloss >= 3)
+            {
+                isDe = true;
+            }
+            return new BandEntry(DateTime.Now,App.ActivityId, 32, 3, 3, 3, skinTemp, 0, hearRate, 0, 0, 0, fluidloss, isDe);
         }
         public User GenerateRandUser()
         {
