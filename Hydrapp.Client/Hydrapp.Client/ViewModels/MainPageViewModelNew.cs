@@ -353,8 +353,8 @@ namespace Hydrapp.Client.ViewModels
             try
             {
                 double fluidLoss = double.Parse(readFluidLoss);
-                bool dehydration = fluidLoss >= 3.0;
-                BandEntry newEntry = new BandEntry(DateTime.UtcNow, App.GroupId, App.User.UserId, BandId, int.Parse(readGSR),
+                bool dehydration = fluidLoss >= 0.001; // change to 3
+                BandEntry newEntry = new BandEntry(DateTime.UtcNow, App.ActivityId, App.GroupId, App.User.UserId, BandId, int.Parse(readGSR),
                     double.Parse(readSkinTemp), int.Parse(readAmbientLight), int.Parse(readHR), getUV(readUV),
                     int.Parse(readCalories), 0, fluidLoss, dehydration);
                 sendToCloud(newEntry);

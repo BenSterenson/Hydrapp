@@ -102,7 +102,7 @@ namespace Hydrapp.Client.Services
             }
         }
 
-        private string currentFluidLoss = "Not Active";
+        private string currentFluidLoss = "0";
         public string CurrentFluidLoss
         {
             get { return currentFluidLoss; }
@@ -320,15 +320,19 @@ namespace Hydrapp.Client.Services
                     fluidLoss = fluidLoss / 100000;
                     if (fluidLoss > 0)
                     {
-                        if (!this.currentFluidLoss.Equals("Not Active"))
-                            fluidLoss = double.Parse(this.currentFluidLoss) + fluidLoss;
-                        this.currentFluidLoss = fluidLoss.ToString("#.#####");
+                        fluidLoss = double.Parse(this.currentFluidLoss) + fluidLoss;
+                        this.currentFluidLoss = fluidLoss.ToString("#.#######");
                     }
                 }
             }
             catch (OverflowException)
             {
                 return false;
+            }
+            catch (Exception e)
+            {
+                return false;
+
             }
             return true;
         }

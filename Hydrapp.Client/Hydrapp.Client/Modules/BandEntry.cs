@@ -12,6 +12,8 @@ namespace Hydrapp.Client.Modules
     {
         [JsonProperty(PropertyName = "TimeStamp")]
         public DateTime TimeStamp { get; set; }
+        [JsonProperty(PropertyName = "ActivityId")]
+        public int ActivityId { get; set; }
         [JsonProperty(PropertyName = "GroupId")]
         public int GroupId { get; set; }
         [JsonProperty(PropertyName = "UserId")]
@@ -37,10 +39,11 @@ namespace Hydrapp.Client.Modules
         [JsonProperty(PropertyName = "IsDehydrated")]
         public bool IsDehydrated { get; set; }
 
-        public BandEntry(DateTime timeStamp, int groupId, int userId, int bandId, int gsr, double skinTemp,
+        public BandEntry(DateTime timeStamp, int activityId, int groupId, int userId, int bandId, int gsr, double skinTemp,
         int light, int heartRate, int UV, int calories, int steps, double floidLoss, bool IsDehydrated)
         {
             this.TimeStamp = timeStamp;
+            this.ActivityId = activityId;
             this.GroupId = groupId;
             this.UserId = userId;
             this.BandId = bandId;

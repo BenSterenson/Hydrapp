@@ -25,7 +25,7 @@ namespace Hydrapp.Client
             ToolbarItems.Add(toolbarItem);
 
             InitializeComponent();
-
+            
             this.BindingContext = new ManageGroupPageViewModel();
 
             listView.ItemSelected +=async (object sender, SelectedItemChangedEventArgs e) => {
@@ -47,7 +47,7 @@ namespace Hydrapp.Client
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
             App.IsUserLoggedIn = false;
-            await AzureDbService.groupLogout(App.GroupId);
+            await AzureDbService.groupLogout(App.GroupId, App.ActivityId);
             Navigation.InsertPageBefore(new LoginPage(), this);
             await Navigation.PopAsync();
         }
@@ -58,6 +58,10 @@ namespace Hydrapp.Client
             await Navigation.PushAsync(new SettingPage());
         }
 
+        async void OnSummaryButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new SummaryPage((ManageGroupPageViewModel) this.BindingContext));
+        }
 
     }
 }

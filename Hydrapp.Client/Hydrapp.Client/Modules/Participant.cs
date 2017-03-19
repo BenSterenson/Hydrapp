@@ -23,8 +23,10 @@ namespace Hydrapp.Client.Modules
         private BandEntry bandEntry;
         private string image_temp;
         private string image_fluid;
+        public long dehydrateTicks { get; set; }
+        public bool notified { get; set; }
 
-        public int RowNumber
+    public int RowNumber
         {
             get
             {
@@ -81,11 +83,7 @@ namespace Hydrapp.Client.Modules
                 return bandEntryHistory;
             }
         }
-
-        //public Group Group { get; set; }
-        //public Band Band { get; set; }
-        //public Band Band_nfo { get; set; }
-
+        
 
         public Participant() { }
 
@@ -98,19 +96,21 @@ namespace Hydrapp.Client.Modules
             this.rowNumber = rowNumber;
             this.user = user;
         }
-        public Participant(int rowNumber, User user, BandEntry Entry)
+        public Participant(int rowNumber, User user, BandEntry Entry, long ticks)
         {
             this.rowNumber = rowNumber;
             this.user = user;
             this.bandEntry = Entry;
+            this.dehydrateTicks = ticks;
             this.Image_temp = Entry.SkinTemp > 35 ? "overHeat.png" : "normalHeat.png";
             this.Image_fluid = Entry.IsDehydrated ? "dehydration.png" : "normalfluid.png";
         }
-        public Participant(int rowNumber, User user, BandEntry Entry, ObservableCollection<BandEntry> BandEntryHistory)
+        public Participant(int rowNumber, User user, BandEntry Entry, long ticks, ObservableCollection<BandEntry> BandEntryHistory)
         {
             this.rowNumber = rowNumber;
             this.user = user;
             this.bandEntry = Entry;
+            this.dehydrateTicks = ticks;
             this.bandEntryHistory = BandEntryHistory;
             this.Image_temp = Entry.SkinTemp > 35 ? "overHeat.png" : "normalHeat.png";
             this.Image_fluid = Entry.IsDehydrated ? "dehydration.png" : "normalfluid.png";

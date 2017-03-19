@@ -92,6 +92,8 @@ namespace Hydrapp.Client.Services
                 Debug.WriteLine("Couldn't add user:" + user, e);
                 throw e;
             }
+            UserHydrateLvl userHydratelvl = new UserHydrateLvl(user.UserId);
+            await mobileService.GetTable<UserHydrateLvl>().InsertAsync(userHydratelvl);
             return user;
         }
         public async Task<bool> deleteUser(User user)
@@ -144,7 +146,7 @@ namespace Hydrapp.Client.Services
             }
             GroupMember newGroupMember = new GroupMember(userId, groupID, false);
             await mobileService.GetTable<GroupMember>().InsertAsync(newGroupMember);
-            return userId;
+            return 1;
         }
 
         public async Task<int> createGroup(int userId, string groupName, string groupPassword)
@@ -156,6 +158,80 @@ namespace Hydrapp.Client.Services
             return group.GroupId;
         }
 
+        public async Task<int> createActivity(int Lvl, int groupId)
+        {
+            Activity activity = new Activity();
+            activity.ActivityLvl = Lvl;
+            activity.ActivityTime = DateTime.Now;
+            activity.GroupId = groupId;
+            await mobileService.GetTable<Activity>().InsertAsync(activity);
+            return activity.ActivityId;
+        }
+
+        public async Task<int> updateUserHydrateAvg(int activityId, List<int> userIds)
+        {
+            List<Activity> activityList = await mobileService.GetTable<Activity>().Where(x => x.ActivityId == activityId).ToListAsync();
+            Activity activity = activityList.ElementAt(0);
+            try
+            {
+                foreach (int userId in userIds)
+                {
+                    bool dehydrated = false;
+                    TimeSpan dehydrationTime;
+                    List<BandEntry> result = await mobileService.GetTable<BandEntry>().Where(bandEntry => bandEntry.UserId == userId).OrderBy(entry => entry.TimeStamp).ToListAsync();
+                    foreach (BandEntry entry in result)
+                    {
+                        if (entry.IsDehydrated && entry.TimeStamp > activity.ActivityTime)
+                        {
+                            dehydrated = true;
+                            dehydrationTime = entry.TimeStamp - activity.ActivityTime;
+                            break;
+                        }
+                    }
+                    if (dehydrated)
+                    {
+                        long currentAvg = 0;
+                        int currentActivityCount = 0;
+                        List<UserHydrateLvl> userHydrateList = await mobileService.GetTable<UserHydrateLvl>().Where(UserHydrateLvl => UserHydrateLvl.UserId == userId).ToListAsync();
+                        UserHydrateLvl userHydrateLvl = userHydrateList.ElementAt(0);
+                        switch (activity.ActivityLvl) {
+                            case 1: currentAvg = userHydrateLvl.Lvl1Avg;
+                                    currentActivityCount = userHydrateLvl.Lvl1Count;
+                                    break;
+                            case 2: currentAvg = userHydrateLvl.Lvl2Avg;
+                                    currentActivityCount = userHydrateLvl.Lvl2Count;
+                                    break;
+                            case 3: currentAvg = userHydrateLvl.Lvl3Avg;
+                                    currentActivityCount = userHydrateLvl.Lvl3Count;
+                                    break;
+                        }
+                        currentAvg = ((currentAvg * currentActivityCount) + dehydrationTime.Ticks) / (currentActivityCount + 1);
+                        switch (activity.ActivityLvl)
+                        {
+                            case 1:
+                                userHydrateLvl.Lvl1Avg = currentAvg;
+                                userHydrateLvl.Lvl1Count = currentActivityCount + 1;
+                                break;
+                            case 2:
+                                userHydrateLvl.Lvl2Avg = currentAvg;
+                                userHydrateLvl.Lvl2Count = currentActivityCount + 1;
+                                break;
+                            case 3:
+                                userHydrateLvl.Lvl3Avg = currentAvg;
+                                userHydrateLvl.Lvl3Count = currentActivityCount + 1;
+                                break;
+                        }
+                        await mobileService.GetTable<UserHydrateLvl>().UpdateAsync(userHydrateLvl);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+            return 1;
+        }
+        
         public async Task<int> addBandEntry(BandEntry bandEntry)
         {
             try
@@ -231,12 +307,11 @@ namespace Hydrapp.Client.Services
             List<BandEntry> result = await mobileService.GetTable<BandEntry>().Where(bandEntry => bandEntry.GroupId == groupId).ToListAsync();
             foreach (var entry in result)
             {
-                //await mobileService.GetTable<HistoryBandEntry>().insertAsync(entry);
                 await mobileService.GetTable<BandEntry>().DeleteAsync(entry);
             }
         }
 
-        public async Task groupLogout(int groupId)
+        public async Task groupLogout(int groupId, int activityId)
         {
             List<GroupMember> result = await mobileService.GetTable<GroupMember>().Where(groupMember => groupMember.GroupId == groupId && groupMember.Admin == false).ToListAsync();
             foreach (var groupMember in result)
@@ -244,6 +319,18 @@ namespace Hydrapp.Client.Services
                 await mobileService.GetTable<GroupMember>().DeleteAsync(groupMember);
             }
             await deleteBandEntriesForGroup(groupId);
+            await finishActivitiesForGroup(groupId);
+        }
+
+        private async Task finishActivitiesForGroup(int groupId)
+        {
+            // we want to make sure every activity signed to this group will be finished, not only the current
+            List<Activity> result = await mobileService.GetTable<Activity>().Where(activity => activity.GroupId == groupId && activity.Done == 0).ToListAsync();
+            foreach (var activity in result)
+            {
+                activity.Done = 1;
+                await mobileService.GetTable<Activity>().UpdateAsync(activity);
+            }
         }
 
         public async Task updateUser(User user)
@@ -258,5 +345,32 @@ namespace Hydrapp.Client.Services
             List<BandEntry> result = await mobileService.GetTable<BandEntry>().Where(bandEntry => bandEntry.UserId == user.UserId).OrderByDescending(entry => entry.TimeStamp).ToListAsync();
             return result;
         }
+
+        public async Task<int> getActivityForGroup(int groupId)
+        {
+            List<Activity> result = await mobileService.GetTable<Activity>().Where(activity => activity.GroupId == groupId && activity.Done == 0).ToListAsync();
+            if (result.Count > 0)
+            {
+                return result.ElementAt(0).ActivityId;
+            }
+            return -1;
+        }
+
+        public async Task<long> getDehydrateAVGForUser(int userId, int activityLvl)
+        {
+            List<UserHydrateLvl> result = await mobileService.GetTable<UserHydrateLvl>().Where(x => x.UserId == userId).ToListAsync();
+            long ticks;
+            switch (activityLvl)
+            {
+                case 1:
+                    return result.ElementAt(0).Lvl1Avg;
+                case 2:
+                    return result.ElementAt(0).Lvl2Avg;
+                case 3:
+                    return result.ElementAt(0).Lvl3Avg;
+            }
+            return -1;
+        }
+        
     }
 }

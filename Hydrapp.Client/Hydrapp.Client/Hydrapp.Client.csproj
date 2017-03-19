@@ -34,6 +34,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
     <Compile Include="Constants.cs" />
@@ -50,17 +57,22 @@
     <Compile Include="ManageGroupPage.xaml.cs">
       <DependentUpon>ManageGroupPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\UserHydrateLvl.cs" />
     <Compile Include="Modules\Band.cs" />
     <Compile Include="Modules\BandEntry.cs" />
     <Compile Include="Modules\GroupMember.cs" />
     <Compile Include="Modules\TestItem.cs" />
     <Compile Include="Modules\Participant.cs" />
     <Compile Include="Modules\Group.cs" />
+    <Compile Include="Modules\Activity.cs" />
     <Compile Include="Modules\User.cs" />
     <Compile Include="Services\AzureDBService.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="MemberChartPage.xaml.cs">
       <DependentUpon>MemberChartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SummaryPage.xaml.cs">
+      <DependentUpon>SummaryPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
@@ -73,6 +85,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BandService.cs" />
+    <Compile Include="ViewModels\SummaryPageViewModel.cs" />
     <Compile Include="ValueConverters\FluidlossColorConverter.cs" />
     <Compile Include="ValueConverters\CelsiusToFahrenheitConverter.cs" />
     <Compile Include="ViewModels\ChartsViewModel.cs" />
@@ -189,6 +202,12 @@
   <ItemGroup>
     <EmbeddedResource Include="MainPageNew.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SummaryPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
