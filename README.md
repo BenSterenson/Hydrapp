@@ -2,7 +2,8 @@
 
 - Hydrapp is an anti-dehydration application that specializes in monitoring fluid loss of any person as a result of physical effort.
 
-- Hydrapp was developed as Part of an E-Health and Cloud Technologies Workshop - see website for documentation.
+- Hydrapp was developed as Part of an E-Health and Cloud Technologies Workshop - see [website](https://bensterenson.wixsite.com/hydrapp) for documentation.
+
 
 # Hydrapp Backend
 
