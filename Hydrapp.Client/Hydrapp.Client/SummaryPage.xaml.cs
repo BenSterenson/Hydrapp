@@ -13,15 +13,18 @@ namespace Hydrapp.Client
         private IService AzureDbService = App.AzureDbservice;
         public SummaryPage()
 		{
+            InitializeComponent();
+            this.BindingContext = new SummaryPageViewModel(App.groupName_summary, App.numOfParticipants_summary, App.ActivityLvl, App.numOfAlerts_summary);
+
         }
 
-        public SummaryPage(ManageGroupPageViewModel bindingContext)
+        /*public SummaryPage()
         {
+
             InitializeComponent();
-            
-            this.BindingContext = new SummaryPageViewModel(bindingContext);
-            
-        }
+            //this.BindingContext = new SummaryPageViewModel(bindingContext);
+
+        }*/
 
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {

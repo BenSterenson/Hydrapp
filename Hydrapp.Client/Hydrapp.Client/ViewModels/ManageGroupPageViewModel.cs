@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using Hydrapp.Client.Services;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace Hydrapp.Client.ViewModels
 {
@@ -47,14 +48,14 @@ namespace Hydrapp.Client.ViewModels
 
         public ManageGroupPageViewModel()
         {
-            groupName = "HydrappGroup";
+            App.groupName_summary = groupName = "HydrappGroup";
             stopwatch = Stopwatch.StartNew();
             RefreshGroupMembers();
             updateMembersTimer();
             recommendationTimer();
             //Memberleft();
-
         }
+
         void RefreshGroupMembers()
         {
             Device.StartTimer(new TimeSpan(0, 0, 0, 5), checkForNewMember);
@@ -176,6 +177,7 @@ namespace Hydrapp.Client.ViewModels
             set
             {
                 groupName = value;
+                App.groupName_summary = groupName;
                 OnPropertyChanged();
             }
         }
@@ -190,6 +192,7 @@ namespace Hydrapp.Client.ViewModels
             set
             {
                 numOfParticipants = value;
+                App.numOfParticipants_summary = numOfParticipants;
                 OnPropertyChanged();
             }
         }

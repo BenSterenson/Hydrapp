@@ -60,7 +60,7 @@ namespace Hydrapp.Client
 
         async void OnSummaryButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new SummaryPage((ManageGroupPageViewModel) this.BindingContext));
+            await Navigation.PushAsync(new SummaryPage());
         }
 
     }
