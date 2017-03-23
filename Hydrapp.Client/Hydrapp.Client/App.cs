@@ -22,11 +22,6 @@ namespace Hydrapp.Client
         public static List<int> Users = new List<int>();
         public static IService AzureDbservice = new AzureDBService();
 
-        public static string groupName_summary;
-        public static int numOfParticipants_summary;
-        public static string activity_Level_summary;
-        public static int numOfAlerts_summary;
-
         public App()
         {
 

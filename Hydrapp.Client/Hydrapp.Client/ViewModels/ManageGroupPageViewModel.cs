@@ -33,6 +33,9 @@ namespace Hydrapp.Client.ViewModels
         private Color backgroundColor;
         public Stopwatch stopwatch;
 
+        public int numOfAlerts_summary;
+
+
         public ObservableCollection<Participant> Participants
         {
             get
@@ -48,7 +51,7 @@ namespace Hydrapp.Client.ViewModels
 
         public ManageGroupPageViewModel()
         {
-            App.groupName_summary = groupName = "HydrappGroup";
+            groupName = "HydrappGroup";
             stopwatch = Stopwatch.StartNew();
             RefreshGroupMembers();
             updateMembersTimer();
@@ -85,7 +88,8 @@ namespace Hydrapp.Client.ViewModels
         {
             await DisplayAlert("ALERT ALERT ALERT\n",
                         "According to our learning algorithm, User: " + par.user.userName +
-                        ", jas a chance of getting hydrated soon. please pay attention!", "OK");
+                        ", has a chance of getting hydrated soon. please pay attention!", "OK");
+            numOfAlerts_summary++;
 
         }
 
@@ -122,6 +126,7 @@ namespace Hydrapp.Client.ViewModels
                     {
                         await DisplayAlert("Dehydration Alert", member.user.userName + " is dehydrated!!", "Ok");
                         noticed = true;
+                        numOfAlerts_summary++;
                     }
                 }
             }
@@ -177,7 +182,6 @@ namespace Hydrapp.Client.ViewModels
             set
             {
                 groupName = value;
-                App.groupName_summary = groupName;
                 OnPropertyChanged();
             }
         }
@@ -192,7 +196,6 @@ namespace Hydrapp.Client.ViewModels
             set
             {
                 numOfParticipants = value;
-                App.numOfParticipants_summary = numOfParticipants;
                 OnPropertyChanged();
             }
         }

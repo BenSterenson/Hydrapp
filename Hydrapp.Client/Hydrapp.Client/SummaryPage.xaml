@@ -21,6 +21,11 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+    
+
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -108,23 +113,64 @@
                 HorizontalOptions="Center"
                 Grid.Row="5" Grid.Column="1"
                 VerticalOptions="CenterAndExpand" />
-        
-        <Label Text="Group Performance:"
-              Font="Medium"
-               FontAttributes="Bold"
-              HorizontalOptions="Center"
-              Grid.Row="6" Grid.Column="0"
-              VerticalOptions="CenterAndExpand" />  
-    
-        <Label Text="{Binding Group_performance}"
+
+        <Label Text="Highest Fluid Loss Recorded:"
                 Font="Medium"
+                FontAttributes="Bold"
                 HorizontalOptions="Center"
-                Grid.Row="6" Grid.Column="1"
+                Grid.Row="6" Grid.Column="0"
                 VerticalOptions="CenterAndExpand" />
+
+          <Label Text="{Binding H_FluidLoss_Recorded, StringFormat='{0}{0:#.######}'}"
+                  Font="Medium"
+                  HorizontalOptions="Center"
+                  Grid.Row="6" Grid.Column="1"
+                  VerticalOptions="CenterAndExpand" />
+          
+          <Label Text="Most Hydrated User:"
+                  Font="Medium"
+                  FontAttributes="Bold"
+                  HorizontalOptions="Center"
+                  Grid.Row="7" Grid.Column="0"
+                  VerticalOptions="CenterAndExpand" />
+
+          <Label Text="{Binding Hydrated_User}"
+                  Font="Medium"
+                  HorizontalOptions="Center"
+                  Grid.Row="7" Grid.Column="1"
+                  VerticalOptions="CenterAndExpand" />
+
+          <Label Text="Least Hydrated User:"
+                  Font="Medium"
+                  FontAttributes="Bold"
+                  HorizontalOptions="Center"
+                  Grid.Row="8" Grid.Column="0"
+                  VerticalOptions="CenterAndExpand" />
+
+          <Label Text="{Binding Dehydrated_User}"
+                  Font="Medium"
+                  HorizontalOptions="Center"
+                  Grid.Row="8" Grid.Column="1"
+                  VerticalOptions="CenterAndExpand" />
+
+          <Label Text="Group Performance:"
+                Font="Large"
+                 FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Grid.Row="9" Grid.Column="0"
+                VerticalOptions="CenterAndExpand" />
+
+          <Label Text="{Binding Group_performance}"
+                  Font="Large"
+                  HorizontalOptions="Center"
+                  Grid.Row="9" Grid.Column="1"
+                  VerticalOptions="CenterAndExpand" />
       </Grid>
       
       
         <Button Text="Exit Summary"
+                Font="Large"
+                FontAttributes="Bold"
                 HorizontalOptions="Center"
                 Clicked="OnLogoutButtonClicked" />
           
