@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using Hydrapp.Client.Services;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace Hydrapp.Client.ViewModels
 {
@@ -31,6 +32,9 @@ namespace Hydrapp.Client.ViewModels
         private int numOfParticipants;
         private Color backgroundColor;
         public Stopwatch stopwatch;
+
+        public int numOfAlerts_summary;
+
 
         public ObservableCollection<Participant> Participants
         {
@@ -53,11 +57,11 @@ namespace Hydrapp.Client.ViewModels
             updateMembersTimer();
             recommendationTimer();
             //Memberleft();
-
         }
+
         void RefreshGroupMembers()
         {
-            Device.StartTimer(new TimeSpan(0, 0, 0, 5), checkForNewMember);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 1), checkForNewMember);
         }
         void updateMembersTimer()
         {
@@ -84,7 +88,8 @@ namespace Hydrapp.Client.ViewModels
         {
             await DisplayAlert("ALERT ALERT ALERT\n",
                         "According to our learning algorithm, User: " + par.user.userName +
-                        ", jas a chance of getting hydrated soon. please pay attention!", "OK");
+                        ", has a chance of getting hydrated soon. please pay attention!", "OK");
+            numOfAlerts_summary++;
 
         }
 
@@ -121,6 +126,7 @@ namespace Hydrapp.Client.ViewModels
                     {
                         await DisplayAlert("Dehydration Alert", member.user.userName + " is dehydrated!!", "Ok");
                         noticed = true;
+                        numOfAlerts_summary++;
                     }
                 }
             }

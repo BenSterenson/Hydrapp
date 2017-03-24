@@ -36,6 +36,9 @@
             VerticalOptions="CenterAndExpand"
             Clicked="OnSummaryButtonClicked" />
         
+    <!--Command="{Binding OnSummaryButtonClicked}" />-->
+            
+        
   </StackLayout>
     
       <ListView x:Name="listView" SeparatorVisibility="Default" ItemsSource="{Binding Participants}" RowHeight="50">

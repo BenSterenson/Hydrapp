@@ -11,17 +11,21 @@ namespace Hydrapp.Client
 	public partial class SummaryPage : ContentPage
 	{
         private IService AzureDbService = App.AzureDbservice;
-        public SummaryPage()
+        public SummaryPage(ManageGroupPageViewModel vm)
 		{
-        }
-
-        public SummaryPage(ManageGroupPageViewModel bindingContext)
-        {
             InitializeComponent();
             
-            this.BindingContext = new SummaryPageViewModel(bindingContext);
-            
+            this.BindingContext = new SummaryPageViewModel(vm.GroupName, App.ActivityLvl, vm.numOfAlerts_summary, vm.stopwatch.Elapsed, vm.Participants);
+
         }
+
+        /*public SummaryPage()
+        {
+
+            InitializeComponent();
+            //this.BindingContext = new SummaryPageViewModel(bindingContext);
+
+        }*/
 
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
