@@ -411,6 +411,10 @@ namespace Hydrapp.Client.ViewModels
             }
         }
 
+        public async void stopSensors()
+        {
+            await bandService.StopReadingSkinTemp();
+        }
         public Command StopAllSensors
         {
             get
