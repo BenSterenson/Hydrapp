@@ -215,6 +215,8 @@ namespace Hydrapp.Client
 
         private string calc_group_performance()
         {
+            if (numOfAlerts < 10 && dehydrated_Percentage == 0)
+                return "Very Good!";
             if (numOfAlerts < 10 && dehydrated_Percentage < 10)
                 return "Very Good!";
             else

@@ -420,6 +420,12 @@ namespace Hydrapp.Client.ViewModels
                         try
                         {
                             await bandService.StopReadingSkinTemp();
+                            await bandService.StopReadingAmbientLight();
+                            await bandService.StopReadingCalories();
+                            await bandService.StopReadingGSR();
+                            await bandService.StopReadingHeartRate();
+                            await bandService.StopReadingPedometer();
+                            await bandService.StopReadingUV();
                         }
                         catch (Exception e)
                         {
