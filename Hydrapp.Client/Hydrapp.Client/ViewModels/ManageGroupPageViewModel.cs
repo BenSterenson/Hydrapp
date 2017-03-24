@@ -61,7 +61,7 @@ namespace Hydrapp.Client.ViewModels
 
         void RefreshGroupMembers()
         {
-            Device.StartTimer(new TimeSpan(0, 0, 0, 5), checkForNewMember);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 1), checkForNewMember);
         }
         void updateMembersTimer()
         {

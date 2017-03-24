@@ -24,8 +24,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-    
-
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+          
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -74,6 +75,8 @@
                Grid.Row="2" Grid.Column="1"
                VerticalOptions="CenterAndExpand" />
 
+          
+
         <Label Text="Activity Time:"
                Font="Medium"
                FontAttributes="Bold"
@@ -101,69 +104,98 @@
                 Grid.Row="4" Grid.Column="1"
                 VerticalOptions="CenterAndExpand" />
           
-        <Label Text="Dehydrated Members Ratio:"
+        <Label Text="Dehydrated Members Percentage:"
               Font="Medium"
                FontAttributes="Bold"
               HorizontalOptions="Center"
               Grid.Row="5" Grid.Column="0"
               VerticalOptions="CenterAndExpand" />
         
-        <Label Text="{Binding Dehydrated_Ratio, StringFormat='{0} %'}"
+        <Label Text="{Binding Dehydrated_Percentage, StringFormat='{0} %'}"
                 Font="Medium"
                 HorizontalOptions="Center"
                 Grid.Row="5" Grid.Column="1"
                 VerticalOptions="CenterAndExpand" />
+          
+          
+        <Label Text="Least Hydrated User:"
+                  Font="Medium"
+                  FontAttributes="Bold"
+                  HorizontalOptions="Center"
+                  Grid.Row="6" Grid.Column="0"
+                  VerticalOptions="CenterAndExpand" />
+
+          <Label Text="{Binding Dehydrated_User}"
+                  Font="Medium"
+                  HorizontalOptions="Center"
+                  Grid.Row="6" Grid.Column="1"
+                  VerticalOptions="CenterAndExpand" />
 
         <Label Text="Highest Fluid Loss Recorded:"
                 Font="Medium"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
-                Grid.Row="6" Grid.Column="0"
+                Grid.Row="7" Grid.Column="0"
                 VerticalOptions="CenterAndExpand" />
 
-          <Label Text="{Binding H_FluidLoss_Recorded, StringFormat='{0}{0:#.######}'}"
+          <Label Text="{Binding H_FluidLoss_Recorded, StringFormat='{0}{0:#} %'}"
                   Font="Medium"
                   HorizontalOptions="Center"
-                  Grid.Row="6" Grid.Column="1"
+                  Grid.Row="7" Grid.Column="1"
                   VerticalOptions="CenterAndExpand" />
           
           <Label Text="Most Hydrated User:"
                   Font="Medium"
                   FontAttributes="Bold"
                   HorizontalOptions="Center"
-                  Grid.Row="7" Grid.Column="0"
+                  Grid.Row="8" Grid.Column="0"
                   VerticalOptions="CenterAndExpand" />
 
           <Label Text="{Binding Hydrated_User}"
                   Font="Medium"
                   HorizontalOptions="Center"
-                  Grid.Row="7" Grid.Column="1"
-                  VerticalOptions="CenterAndExpand" />
-
-          <Label Text="Least Hydrated User:"
-                  Font="Medium"
-                  FontAttributes="Bold"
-                  HorizontalOptions="Center"
-                  Grid.Row="8" Grid.Column="0"
-                  VerticalOptions="CenterAndExpand" />
-
-          <Label Text="{Binding Dehydrated_User}"
-                  Font="Medium"
-                  HorizontalOptions="Center"
                   Grid.Row="8" Grid.Column="1"
                   VerticalOptions="CenterAndExpand" />
+          
+          
+          <Label Text="Lowest Fluid Loss Recorded:"
+                Font="Medium"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Grid.Row="9" Grid.Column="0"
+                VerticalOptions="CenterAndExpand" />
+
+          <Label Text="{Binding L_FluidLoss_Recorded, StringFormat='{0}{0:#} %'}"
+                  Font="Medium"
+                  HorizontalOptions="Center"
+                  Grid.Row="9" Grid.Column="1"
+                  VerticalOptions="CenterAndExpand" />
+
+          <Label Text="Highest Lowest Record Difference:"
+                Font="Medium"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Grid.Row="10" Grid.Column="0"
+                VerticalOptions="CenterAndExpand" />
+
+          <Label Text="{Binding D_FluidLoss_Recorded, StringFormat='{0}{0:#} %'}"
+                  Font="Medium"
+                  HorizontalOptions="Center"
+                  Grid.Row="10" Grid.Column="1"
+                  VerticalOptions="CenterAndExpand" />
+          
 
           <Label Text="Group Performance:"
                 Font="Large"
                  FontAttributes="Bold"
                 HorizontalOptions="Center"
-                Grid.Row="9" Grid.Column="0"
+                Grid.Row="11" Grid.Column="0"
                 VerticalOptions="CenterAndExpand" />
 
           <Label Text="{Binding Group_performance}"
                   Font="Large"
                   HorizontalOptions="Center"
-                  Grid.Row="9" Grid.Column="1"
+                  Grid.Row="11" Grid.Column="1"
                   VerticalOptions="CenterAndExpand" />
       </Grid>
       

@@ -16,7 +16,7 @@ namespace Hydrapp.Client
         
         private int numOfParticipants;
         private int numOfAlerts;
-        private int dehydrated_Ratio;
+        private int dehydrated_Percentage;
 
         private string groupName;
         private string activityTime;
@@ -24,6 +24,8 @@ namespace Hydrapp.Client
         private string group_performance;
         private ObservableCollection<Participant> participants;
         private double h_FluidLoss_Recorded;
+        private double l_FluidLoss_Recorded;
+        private double d_FluidLoss_Recorded;
         private string dehydrated_User;
         private string hydrated_User;
 
@@ -69,7 +71,34 @@ namespace Hydrapp.Client
                 OnPropertyChanged();
             }
         }
-        
+
+        public double L_FluidLoss_Recorded
+        {
+            get
+            {
+                return l_FluidLoss_Recorded;
+            }
+
+            set
+            {
+                l_FluidLoss_Recorded = value;
+                OnPropertyChanged();
+            }
+        }
+        public double D_FluidLoss_Recorded
+        {
+            get
+            {
+                return d_FluidLoss_Recorded;
+            }
+
+            set
+            {
+                d_FluidLoss_Recorded = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public string GroupName
         {
@@ -113,16 +142,16 @@ namespace Hydrapp.Client
             }
         }
 
-        public int Dehydrated_Ratio
+        public int Dehydrated_Percentage
         {
             get
             {
-                return dehydrated_Ratio;
+                return dehydrated_Percentage;
             }
 
             set
             {
-                dehydrated_Ratio = value;
+                dehydrated_Percentage = value;
                 OnPropertyChanged();
             }
         }
@@ -169,7 +198,7 @@ namespace Hydrapp.Client
             }
         }
 
-        private int calc_groupDehydrated_Ratio()
+        private int calc_groupDehydrated_Percentage()
         {
             int dehydrated_count = 0;
             foreach (var par in participants)
@@ -186,7 +215,7 @@ namespace Hydrapp.Client
 
         private string calc_group_performance()
         {
-            if (numOfAlerts < 10 && dehydrated_Ratio < 10)
+            if (numOfAlerts < 10 && dehydrated_Percentage < 10)
                 return "Very Good!";
             else
                 return "Better drink more!";
@@ -237,6 +266,7 @@ namespace Hydrapp.Client
             dehydrated_User = maxDehydrated_User;
             hydrated_User = maxhydrated_User;
             h_FluidLoss_Recorded = maxFluid;
+            l_FluidLoss_Recorded = minFluid;
         }
 
         public SummaryPageViewModel(string summary_group_name, int summary_activity_Level, int summary_numOfAlerts, TimeSpan summary_activityTime, ObservableCollection<Participant> Participants)
@@ -247,9 +277,10 @@ namespace Hydrapp.Client
             activityTime = summary_activityTime.ToString(@"hh\:mm\:ss");
             activity_Level = convert_activity_to_string(summary_activity_Level);
             numOfAlerts = summary_numOfAlerts;
-            dehydrated_Ratio = calc_groupDehydrated_Ratio();
+            dehydrated_Percentage = calc_groupDehydrated_Percentage();
             group_performance = calc_group_performance();
             find_fluid_loss_range();
+            d_FluidLoss_Recorded = h_FluidLoss_Recorded - l_FluidLoss_Recorded;
 
         }
 
