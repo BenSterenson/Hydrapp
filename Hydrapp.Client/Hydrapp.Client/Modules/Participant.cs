@@ -96,22 +96,24 @@ namespace Hydrapp.Client.Modules
             this.rowNumber = rowNumber;
             this.user = user;
         }
-        public Participant(int rowNumber, User user, BandEntry Entry, long ticks)
+        public Participant(int rowNumber, User user, BandEntry Entry, long ticks, bool notified)
         {
             this.rowNumber = rowNumber;
             this.user = user;
             this.bandEntry = Entry;
             this.dehydrateTicks = ticks;
+            this.notified = notified;
             this.Image_temp = Entry.SkinTemp > 35 ? "overHeat.png" : "normalHeat.png";
             this.Image_fluid = Entry.IsDehydrated ? "dehydration.png" : "normalfluid.png";
         }
-        public Participant(int rowNumber, User user, BandEntry Entry, long ticks, ObservableCollection<BandEntry> BandEntryHistory)
+        public Participant(int rowNumber, User user, BandEntry Entry, long ticks, ObservableCollection<BandEntry> BandEntryHistory, bool notified)
         {
             this.rowNumber = rowNumber;
             this.user = user;
             this.bandEntry = Entry;
             this.dehydrateTicks = ticks;
             this.bandEntryHistory = BandEntryHistory;
+            this.notified = notified;
             this.Image_temp = Entry.SkinTemp > 35 ? "overHeat.png" : "normalHeat.png";
             this.Image_fluid = Entry.IsDehydrated ? "dehydration.png" : "normalfluid.png";
         }

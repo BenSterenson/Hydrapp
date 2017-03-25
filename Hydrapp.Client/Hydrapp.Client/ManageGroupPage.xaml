@@ -85,9 +85,9 @@
                       
                     <Label Grid.Column="0" Text="{Binding RowNumber}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="1" Text="{Binding user.userName}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
-                    <Label Grid.Column="2" Text="{Binding BandEntry.HeartRate, StringFormat='{0}{0:#.##}' bps}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
-                    <Label Grid.Column="3" Text="{Binding BandEntry.FluidLoss, StringFormat='{0}{0:#.######} %'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
-                    <Label Grid.Column="4" Text="{Binding BandEntry.SkinTemp, StringFormat='{0}{0:#.##}' c}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                      <Label Grid.Column="2" Text="{Binding BandEntry.HeartRate, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                      <Label Grid.Column="3" Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.######}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                      <Label Grid.Column="4" Text="{Binding BandEntry.SkinTemp, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Image Grid.Column="5" Source="{Binding Image_temp}" HeightRequest="30" />
                     <Image Grid.Column="6" Source="{Binding Image_fluid}" HeightRequest="30" />
                     </Grid>

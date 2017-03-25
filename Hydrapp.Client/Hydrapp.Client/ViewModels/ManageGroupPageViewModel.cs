@@ -32,7 +32,7 @@ namespace Hydrapp.Client.ViewModels
         private int numOfParticipants;
         private Color backgroundColor;
         public Stopwatch stopwatch;
-
+        private Object thisLock = new Object();
         public int numOfAlerts_summary;
 
 
@@ -61,7 +61,7 @@ namespace Hydrapp.Client.ViewModels
 
         void RefreshGroupMembers()
         {
-            Device.StartTimer(new TimeSpan(0, 0, 0, 1), checkForNewMember);
+            Device.StartTimer(new TimeSpan(0, 0, 0, 2), checkForNewMember);
         }
         void updateMembersTimer()
         {
@@ -95,8 +95,9 @@ namespace Hydrapp.Client.ViewModels
 
         private bool checkForNewMember()
         {
+            lock (thisLock) {
             addNewMembers();
-            
+        }
             /*Generate random users*/
             //GenerateaddNewMembers();
             return true;
@@ -121,7 +122,7 @@ namespace Hydrapp.Client.ViewModels
                 if (latest != null && (DateTime.Compare(member.BandEntry.TimeStamp, latest.TimeStamp) < 0))
                 {
                     member.BandEntry = latest;
-                    Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.dehydrateTicks, member.BandEntryHistory);
+                    Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.dehydrateTicks, member.BandEntryHistory, member.notified);
                     if (latest.IsDehydrated && noticed == false)
                     {
                         await DisplayAlert("Dehydration Alert", member.user.userName + " is dehydrated!!", "Ok");
@@ -141,7 +142,7 @@ namespace Hydrapp.Client.ViewModels
                 long dehydrateTicks = await AzureDbService.getDehydrateAVGForUser(user.UserId, App.ActivityLvl);
                 if (latest != null)
                 {
-                    participants.Add(new Participant(RowCount(), user, latest, dehydrateTicks));
+                    participants.Add(new Participant(RowCount(), user, latest, dehydrateTicks, false));
                     currentMembersList.Add(user.UserId);
                 }
             }
@@ -242,13 +243,13 @@ namespace Hydrapp.Client.ViewModels
 
                 User user = new User("Ben", "123", "nan",70,1.80);
                 BandEntry latest = GenerateBandEntry(null);
-                participants.Add(new Participant(RowCount(), user, latest, 1000));
+                participants.Add(new Participant(RowCount(), user, latest, 1000, false));
                 user = new User("Noam", "123", "nan", 70, 1.80);
                 latest = GenerateBandEntry(null);
-                participants.Add(new Participant(RowCount(), user, latest, 2000));
+                participants.Add(new Participant(RowCount(), user, latest, 2000, false));
                 user = new User("Shimon", "123", "nan", 70, 1.80);
                 latest = GenerateBandEntry(null);
-                participants.Add(new Participant(RowCount(), user, latest, 3000));
+                participants.Add(new Participant(RowCount(), user, latest, 3000, false));
             }
             NumOfParticipants = participants.Count();
         }
@@ -262,7 +263,7 @@ namespace Hydrapp.Client.ViewModels
                 BandEntry latest = GenerateBandEntry(p.BandEntry);
                 var member = participants[i];
                 member.BandEntry = latest;
-                Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.dehydrateTicks, member.BandEntryHistory);
+                Participants[i] = new Participant(member.RowNumber, member.user, member.BandEntry, member.dehydrateTicks, member.BandEntryHistory, member.notified);
             }
         }
 
