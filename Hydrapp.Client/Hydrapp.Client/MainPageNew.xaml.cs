@@ -63,9 +63,7 @@ namespace Hydrapp.Client
 
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
-            MainPageViewModelNew vm = sender as MainPageViewModelNew;
             App.IsUserLoggedIn = false;
-            vm.stopSensors();
             Navigation.InsertPageBefore(new LoginPage(), this);
             await Navigation.PopAsync();
         }

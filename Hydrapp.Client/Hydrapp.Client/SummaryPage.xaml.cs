@@ -19,14 +19,6 @@ namespace Hydrapp.Client
 
         }
 
-        /*public SummaryPage()
-        {
-
-            InitializeComponent();
-            //this.BindingContext = new SummaryPageViewModel(bindingContext);
-
-        }*/
-
         async void OnLogoutButtonClicked(object sender, EventArgs e)
         {
             App.IsUserLoggedIn = false;
