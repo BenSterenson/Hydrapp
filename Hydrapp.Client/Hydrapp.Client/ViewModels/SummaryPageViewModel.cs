@@ -18,7 +18,7 @@ namespace Hydrapp.Client
         private int numOfAlerts;
         private int dehydrated_Percentage;
 
-        private string groupName;
+        private string groupId;
         private string activityTime;
         private string activity_Level;
         private string group_performance;
@@ -100,16 +100,16 @@ namespace Hydrapp.Client
         }
 
 
-        public string GroupName
+        public string GroupId
         {
             get
             {
-                return groupName;
+                return groupId;
             }
 
             set
             {
-                groupName = value;
+                groupId = value;
                 OnPropertyChanged();
             }
         }
@@ -271,11 +271,11 @@ namespace Hydrapp.Client
             l_FluidLoss_Recorded = minFluid;
         }
 
-        public SummaryPageViewModel(string summary_group_name, int summary_activity_Level, int summary_numOfAlerts, TimeSpan summary_activityTime, ObservableCollection<Participant> Participants)
+        public SummaryPageViewModel(int summary_activity_Level, int summary_numOfAlerts, TimeSpan summary_activityTime, ObservableCollection<Participant> Participants)
         {
             participants = Participants;
             numOfParticipants = participants.Count;
-            groupName = summary_group_name;
+            GroupId = App.GroupId.ToString();
             activityTime = summary_activityTime.ToString(@"hh\:mm\:ss");
             activity_Level = convert_activity_to_string(summary_activity_Level);
             numOfAlerts = summary_numOfAlerts;
@@ -284,13 +284,6 @@ namespace Hydrapp.Client
             find_fluid_loss_range();
             d_FluidLoss_Recorded = h_FluidLoss_Recorded - l_FluidLoss_Recorded;
 
-        }
-
-        public SummaryPageViewModel(ManageGroupPageViewModel bindingContext)
-        {
-            this.NumOfParticipants = bindingContext.NumOfParticipants;
-            this.GroupName = bindingContext.GroupName;
-            //this.ActivityTime = bindingContext.stopwatch.Elapsed;
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

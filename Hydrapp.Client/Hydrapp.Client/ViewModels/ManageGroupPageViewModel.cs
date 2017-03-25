@@ -51,7 +51,7 @@ namespace Hydrapp.Client.ViewModels
 
         public ManageGroupPageViewModel()
         {
-            groupName = "HydrappGroup";
+            groupName = "Hydrapp Group: " + App.GroupId.ToString();
             stopwatch = Stopwatch.StartNew();
             RefreshGroupMembers();
             updateMembersTimer();

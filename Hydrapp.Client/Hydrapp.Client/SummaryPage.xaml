@@ -34,7 +34,7 @@
           </Grid.ColumnDefinitions>
 
 
-          <Label Text="Group Name:"
+          <Label Text="Group ID:"
                Font="Medium"
                  FontAttributes="Bold"
                  Grid.Row="0" Grid.Column="0"
@@ -42,7 +42,7 @@
                  VerticalOptions="CenterAndExpand" />
 
 
-          <Label Text="{Binding GroupName}"
+          <Label Text="{Binding GroupId}"
                Font="Medium"
                Grid.Row="0" Grid.Column="1"
                HorizontalOptions="Center"

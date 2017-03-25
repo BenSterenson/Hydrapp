@@ -15,7 +15,7 @@ namespace Hydrapp.Client
 		{
             InitializeComponent();
             
-            this.BindingContext = new SummaryPageViewModel(vm.GroupName, App.ActivityLvl, vm.numOfAlerts_summary, vm.stopwatch.Elapsed, vm.Participants);
+            this.BindingContext = new SummaryPageViewModel(App.ActivityLvl, vm.numOfAlerts_summary, vm.stopwatch.Elapsed, vm.Participants);
 
         }
 
