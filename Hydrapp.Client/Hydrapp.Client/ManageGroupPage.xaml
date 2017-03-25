@@ -90,7 +90,7 @@
         Grid.Row="9" Grid.Column="1"
         VerticalOptions="CenterAndExpand" />
 
-                      <Label Grid.Column="0" Text="{Binding RowNumber}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
+                    <Label Grid.Column="0" Text="{Binding RowNumber}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="1" Text="{Binding user.userName}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="2" Text="{Binding BandEntry.HeartRate, StringFormat='{}{0:#.##}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
                     <Label Grid.Column="3" Text="{Binding BandEntry.FluidLoss, StringFormat='{}{0:#.######}'}" VerticalOptions="Center" HorizontalTextAlignment="Center" />
