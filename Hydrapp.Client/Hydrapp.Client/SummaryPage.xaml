@@ -186,14 +186,14 @@
           
 
           <Label Text="Group Performance:"
-                Font="Large"
+                Font="Medium"
                  FontAttributes="Bold"
                 HorizontalOptions="Center"
                 Grid.Row="11" Grid.Column="0"
                 VerticalOptions="CenterAndExpand" />
 
           <Label Text="{Binding Group_performance}"
-                  Font="Large"
+                  Font="Medium"
                   HorizontalOptions="Center"
                   Grid.Row="11" Grid.Column="1"
                   VerticalOptions="CenterAndExpand" />
@@ -201,7 +201,7 @@
       
       
         <Button Text="Exit Summary"
-                Font="Large"
+                Font="Medium"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
                 Clicked="OnLogoutButtonClicked" />
@@ -210,7 +210,7 @@
           
       
           <Button Text="Send Mail"
-                Font="Large"
+                Font="Medium"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
                 Command="{Binding OnSendMailButtonClicked}" />
