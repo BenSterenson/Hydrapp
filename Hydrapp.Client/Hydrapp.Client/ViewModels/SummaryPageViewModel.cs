@@ -1,10 +1,12 @@
 ﻿using Hydrapp.Client.Modules;
 using Hydrapp.Client.ViewModels;
+using Plugin.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Hydrapp.Client
@@ -28,7 +30,10 @@ namespace Hydrapp.Client
         private double d_FluidLoss_Recorded;
         private string dehydrated_User;
         private string hydrated_User;
-
+        public ICommand OnSendMailButtonClicked
+        {
+            get; private set;
+        }
 
         public string Hydrated_User
         {
@@ -277,19 +282,57 @@ namespace Hydrapp.Client
             numOfParticipants = participants.Count;
             GroupId = App.GroupId.ToString();
             activityTime = summary_activityTime.ToString(@"hh\:mm\:ss");
-            activity_Level = convert_activity_to_string(summary_activity_Level);
+            Activity_Level = convert_activity_to_string(summary_activity_Level);
             numOfAlerts = summary_numOfAlerts;
             dehydrated_Percentage = calc_groupDehydrated_Percentage();
             group_performance = calc_group_performance();
             find_fluid_loss_range();
             d_FluidLoss_Recorded = h_FluidLoss_Recorded - l_FluidLoss_Recorded;
+            OnSendMailButtonClicked = new Command(SendMailCommand);
 
         }
+
+
+        void SendMailCommand()
+        {
+            var emailMessenger = MessagingPlugin.EmailMessenger;
+            if (emailMessenger.CanSendEmail)
+            {
+                String timeStamp = DateTime.Now.ToString("dd.MM.yyyy");
+                string mailContent = "WorkOut Summary\n";
+                mailContent += "\n\n";
+                mailContent += "Group ID:\t" + GroupId + "\n"; 
+                mailContent += "Number Of Participants:\t" + NumOfParticipants.ToString() + "\n";
+                mailContent += "Activity Level:\t" + Activity_Level + "\n";
+                mailContent += "Activity Time:\t" + ActivityTime + "\n";
+                mailContent += "Number Of Alerts:\t" + NumOfAlerts.ToString() + "\n"; 
+                mailContent += "Dehydrated Members Percentage:\t" + Dehydrated_Percentage.ToString() + "%" + "\n";
+                mailContent += "Least Hydrated User:\t" + Dehydrated_User + "\n";
+                mailContent += "Highest Fluid Loss Recorded:\t" + H_FluidLoss_Recorded.ToString() + "%" + "\n";
+                mailContent += "Most Hydrated User:\t" + Hydrated_User + "\n";
+                mailContent += "Lowest Fluid Loss Recorded:\t" + L_FluidLoss_Recorded.ToString() + "%" + "\n";
+                mailContent += "Highest Lowest Record Difference:\t" + D_FluidLoss_Recorded.ToString() + "%" + "\n";
+                mailContent += "Group Performance:\t" + Group_performance + "\n";
+                mailContent += "\n\n";
+
+                var email = new EmailMessageBuilder()
+
+                  .To(App.User.email.ToString())
+                  .Subject("Hydrapp Workout Summary " + timeStamp)
+                  .Body(mailContent)
+                  .Build();
+
+                emailMessenger.SendEmail(email);
+
+            }
+        }
+
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
 
     }
 }

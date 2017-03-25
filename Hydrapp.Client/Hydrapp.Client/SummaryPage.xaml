@@ -205,8 +205,16 @@
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
                 Clicked="OnLogoutButtonClicked" />
+      
           
-        
+          
+      
+          <Button Text="Send Mail"
+                Font="Large"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Command="{Binding OnSendMailButtonClicked}" />
+
       </StackLayout>
 
 
